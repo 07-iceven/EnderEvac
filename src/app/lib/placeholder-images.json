@@ -10,7 +10,7 @@
     {
       "id": "app-logo",
       "description": "Ender Evac Logo",
-      "imageUrl": "/logo.png",
+      "imageUrl": "/icon.png",
       "imageHint": "green exit sign"
     }
   ]
