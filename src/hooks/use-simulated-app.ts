@@ -12,6 +12,7 @@ export interface AppSettings {
   announcementContent: string
   accentColor: string // hex
   language: Language
+  maxPlayers: number
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
@@ -22,7 +23,8 @@ const DEFAULT_SETTINGS: AppSettings = {
   websiteUrl: 'https://myserver.com',
   announcementContent: 'Due to long-term inactivity, the server is now officially closed. The source files are available on GitHub.',
   accentColor: '#0078D4',
-  language: 'zh'
+  language: 'zh',
+  maxPlayers: 20
 }
 
 export function parseTimeToSeconds(timeStr: string): number {
@@ -165,10 +167,14 @@ export function useSimulatedApp() {
     isDarkMode,
     setIsDarkMode,
     playerCount,
+    setPlayerCount,
     isOnline,
+    setIsOnline,
     isEvacuating,
     timeSinceLastPlayer,
+    setTimeSinceLastPlayer,
     uptimeSeconds,
+    setUptimeSeconds,
     currentEvacStep,
     triggerManualEvac
   }

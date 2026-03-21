@@ -1,15 +1,39 @@
 "use client"
 
 import { SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
+import { Activity, Clock, Users, Shield } from "lucide-react"
 
 interface SettingsSheetProps {
   settings: AppSettings
   onUpdate: (settings: Partial<AppSettings>) => void
+  playerCount: number
+  setPlayerCount: (val: number) => void
+  uptimeSeconds: number
+  setUptimeSeconds: (val: number) => void
+  timeSinceLastPlayer: number
+  setTimeSinceLastPlayer: (val: number) => void
+  isOnline: boolean
+  setIsOnline: (val: boolean) => void
 }
 
-export function SettingsSheet({ settings }: SettingsSheetProps) {
+export function SettingsSheet({ 
+  settings, 
+  onUpdate, 
+  playerCount, 
+  setPlayerCount, 
+  uptimeSeconds, 
+  setUptimeSeconds,
+  timeSinceLastPlayer,
+  setTimeSinceLastPlayer,
+  isOnline,
+  setIsOnline
+}: SettingsSheetProps) {
   const t = translations[settings.language]
 
   return (
@@ -19,8 +43,100 @@ export function SettingsSheet({ settings }: SettingsSheetProps) {
         <SheetDescription>{t.settingsDesc}</SheetDescription>
       </SheetHeader>
       
-      <div className="flex flex-col items-center justify-center py-12 text-muted-foreground/50 italic text-sm border-2 border-dashed rounded-lg">
-        {/* 内容已移除 */}
+      <div className="space-y-6">
+        {/* Server Status Edit */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-bold text-sm text-primary">
+            <Activity className="h-4 w-4" />
+            {t.serverStatus}
+          </div>
+          
+          <div className="grid gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="uptime">{t.editData.uptime}</Label>
+              <Input 
+                id="uptime"
+                type="number"
+                value={uptimeSeconds}
+                onChange={(e) => setUptimeSeconds(parseInt(e.target.value) || 0)}
+              />
+            </div>
+            
+            <div className="flex gap-4">
+              <Button 
+                variant={isOnline ? "default" : "outline"} 
+                className="flex-1"
+                onClick={() => setIsOnline(true)}
+              >
+                {t.running}
+              </Button>
+              <Button 
+                variant={!isOnline ? "destructive" : "outline"} 
+                className="flex-1"
+                onClick={() => setIsOnline(false)}
+              >
+                {t.offline}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* Inactivity Edit */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-bold text-sm text-primary">
+            <Clock className="h-4 w-4" />
+            {t.shutdownCountdown}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="elapsed">{t.editData.elapsed}</Label>
+            <Input 
+              id="elapsed"
+              type="number"
+              value={timeSinceLastPlayer}
+              onChange={(e) => setTimeSinceLastPlayer(parseInt(e.target.value) || 0)}
+            />
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* Players Edit */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-bold text-sm text-primary">
+            <Users className="h-4 w-4" />
+            {t.onlinePlayers}
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="online">{t.editData.online}</Label>
+              <Input 
+                id="online"
+                type="number"
+                value={playerCount}
+                onChange={(e) => setPlayerCount(parseInt(e.target.value) || 0)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="max">{t.editData.max}</Label>
+              <Input 
+                id="max"
+                type="number"
+                value={settings.maxPlayers}
+                onChange={(e) => onUpdate({ maxPlayers: parseInt(e.target.value) || 0 })}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-6">
+          <p className="text-[10px] text-muted-foreground text-center italic">
+            Ender-Evac Simulation Debugger
+          </p>
+        </div>
       </div>
     </SheetContent>
   )

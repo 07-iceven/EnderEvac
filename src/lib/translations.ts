@@ -22,18 +22,24 @@ export const translations = {
     estimatedClosing: 'Starts Running Away In',
     configuration: 'Timer Configuration',
     configDesc: 'Setup the inactivity threshold for automated evacuation.',
-    settingsTitle: 'System Settings',
-    settingsDesc: 'Configure integration, push notifications, and appearance.',
+    settingsTitle: 'Home Data Editor',
+    settingsDesc: 'Manually override the live status data shown on the dashboard.',
+    editData: {
+      uptime: 'Uptime (seconds)',
+      elapsed: 'Inactivity Elapsed (seconds)',
+      online: 'Online Players',
+      max: 'Max Players'
+    },
     evacuationTitle: 'Evacuation Protocol Status',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
     steps: {
-      waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity.' },
-      closing: { title: 'Closing Minecraft Server', desc: 'Disconnecting services.' },
-      maintenance: { title: 'Maintenance Facade Active', desc: 'Deploying "Under Maintenance" facade.' },
-      uploading: { title: 'GitHub Archive', desc: 'Pushing files and open-sourcing.' },
-      notifying: { title: 'Sending Good News', desc: 'Broadcasting evacuation and source URL.' },
-      facade_shutdown: { title: 'Closing Maintenance Facade', desc: 'Removing temporary maintenance proxy.' },
-      shutdown: { title: 'Shutdown', desc: 'Saving electricity.' }
+      waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity' },
+      closing: { title: 'Closing Minecraft Server', desc: 'Disconnecting services' },
+      maintenance: { title: 'Maintenance Facade Active', desc: 'Deploying "Under Maintenance" facade' },
+      uploading: { title: 'GitHub Archive', desc: 'Pushing files and open-sourcing' },
+      notifying: { title: 'Sending Good News', desc: 'Broadcasting evacuation and source URL' },
+      facade_shutdown: { title: 'Closing Maintenance Facade', desc: 'Removing temporary maintenance proxy' },
+      shutdown: { title: 'Shutdown', desc: 'Saving electricity' }
     },
     tabs: {
       timer: 'Timer',
@@ -101,8 +107,14 @@ export const translations = {
     estimatedClosing: '预计跑路时间',
     configuration: '定时配置',
     configDesc: '设置自动跑路的不活跃时长阈值。',
-    settingsTitle: '系统设置',
-    settingsDesc: '配置集成、推送通知和外观。',
+    settingsTitle: '主页数据修改',
+    settingsDesc: '手动覆盖仪表盘上显示的实时状态数据。',
+    editData: {
+      uptime: '运行时长 (秒)',
+      elapsed: '已不活跃时间 (秒)',
+      online: '在线玩家',
+      max: '最高玩家数'
+    },
     evacuationTitle: '跑路协议状态',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
@@ -180,18 +192,24 @@ export const translations = {
     estimatedClosing: '避難開始まで',
     configuration: 'タイマー設定',
     configDesc: '自動シャットダウンの非アクティブしきい値を設定します。',
-    settingsTitle: 'システム設定',
-    settingsDesc: '連携、通知、外観を構成します。',
+    settingsTitle: 'データ編集',
+    settingsDesc: 'ダッシュボードに表示されるライブステータスデータを手動で上書きします。',
+    editData: {
+      uptime: '稼働時間 (秒)',
+      elapsed: '非アクティブ経過 (秒)',
+      online: 'オンライン',
+      max: '最大人数'
+    },
     evacuationTitle: '避難プロトコルステータス',
     evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
-      waiting: { title: '避難待ち', desc: 'プレイヤーの活動を監視中。' },
-      closing: { title: 'マインクラフト服务器を停止中', desc: 'サービスを切断します。' },
-      maintenance: { title: '偽装サーバーを維持中', desc: '「メンテナンス中」の画面を展開します。' },
-      uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します。' },
-      notifying: { title: '喜報を送信', desc: '避難メッセージとソースURLを通知します。' },
-      facade_shutdown: { title: '偽装サーバーを停止', desc: '一時的な「メンテナンス中」の表示を撤去します。' },
-      shutdown: { title: 'シャットダウン', desc: '節電します。' }
+      waiting: { title: '避難待ち', desc: 'プレイヤーの活動を監視中' },
+      closing: { title: 'マインクラフト服务器を停止中', desc: 'サービスを切断します' },
+      maintenance: { title: '偽装サーバーを維持中', desc: '「メンテナンス中」の画面を展開します' },
+      uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します' },
+      notifying: { title: '喜報を送信', desc: '避難メッセージとソースURLを通知します' },
+      facade_shutdown: { title: '偽装サーバーを停止', desc: '一時的な「メンテナンス中」の表示を撤去します' },
+      shutdown: { title: '关机', desc: '節電します' }
     },
     tabs: {
       timer: 'タイマー',
@@ -233,7 +251,7 @@ export const translations = {
     toasts: {
       inputRequired: '入力が必要です',
       inputRequiredDesc: '非アクティブしきい値を入力してください',
-      invalidUnit: '無効な単位が検出されました',
+      invalidUnit: '無効な单位が検出されました',
       invalidUnitDesc: '「{{part}}」は無効です。s, m, h, d を使用してください。',
       configUpdated: '设定が正常に更新されました。'
     }

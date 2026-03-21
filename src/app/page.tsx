@@ -20,10 +20,14 @@ export default function Home() {
     isDarkMode, 
     setIsDarkMode, 
     playerCount, 
+    setPlayerCount,
     isOnline, 
+    setIsOnline,
     isEvacuating,
     timeSinceLastPlayer,
+    setTimeSinceLastPlayer,
     uptimeSeconds,
+    setUptimeSeconds,
     currentEvacStep,
     triggerManualEvac
   } = useSimulatedApp()
@@ -68,7 +72,15 @@ export default function Home() {
               </SheetTrigger>
               <SettingsSheet 
                 settings={settings} 
-                onUpdate={updateSettings} 
+                onUpdate={updateSettings}
+                playerCount={playerCount}
+                setPlayerCount={setPlayerCount}
+                uptimeSeconds={uptimeSeconds}
+                setUptimeSeconds={setUptimeSeconds}
+                timeSinceLastPlayer={timeSinceLastPlayer}
+                setTimeSinceLastPlayer={setTimeSinceLastPlayer}
+                isOnline={isOnline}
+                setIsOnline={setIsOnline}
               />
             </Sheet>
           </div>
@@ -103,6 +115,7 @@ export default function Home() {
                   uptimeSeconds={uptimeSeconds}
                   thresholdSeconds={thresholdSeconds}
                   language={settings.language}
+                  maxPlayers={settings.maxPlayers}
                 />
               </section>
 

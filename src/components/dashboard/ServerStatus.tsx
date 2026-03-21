@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,9 +14,19 @@ interface ServerStatusProps {
   uptimeSeconds: number
   thresholdSeconds: number
   language: Language
+  maxPlayers: number
 }
 
-export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLastPlayer, uptimeSeconds, thresholdSeconds, language }: ServerStatusProps) {
+export function ServerStatus({ 
+  isOnline, 
+  isEvacuating, 
+  playerCount, 
+  timeSinceLastPlayer, 
+  uptimeSeconds, 
+  thresholdSeconds, 
+  language,
+  maxPlayers
+}: ServerStatusProps) {
   const t = translations[language]
   const progress = Math.min((timeSinceLastPlayer / thresholdSeconds) * 100, 100)
   const remainingSeconds = Math.max(thresholdSeconds - timeSinceLastPlayer, 0)
@@ -39,7 +48,6 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
   const statusText = isEvacuating ? t.evacuating : isOnline ? t.running : t.offline
   const statusColor = isEvacuating ? "text-yellow-500" : isOnline ? "text-green-500" : "text-red-500"
 
-  // Persistent alert if evacuation was triggered (is currently evacuating or already offline)
   const showEvacAlert = isEvacuating || !isOnline
 
   return (
@@ -107,7 +115,7 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
           <Users className="h-4 w-4 text-primary" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{playerCount} / 20</div>
+          <div className="text-2xl font-bold">{playerCount} / {maxPlayers}</div>
           <Badge variant={playerCount > 0 ? "default" : "secondary"} className="mt-1">
             {playerCount > 0 ? t.activeTraffic : t.idle}
           </Badge>
