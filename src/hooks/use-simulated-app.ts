@@ -63,6 +63,7 @@ export function useSimulatedApp() {
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
   const [uptimeSeconds, setUptimeSeconds] = useState(14 * 86400 + 2 * 3600)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     const savedSettings = localStorage.getItem('enderevac-settings')
@@ -120,17 +121,18 @@ export function useSimulatedApp() {
   useEffect(() => {
     if (playerCount > 0) {
       setTimeSinceLastPlayer(0)
-      // If in evacuation, stop it if a player joins (logical for simulation)
       if (isEvacuating) {
         setIsEvacuating(false)
       }
     }
-  }, [playerCount])
+  }, [playerCount, isEvacuating])
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // If paused, do not increment any timers
+      if (isPaused) return
+
       // Increment inactivity timer only if no players are online and server is online
-      // Also increment if evacuation is already in progress (even if playerCount is 0)
       if (isOnline && (playerCount === 0 || isEvacuating)) {
         setTimeSinceLastPlayer(prev => prev + 1)
       }
@@ -141,7 +143,7 @@ export function useSimulatedApp() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isOnline, playerCount, isEvacuating])
+  }, [isOnline, playerCount, isEvacuating, isPaused])
 
   useEffect(() => {
     const threshold = parseTimeToSeconds(settings.shutdownThreshold)
@@ -192,6 +194,7 @@ export function useSimulatedApp() {
     uptimeSeconds,
     setUptimeSeconds,
     currentEvacStep,
-    triggerManualEvac
+    triggerManualEvac,
+    setIsPaused
   }
 }

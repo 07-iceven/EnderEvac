@@ -29,7 +29,8 @@ export default function Home() {
     uptimeSeconds,
     setUptimeSeconds,
     currentEvacStep,
-    triggerManualEvac
+    triggerManualEvac,
+    setIsPaused
   } = useSimulatedApp()
 
   const t = translations[settings.language]
@@ -63,7 +64,7 @@ export default function Home() {
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">{t.subtitle}</h2>
           </div>
           <div className="flex items-center gap-2">
-            <Sheet>
+            <Sheet onOpenChange={setIsPaused}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="h-9 w-9">
                   <SettingsIcon className="h-4 w-4" />
