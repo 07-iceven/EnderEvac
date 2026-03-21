@@ -79,10 +79,7 @@ export function ServerStatus({
             </CardHeader>
             <CardContent className="space-y-6 py-10">
               <div className="flex flex-col items-center justify-center text-center">
-                <div className="text-xs font-bold text-destructive/70 uppercase tracking-[0.2em] mb-3">
-                  {t.estimatedClosing}
-                </div>
-                <div className="text-5xl md:text-7xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm">
+                <div className="text-5xl md:text-8xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm">
                   {!isOnline ? "0s" : formatFullTime(remainingSeconds)}
                 </div>
               </div>
