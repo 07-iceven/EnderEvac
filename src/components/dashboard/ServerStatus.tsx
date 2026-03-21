@@ -59,7 +59,7 @@ export function ServerStatus({
               <AlertTriangle className="h-24 w-24 text-destructive" />
             </div>
             <div className="z-10 flex flex-col items-center gap-3">
-              <Zap className={`h-8 w-8 text-destructive ${isEvacuating ? 'fill-destructive' : ''}`} />
+              < Zap className={`h-8 w-8 text-destructive ${isEvacuating ? 'fill-destructive' : ''}`} />
               <h3 className="text-4xl font-black text-destructive uppercase tracking-tighter text-center">
                 {isEvacuating ? t.evacuating : t.offline}
               </h3>
@@ -77,20 +77,18 @@ export function ServerStatus({
               </CardTitle>
               {progress > 80 && isOnline && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between items-end">
-                <div>
-                  <div className="text-2xl font-mono font-bold tracking-tighter">
-                    {formatFullTime(timeSinceLastPlayer)} / {formatFullTime(thresholdSeconds)}
-                  </div>
-                  <p className="text-xs text-muted-foreground">{t.inactivityThreshold}</p>
+            <CardContent className="space-y-6 py-10">
+              <div className="flex flex-col items-center justify-center text-center">
+                <div className="text-xs font-bold text-destructive/70 uppercase tracking-[0.2em] mb-3">
+                  {t.estimatedClosing}
                 </div>
-                <div className="text-right">
-                  <div className="text-xs font-semibold text-destructive uppercase">{t.estimatedClosing}</div>
-                  <div className="text-lg font-bold text-destructive">{!isOnline ? "0s" : formatFullTime(remainingSeconds)}</div>
+                <div className="text-5xl md:text-7xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm">
+                  {!isOnline ? "0s" : formatFullTime(remainingSeconds)}
                 </div>
               </div>
-              <Progress value={progress} className="h-2" />
+              <div className="px-4 md:px-16">
+                <Progress value={progress} className="h-2 opacity-80" />
+              </div>
             </CardContent>
           </>
         )}
