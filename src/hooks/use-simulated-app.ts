@@ -130,16 +130,16 @@ export function useSimulatedApp() {
 
     if (isEvacuating) {
       const evacSeconds = timeSinceLastPlayer - threshold
-      // Transition through steps every 5 seconds
-      const step = Math.min(Math.floor(evacSeconds / 5) + 1, 5)
+      // Transition through steps every 5 seconds (Total 7 steps: index 0 to 6)
+      const step = Math.min(Math.floor(evacSeconds / 5) + 1, 6)
       setCurrentEvacStep(step)
       
-      if (step === 5) {
+      if (step === 6) {
         setIsOnline(false)
         setIsEvacuating(false)
       }
     } else if (!isOnline) {
-      setCurrentEvacStep(5)
+      setCurrentEvacStep(6)
     } else {
       setCurrentEvacStep(0)
     }

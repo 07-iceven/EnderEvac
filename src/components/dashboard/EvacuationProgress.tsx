@@ -2,12 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Language, translations } from "@/lib/translations"
-import { CheckCircle2, Clock, ServerOff, Construction, Github, MessageSquare, Power, Loader2 } from "lucide-react"
+import { CheckCircle2, Clock, ServerOff, Construction, Github, MessageSquare, Power, Loader2, EyeOff } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface EvacuationProgressProps {
   language: Language
-  currentStep: number // 0 to 5
+  currentStep: number // 0 to 6
   evacuationTime?: number // seconds elapsed since evacuation started
 }
 
@@ -20,6 +20,7 @@ export function EvacuationProgress({ language, currentStep }: EvacuationProgress
     { key: 'maintenance', icon: Construction },
     { key: 'uploading', icon: Github },
     { key: 'notifying', icon: MessageSquare },
+    { key: 'facade_shutdown', icon: EyeOff },
     { key: 'shutdown', icon: Power },
   ]
 
