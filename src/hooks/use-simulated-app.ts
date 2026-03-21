@@ -217,16 +217,12 @@ export function useSimulatedApp() {
   }
 
   const resetSimulation = () => {
-    setPlayerCount(0)
     setIsOnline(true)
     setIsEvacuating(false)
     setTimeSinceLastPlayer(0)
     setUptimeSeconds(14 * 86400 + 2 * 3600)
     setCurrentEvacStep(0)
-    updateSettings({
-      maxPlayers: 20,
-      stepDurations: [5, 5, 5, 5, 5, 5]
-    })
+    // Removed reset of stepDurations and playerCount per user request
     toast({
       title: (translations as any)[settings.language].toasts.simulationReset
     })
