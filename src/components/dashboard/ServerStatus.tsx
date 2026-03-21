@@ -2,9 +2,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 import { Activity, Users, Clock, AlertTriangle, Zap } from "lucide-react"
 import { Language, translations } from "@/lib/translations"
+import { cn } from "@/lib/utils"
 
 interface ServerStatusProps {
   isOnline: boolean
@@ -52,49 +52,60 @@ export function ServerStatus({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className={`fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 ${showEvacAlert ? 'border-destructive/50 ring-2 ring-destructive/20' : ''}`}>
-        {showEvacAlert ? (
-          <div className={`relative h-full min-h-[140px] flex flex-col items-center justify-center p-6 ${isEvacuating ? 'bg-destructive/5 animate-pulse' : 'bg-destructive/10'}`}>
-            <div className="absolute top-2 right-2 opacity-20">
-              <AlertTriangle className="h-24 w-24 text-destructive" />
+      <Card className={cn(
+        "fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 relative",
+        showEvacAlert ? 'border-destructive/50 ring-2 ring-destructive/20' : ''
+      )}>
+        {/* Background Progress Layer */}
+        {!showEvacAlert && isOnline && (
+          <div 
+            className="absolute inset-0 bg-destructive/10 transition-all duration-1000 ease-linear z-0"
+            style={{ width: `${progress}%` }}
+          />
+        )}
+
+        <div className="relative z-10 h-full flex flex-col">
+          {showEvacAlert ? (
+            <div className={cn(
+              "relative h-full min-h-[200px] flex flex-col items-center justify-center p-6",
+              isEvacuating ? 'bg-destructive/5 animate-pulse' : 'bg-destructive/10'
+            )}>
+              <div className="absolute top-2 right-2 opacity-20">
+                <AlertTriangle className="h-24 w-24 text-destructive" />
+              </div>
+              <div className="z-10 flex flex-col items-center gap-3">
+                <Zap className={cn("h-8 w-8 text-destructive", isEvacuating ? 'fill-destructive' : '')} />
+                <h3 className="text-4xl font-black text-destructive uppercase tracking-tighter text-center">
+                  {isEvacuating ? t.evacuating : t.offline}
+                </h3>
+                <p className="text-sm font-bold text-destructive/70 tracking-widest uppercase">
+                  {isEvacuating ? "Protocol Active" : "Server Shutdown Completed"}
+                </p>
+              </div>
             </div>
-            <div className="z-10 flex flex-col items-center gap-3">
-              < Zap className={`h-8 w-8 text-destructive ${isEvacuating ? 'fill-destructive' : ''}`} />
-              <h3 className="text-4xl font-black text-destructive uppercase tracking-tighter text-center">
-                {isEvacuating ? t.evacuating : t.offline}
-              </h3>
-              <p className="text-sm font-bold text-destructive/70 tracking-widest uppercase">
-                {isEvacuating ? "Protocol Active" : "Server Shutdown Completed"}
-              </p>
-            </div>
-          </div>
-        ) : (
-          <>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                {t.shutdownCountdown}
-              </CardTitle>
-              {progress > 80 && isOnline && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
-            </CardHeader>
-            <CardContent className="space-y-6 py-10">
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="text-5xl md:text-8xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm">
+          ) : (
+            <>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  {t.shutdownCountdown}
+                </CardTitle>
+                {progress > 80 && isOnline && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col items-center justify-center py-12">
+                <div className="text-6xl md:text-9xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm">
                   {!isOnline ? "0s" : formatFullTime(remainingSeconds)}
                 </div>
-              </div>
-              <div className="px-4 md:px-16">
-                <Progress value={progress} className="h-2 opacity-80" />
-              </div>
-            </CardContent>
-          </>
-        )}
+              </CardContent>
+            </>
+          )}
+        </div>
       </Card>
 
       <Card className="fluent-glass col-span-1 md:col-span-1 lg:col-span-2">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">{t.serverStatus}</CardTitle>
-          <Activity className={`h-4 w-4 ${statusColor}`} />
+          <Activity className={cn("h-4 w-4", statusColor)} />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{statusText}</div>
