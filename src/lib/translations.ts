@@ -70,8 +70,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      privacy: 'Privacy Policy',
-      terms: 'Terms of Service'
+      source: 'Open Source'
     },
     toasts: {
       inputRequired: 'Input Required',
@@ -150,8 +149,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      privacy: '隐私政策',
-      terms: '服务条款'
+      source: '开源链接'
     },
     toasts: {
       inputRequired: '需要输入',
@@ -230,8 +228,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      privacy: 'プライバシーポリシー',
-      terms: '利用規約'
+      source: 'オープンソース'
     },
     toasts: {
       inputRequired: '入力が必要です',

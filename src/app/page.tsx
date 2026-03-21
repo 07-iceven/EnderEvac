@@ -128,8 +128,14 @@ export default function Home() {
         <footer className="border-t py-6 px-8 mt-auto flex justify-between items-center text-xs text-muted-foreground">
           <p>{t.footer.copy}</p>
           <div className="flex gap-4">
-            <a href="#" className="hover:underline">{t.footer.privacy}</a>
-            <a href="#" className="hover:underline">{t.footer.terms}</a>
+            <a 
+              href={settings.githubRepo} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:underline"
+            >
+              {t.footer.source}
+            </a>
           </div>
         </footer>
       </main>
