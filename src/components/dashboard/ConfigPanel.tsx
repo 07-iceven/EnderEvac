@@ -158,7 +158,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
               <TooltipProvider>
                 <div className="grid grid-cols-6 gap-2">
                   {accentColors.map((color) => (
-                    <Tooltip key={color.value}>
+                    <Tooltip key={color.value} delayDuration={100}>
                       <TooltipTrigger asChild>
                         <button
                           onClick={() => onUpdate({ accentColor: color.value })}
@@ -166,8 +166,12 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                           style={{ backgroundColor: color.value }}
                         />
                       </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{color.name[settings.language]}</p>
+                      <TooltipContent 
+                        side="top" 
+                        sideOffset={8} 
+                        className="text-[10px] px-2 py-1 h-auto min-w-0"
+                      >
+                        <p className="font-medium">{color.name[settings.language]}</p>
                       </TooltipContent>
                     </Tooltip>
                   ))}
