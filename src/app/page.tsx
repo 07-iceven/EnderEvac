@@ -42,13 +42,6 @@ export default function Home() {
             >
               {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
-            <Separator orientation="vertical" className="h-4 mx-2" />
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                <span className="text-xs font-bold">AD</span>
-              </div>
-              <span className="text-sm font-medium hidden sm:inline">Admin User</span>
-            </div>
           </div>
         </header>
 
