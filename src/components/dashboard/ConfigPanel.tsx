@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -95,29 +94,18 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
   }
 
   return (
-    <Card className="fluent-glass h-full">
-      <CardHeader>
-        <CardTitle>{t.configuration}</CardTitle>
-        <CardDescription>{t.configDesc}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="timer" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="timer" className="gap-2">
-              <Clock className="h-4 w-4" />
-              <span className="hidden sm:inline">{t.tabs.timer}</span>
-            </TabsTrigger>
-            <TabsTrigger value="theme" className="gap-2">
-              <Palette className="h-4 w-4" />
-              <span className="hidden sm:inline">{t.tabs.theme}</span>
-            </TabsTrigger>
-            <TabsTrigger value="language" className="gap-2">
-              <Languages className="h-4 w-4" />
-              <span className="hidden sm:inline">{t.tabs.language}</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="timer" className="space-y-4">
+    <div className="space-y-6">
+      {/* Timer Configuration Card */}
+      <Card className="fluent-glass">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Clock className="h-5 w-5 text-primary" />
+            {t.tabs.timer}
+          </CardTitle>
+          <CardDescription>{t.configDesc}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="threshold">{t.timer.label}</Label>
               <div className="flex gap-2">
@@ -141,13 +129,24 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                 {t.timer.hint}
               </p>
             </div>
-          </TabsContent>
+          </div>
+        </CardContent>
+      </Card>
 
-          <TabsContent value="theme" className="space-y-6">
+      {/* Theme / Appearance Card */}
+      <Card className="fluent-glass">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Palette className="h-5 w-5 text-primary" />
+            {t.tabs.theme}
+          </CardTitle>
+          <CardDescription>{t.theme.darkModeDesc}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label className="text-sm font-semibold">{t.theme.darkMode}</Label>
-                <p className="text-xs text-muted-foreground">{t.theme.darkModeDesc}</p>
               </div>
               <div className="flex items-center gap-2">
                 {isDarkMode ? <Moon className="h-4 w-4 text-primary" /> : <Sun className="h-4 w-4 text-yellow-500" />}
@@ -181,28 +180,37 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                 </div>
               </TooltipProvider>
             </div>
-          </TabsContent>
+          </div>
+        </CardContent>
+      </Card>
 
-          <TabsContent value="language" className="space-y-4">
-            <div className="space-y-2">
-              <Label>{t.language.label}</Label>
-              <Select 
-                value={settings.language} 
-                onValueChange={(val: Language) => onUpdate({ language: val })}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder={t.language.select} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="zh">简体中文 (Chinese)</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="ja">日本語 (Japanese)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+      {/* Language Selection Card */}
+      <Card className="fluent-glass">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Languages className="h-5 w-5 text-primary" />
+            {t.tabs.language}
+          </CardTitle>
+          <CardDescription>{t.language.label}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <Select 
+              value={settings.language} 
+              onValueChange={(val: Language) => onUpdate({ language: val })}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t.language.select} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="zh">简体中文 (Chinese)</SelectItem>
+                <SelectItem value="en">English</SelectItem>
+                <SelectItem value="ja">日本語 (Japanese)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
