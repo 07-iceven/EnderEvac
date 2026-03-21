@@ -69,7 +69,7 @@ export const translations = {
       select: 'Select Language'
     },
     footer: {
-      copy: '© 2024 Ender-Evac. Developed for April 1st Release.',
+      copy: '© 2026 Ender-Evac.',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service'
     },
@@ -149,7 +149,7 @@ export const translations = {
       select: '选择语言'
     },
     footer: {
-      copy: '© 2024 Ender-Evac. 专为 4月1日 发布开发。',
+      copy: '© 2026 Ender-Evac.',
       privacy: '隐私政策',
       terms: '服务条款'
     },
@@ -229,7 +229,7 @@ export const translations = {
       select: '言語を选択'
     },
     footer: {
-      copy: '© 2024 Ender-Evac. 4月1日リリースのために開発されました。',
+      copy: '© 2026 Ender-Evac.',
       privacy: 'プライバシーポリシー',
       terms: '利用規約'
     },
