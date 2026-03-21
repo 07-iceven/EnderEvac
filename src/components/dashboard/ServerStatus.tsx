@@ -53,8 +53,8 @@ export function ServerStatus({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <Card className={cn(
-        "fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 relative h-[320px] flex flex-col justify-center",
-        showEvacAlert ? 'border-destructive/50 ring-2 ring-destructive/20 bg-destructive/10' : 'bg-destructive/5'
+        "fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 relative min-h-[320px] flex flex-col justify-center",
+        showEvacAlert ? 'border-destructive/50 ring-2 ring-destructive/20 bg-destructive/10' : 'bg-destructive/[0.02]'
       )}>
         {/* Background Progress Layer */}
         {!showEvacAlert && isOnline && (
@@ -92,8 +92,8 @@ export function ServerStatus({
                 </CardTitle>
                 {progress > 80 && isOnline && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col items-center justify-center pb-8">
-                <div className="text-8xl md:text-9xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm select-none">
+              <CardContent className="flex-1 flex flex-col items-center justify-center py-6 px-4">
+                <div className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm select-none text-center break-words leading-tight max-w-full">
                   {formatFullTime(remainingSeconds)}
                 </div>
               </CardContent>
