@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useSimulatedApp } from "@/hooks/use-simulated-app"
@@ -27,8 +26,8 @@ export default function Home() {
       <aside className="w-64 border-r fluent-glass flex flex-col hidden lg:flex">
         <div className="p-6">
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold shadow-lg">M</div>
-            <h1 className="text-xl font-headline font-bold tracking-tight">MineDown</h1>
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold shadow-lg">E</div>
+            <h1 className="text-xl font-headline font-bold tracking-tight">Ender-Evac</h1>
           </div>
           
           <nav className="space-y-1">
@@ -122,7 +121,7 @@ export default function Home() {
         </div>
 
         <footer className="border-t py-6 px-8 flex justify-between items-center text-xs text-muted-foreground">
-          <p>© 2024 MineDown Automata. Developed for April 1st Release.</p>
+          <p>© 2024 Ender-Evac. Developed for April 1st Release.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:underline">Privacy Policy</a>
             <a href="#" className="hover:underline">Terms of Service</a>

@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from 'react'
@@ -40,11 +39,11 @@ export function useSimulatedApp() {
 
   // Initial load
   useEffect(() => {
-    const savedSettings = localStorage.getItem('minedown-settings')
+    const savedSettings = localStorage.getItem('enderevac-settings')
     if (savedSettings) {
       setSettings(JSON.parse(savedSettings))
     }
-    const savedTheme = localStorage.getItem('minedown-theme')
+    const savedTheme = localStorage.getItem('enderevac-theme')
     if (savedTheme === 'light') setIsDarkMode(false)
 
     addLog('System initialized. Waiting for player activity monitoring...', 'info')
@@ -58,7 +57,7 @@ export function useSimulatedApp() {
     } else {
       root.classList.remove('dark')
     }
-    localStorage.setItem('minedown-theme', isDarkMode ? 'dark' : 'light')
+    localStorage.setItem('enderevac-theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
   // Accent color effect
@@ -122,7 +121,7 @@ export function useSimulatedApp() {
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     const updated = { ...settings, ...newSettings }
     setSettings(updated)
-    localStorage.setItem('minedown-settings', JSON.stringify(updated))
+    localStorage.setItem('enderevac-settings', JSON.stringify(updated))
     addLog('Configuration updated successfully.', 'success')
   }
 
