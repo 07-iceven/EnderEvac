@@ -118,10 +118,18 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                   {t.timer.confirm}
                 </Button>
               </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mt-2">
-                <Info className="h-4 w-4 text-primary" />
-                <span>{t.timer.currentlyActive}: <strong className="text-foreground">{formatSeconds(totalSeconds)}</strong></span>
+              
+              {/* Enhanced Currently Active Display */}
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 border border-border/50 mt-4">
+                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Info className="h-4 w-4 text-primary" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground leading-none mb-1">{t.timer.currentlyActive}</span>
+                  <span className="text-lg font-mono font-bold text-foreground leading-none">{formatSeconds(totalSeconds)}</span>
+                </div>
               </div>
+
               <p className="text-xs text-muted-foreground leading-relaxed mt-2 italic">
                 {t.timer.hint}
               </p>
@@ -168,7 +176,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       </TooltipTrigger>
                       <TooltipContent 
                         side="top" 
-                        sideOffset={8} 
+                        sideOffset={12} 
                         className="text-[10px] px-2 py-1 h-auto min-w-0"
                       >
                         <p className="font-medium">{color.name[settings.language]}</p>
