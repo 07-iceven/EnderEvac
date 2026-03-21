@@ -4,8 +4,11 @@ import { useSimulatedApp, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { ServerStatus } from "@/components/dashboard/ServerStatus"
 import { EvacuationProgress } from "@/components/dashboard/EvacuationProgress"
 import { ConfigPanel } from "@/components/dashboard/ConfigPanel"
+import { SettingsSheet } from "@/components/dashboard/SettingsSheet"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
+import { Settings as SettingsIcon } from "lucide-react"
 import { translations } from "@/lib/translations"
 
 export default function Home() {
@@ -28,7 +31,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-body bg-background/50">
       <main className="flex flex-col min-w-0">
-        <header className="h-16 border-b fluent-glass flex items-center justify-between px-8 sticky top-0 z-10">
+        <header className="h-16 border-b fluent-glass flex items-center justify-between px-8 sticky top-0 z-50">
           <div className="flex items-center gap-4">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold shadow-lg">E</div>
             <h1 className="text-xl font-headline font-bold tracking-tight">{t.title}</h1>
@@ -36,7 +39,20 @@ export default function Home() {
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">{t.subtitle}</h2>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">{t.refresh}</Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <SettingsIcon className="h-4 w-4" />
+                  {t.settings}
+                </Button>
+              </SheetTrigger>
+              <SettingsSheet 
+                settings={settings} 
+                onUpdate={updateSettings} 
+                isDarkMode={isDarkMode} 
+                setIsDarkMode={setIsDarkMode} 
+              />
+            </Sheet>
           </div>
         </header>
 
@@ -68,16 +84,14 @@ export default function Home() {
             />
           </section>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-            <div className="xl:col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1">
               <ConfigPanel 
                 settings={settings} 
                 onUpdate={updateSettings} 
-                isDarkMode={isDarkMode}
-                setIsDarkMode={setIsDarkMode}
               />
             </div>
-            <div className="xl:col-span-2">
+            <div className="lg:col-span-2">
               <EvacuationProgress 
                 language={settings.language} 
                 currentStep={currentEvacStep} 
