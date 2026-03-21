@@ -49,8 +49,6 @@ export default function Home() {
               <SettingsSheet 
                 settings={settings} 
                 onUpdate={updateSettings} 
-                isDarkMode={isDarkMode} 
-                setIsDarkMode={setIsDarkMode} 
               />
             </Sheet>
           </div>
@@ -89,6 +87,8 @@ export default function Home() {
               <ConfigPanel 
                 settings={settings} 
                 onUpdate={updateSettings} 
+                isDarkMode={isDarkMode} 
+                setIsDarkMode={setIsDarkMode} 
               />
             </div>
             <div className="lg:col-span-2">
