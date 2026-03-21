@@ -54,36 +54,10 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="flex-1 p-8 space-y-8 max-w-7xl mx-auto w-full">
-          <section className="space-y-4">
-            <div className="flex justify-between items-end">
-              <div>
-                <h2 className="text-3xl font-headline font-bold">{t.dashboard}</h2>
-                <p className="text-muted-foreground">{t.dashboardDesc}</p>
-              </div>
-              <div className="flex gap-2">
-                <Button 
-                  onClick={triggerManualEvac} 
-                  disabled={isEvacuating || !isOnline}
-                  variant={isEvacuating ? "secondary" : "default"}
-                >
-                  {t.manualShutdown}
-                </Button>
-              </div>
-            </div>
-            
-            <ServerStatus 
-              isOnline={isOnline} 
-              isEvacuating={isEvacuating}
-              playerCount={playerCount} 
-              timeSinceLastPlayer={timeSinceLastPlayer} 
-              thresholdSeconds={thresholdSeconds}
-              language={settings.language}
-            />
-          </section>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1">
+        <div className="flex-1 p-8 max-w-7xl mx-auto w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            {/* Left Column: Configuration Cards */}
+            <div className="lg:col-span-1 space-y-8">
               <ConfigPanel 
                 settings={settings} 
                 onUpdate={updateSettings} 
@@ -91,7 +65,36 @@ export default function Home() {
                 setIsDarkMode={setIsDarkMode} 
               />
             </div>
-            <div className="lg:col-span-2">
+
+            {/* Right Column: Dashboard and Protocol Progress (Aligned vertically) */}
+            <div className="lg:col-span-2 space-y-8">
+              <section className="space-y-4">
+                <div className="flex justify-between items-end">
+                  <div>
+                    <h2 className="text-3xl font-headline font-bold">{t.dashboard}</h2>
+                    <p className="text-muted-foreground">{t.dashboardDesc}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={triggerManualEvac} 
+                      disabled={isEvacuating || !isOnline}
+                      variant={isEvacuating ? "secondary" : "default"}
+                    >
+                      {t.manualShutdown}
+                    </Button>
+                  </div>
+                </div>
+                
+                <ServerStatus 
+                  isOnline={isOnline} 
+                  isEvacuating={isEvacuating}
+                  playerCount={playerCount} 
+                  timeSinceLastPlayer={timeSinceLastPlayer} 
+                  thresholdSeconds={thresholdSeconds}
+                  language={settings.language}
+                />
+              </section>
+
               <EvacuationProgress 
                 language={settings.language} 
                 currentStep={currentEvacStep} 
