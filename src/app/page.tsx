@@ -6,7 +6,7 @@ import { LogViewer } from "@/components/dashboard/LogViewer"
 import { ConfigPanel } from "@/components/dashboard/ConfigPanel"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Sun, Moon, Github, Settings, LayoutDashboard, Database, HelpCircle } from "lucide-react"
+import { Sun, Moon, Github, Settings, LayoutDashboard, HelpCircle } from "lucide-react"
 
 export default function Home() {
   const { 
@@ -36,10 +36,6 @@ export default function Home() {
             <Button variant="ghost" className="w-full justify-start gap-3 bg-secondary/50">
               <LayoutDashboard className="h-4 w-4" />
               Dashboard
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3">
-              <Database className="h-4 w-4" />
-              Backups
             </Button>
             <Button variant="ghost" className="w-full justify-start gap-3">
               <Settings className="h-4 w-4" />
