@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -100,7 +100,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             <Clock className="h-5 w-5 text-primary" />
             {t.tabs.timer}
           </CardTitle>
-          <CardDescription>{t.configDesc}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -186,7 +185,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             <Languages className="h-5 w-5 text-primary" />
             {t.tabs.language}
           </CardTitle>
-          <CardDescription>{t.language.label}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-2">
