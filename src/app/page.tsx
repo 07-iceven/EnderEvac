@@ -6,7 +6,6 @@ import { LogViewer } from "@/components/dashboard/LogViewer"
 import { ConfigPanel } from "@/components/dashboard/ConfigPanel"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Sun, Moon } from "lucide-react"
 
 export default function Home() {
   const { 
@@ -34,14 +33,7 @@ export default function Home() {
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">Automata Control Center</h2>
           </div>
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="rounded-full"
-            >
-              {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
+            <Button variant="outline" size="sm">Refresh</Button>
           </div>
         </header>
 
@@ -53,7 +45,6 @@ export default function Home() {
                 <p className="text-muted-foreground">Monitor server status and automated shutdown tasks.</p>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline">Refresh</Button>
                 <Button>Manual Shutdown</Button>
               </div>
             </div>
@@ -68,7 +59,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <div className="xl:col-span-1">
-              <ConfigPanel settings={settings} onUpdate={updateSettings} />
+              <ConfigPanel 
+                settings={settings} 
+                onUpdate={updateSettings} 
+                isDarkMode={isDarkMode}
+                setIsDarkMode={setIsDarkMode}
+              />
             </div>
             <div className="xl:col-span-2">
               <LogViewer logs={logs} />

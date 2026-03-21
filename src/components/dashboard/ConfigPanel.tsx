@@ -7,16 +7,20 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Github, Megaphone, Timer, Palette, Info, Check } from "lucide-react"
+import { Switch } from "@/components/ui/switch"
+import { Separator } from "@/components/ui/separator"
+import { Github, Megaphone, Timer, Palette, Info, Check, Moon, Sun } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
 
 interface ConfigPanelProps {
   settings: AppSettings
   onUpdate: (settings: Partial<AppSettings>) => void
+  isDarkMode: boolean
+  setIsDarkMode: (val: boolean) => void
 }
 
-export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
+export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: ConfigPanelProps) {
   const { toast } = useToast()
   const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
 
@@ -193,9 +197,25 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
             </div>
           </TabsContent>
 
-          <TabsContent value="theme" className="space-y-4 pt-4">
-            <div className="space-y-2">
-              <Label>Primary Accent Color</Label>
+          <TabsContent value="theme" className="space-y-6 pt-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label className="text-base">Dark Mode</Label>
+                <p className="text-xs text-muted-foreground">Switch between light and dark themes.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {isDarkMode ? <Moon className="h-4 w-4 text-primary" /> : <Sun className="h-4 w-4 text-yellow-500" />}
+                <Switch 
+                  checked={isDarkMode} 
+                  onCheckedChange={setIsDarkMode} 
+                />
+              </div>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-3">
+              <Label className="text-base">Primary Accent Color</Label>
               <div className="flex flex-wrap gap-2">
                 {accentColors.map((color) => (
                   <button
