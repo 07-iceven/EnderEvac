@@ -27,6 +27,12 @@ export default function Home() {
 
   const t = translations[settings.language]
   const thresholdSeconds = parseTimeToSeconds(settings.shutdownThreshold)
+  
+  // Calculate elapsed time since evacuation protocol actually started
+  const evacuationStartTime = thresholdSeconds
+  const evacuationElapsed = isEvacuating || !isOnline 
+    ? Math.max(timeSinceLastPlayer - evacuationStartTime, 0) 
+    : 0
 
   return (
     <div className="min-h-screen font-body bg-background/50">
@@ -88,6 +94,7 @@ export default function Home() {
               <EvacuationProgress 
                 language={settings.language} 
                 currentStep={currentEvacStep} 
+                evacuationTime={evacuationElapsed}
               />
             </div>
 

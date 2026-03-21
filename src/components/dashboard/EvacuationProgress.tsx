@@ -3,14 +3,16 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Language, translations } from "@/lib/translations"
 import { CheckCircle2, Circle, Clock, ServerOff, Construction, Github, MessageSquare, Power, Loader2 } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 
 interface EvacuationProgressProps {
   language: Language
   currentStep: number // 0 to 5
+  evacuationTime?: number // seconds elapsed since evacuation started
 }
 
-export function EvacuationProgress({ language, currentStep }: EvacuationProgressProps) {
+export function EvacuationProgress({ language, currentStep, evacuationTime = 0 }: EvacuationProgressProps) {
   const t = translations[language]
 
   const steps = [
@@ -21,6 +23,16 @@ export function EvacuationProgress({ language, currentStep }: EvacuationProgress
     { key: 'notifying', icon: MessageSquare },
     { key: 'shutdown', icon: Power },
   ]
+
+  // Calculate sub-progress for the uploading step (step index 3)
+  // Each step takes 5 seconds in the simulation.
+  const stepDuration = 5
+  const uploadStepIndex = 3
+  
+  // Progress is calculated only when active
+  const uploadProgress = currentStep === uploadStepIndex 
+    ? Math.min(((evacuationTime % stepDuration) / stepDuration) * 100, 100)
+    : currentStep > uploadStepIndex ? 100 : 0
 
   return (
     <Card className="fluent-glass h-full flex flex-col">
@@ -55,7 +67,7 @@ export function EvacuationProgress({ language, currentStep }: EvacuationProgress
                     <Icon className="h-5 w-5" />
                   )}
                 </div>
-                <div className="flex flex-col justify-center">
+                <div className="flex flex-col justify-center flex-1">
                   <h3 className={cn(
                     "text-sm font-bold transition-colors",
                     isActive ? "text-primary" : isUpcoming ? "text-muted-foreground" : "text-foreground"
@@ -65,6 +77,17 @@ export function EvacuationProgress({ language, currentStep }: EvacuationProgress
                   <p className="text-xs text-muted-foreground mt-0.5">
                     {stepData.desc}
                   </p>
+                  
+                  {/* Progress bar for Uploading step */}
+                  {step.key === 'uploading' && (isActive || isCompleted) && (
+                    <div className="mt-3 space-y-1.5 max-w-[200px]">
+                      <div className="flex justify-between text-[10px] font-mono">
+                        <span className="text-muted-foreground">Uploading...</span>
+                        <span className="text-primary font-bold">{Math.round(uploadProgress)}%</span>
+                      </div>
+                      <Progress value={uploadProgress} className="h-1" />
+                    </div>
+                  )}
                 </div>
               </div>
             )
