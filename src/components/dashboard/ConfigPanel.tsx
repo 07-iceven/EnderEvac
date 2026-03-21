@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -62,7 +63,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     if (d > 0) parts.push(`${d}d`)
     if (h > 0) parts.push(`${h}h`)
     if (m > 0) parts.push(`${m}m`)
-    if (sec > 0 || parts.length === 0) parts.push(`${sec}s`)
+    parts.push(`${sec}s`)
     return parts.join(' ')
   }
 
