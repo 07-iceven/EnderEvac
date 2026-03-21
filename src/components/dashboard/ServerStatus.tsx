@@ -39,31 +39,8 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="fluent-glass">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium">{t.serverStatus}</CardTitle>
-          <Activity className={`h-4 w-4 ${statusColor}`} />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">{statusText}</div>
-          <p className="text-xs text-muted-foreground mt-1">{t.uptime}</p>
-        </CardContent>
-      </Card>
-
-      <Card className="fluent-glass">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium">{t.onlinePlayers}</CardTitle>
-          <Users className="h-4 w-4 text-primary" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">{playerCount} / 20</div>
-          <Badge variant={playerCount > 0 ? "default" : "secondary"} className="mt-1">
-            {playerCount > 0 ? t.activeTraffic : t.idle}
-          </Badge>
-        </CardContent>
-      </Card>
-
-      <Card className="fluent-glass col-span-1 md:col-span-2">
+      {/* Evacuation Countdown - Spans full width at the top */}
+      <Card className="fluent-glass col-span-1 md:col-span-2 lg:col-span-4">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium flex items-center gap-2">
             <Clock className="h-4 w-4" />
@@ -85,6 +62,32 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
             </div>
           </div>
           <Progress value={progress} className="h-2" />
+        </CardContent>
+      </Card>
+
+      {/* Server Status - Below countdown */}
+      <Card className="fluent-glass col-span-1 md:col-span-1 lg:col-span-2">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-sm font-medium">{t.serverStatus}</CardTitle>
+          <Activity className={`h-4 w-4 ${statusColor}`} />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">{statusText}</div>
+          <p className="text-xs text-muted-foreground mt-1">{t.uptime}</p>
+        </CardContent>
+      </Card>
+
+      {/* Online Players - Below countdown */}
+      <Card className="fluent-glass col-span-1 md:col-span-1 lg:col-span-2">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-sm font-medium">{t.onlinePlayers}</CardTitle>
+          <Users className="h-4 w-4 text-primary" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">{playerCount} / 20</div>
+          <Badge variant={playerCount > 0 ? "default" : "secondary"} className="mt-1">
+            {playerCount > 0 ? t.activeTraffic : t.idle}
+          </Badge>
         </CardContent>
       </Card>
     </div>
