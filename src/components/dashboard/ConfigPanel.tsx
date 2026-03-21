@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Separator } from "@/components/ui/separator"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Github, Megaphone, Timer, Palette, Info, Check, Moon, Sun } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
@@ -216,17 +217,24 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
 
             <div className="space-y-3">
               <Label className="text-base">Primary Accent Color</Label>
-              <div className="flex flex-wrap gap-2">
-                {accentColors.map((color) => (
-                  <button
-                    key={color.value}
-                    onClick={() => onUpdate({ accentColor: color.value })}
-                    className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${settings.accentColor === color.value ? 'border-foreground' : 'border-transparent'}`}
-                    style={{ backgroundColor: color.value }}
-                    title={color.name}
-                  />
-                ))}
-              </div>
+              <TooltipProvider>
+                <div className="flex flex-wrap gap-2">
+                  {accentColors.map((color) => (
+                    <Tooltip key={color.value}>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => onUpdate({ accentColor: color.value })}
+                          className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${settings.accentColor === color.value ? 'border-foreground' : 'border-transparent'}`}
+                          style={{ backgroundColor: color.value }}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{color.name}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
+              </TooltipProvider>
             </div>
           </TabsContent>
         </Tabs>
