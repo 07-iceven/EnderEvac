@@ -1,3 +1,16 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "server-bg",
+      "description": "Minecraft landscape background",
+      "imageUrl": "https://picsum.photos/seed/mc-server/1200/400",
+      "imageHint": "minecraft landscape"
+    },
+    {
+      "id": "app-logo",
+      "description": "Ender Evac Logo",
+      "imageUrl": "https://picsum.photos/seed/evac-exit-v3/512/512",
+      "imageHint": "green exit sign"
+    }
+  ]
 }

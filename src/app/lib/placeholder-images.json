@@ -1,4 +1,3 @@
-
 {
   "placeholderImages": [
     {
@@ -10,8 +9,8 @@
     {
       "id": "app-logo",
       "description": "Ender Evac Logo",
-      "imageUrl": "https://picsum.photos/seed/evac-logo/256/256",
-      "imageHint": "minecraft exit"
+      "imageUrl": "https://picsum.photos/seed/evac-exit-v3/512/512",
+      "imageHint": "green exit sign"
     }
   ]
 }

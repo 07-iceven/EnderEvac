@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useSimulatedApp, parseTimeToSeconds } from "@/hooks/use-simulated-app"
@@ -44,14 +43,14 @@ export default function Home() {
       <main className="flex flex-col min-w-0">
         <header className="h-16 border-b fluent-glass flex items-center justify-between px-8 sticky top-0 z-50">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-lg overflow-hidden shadow-lg border bg-white flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-lg overflow-hidden shadow-lg flex items-center justify-center shrink-0">
               {logoImage && (
                 <Image 
                   src={logoImage.imageUrl} 
                   alt="Logo" 
                   width={40} 
                   height={40}
-                  className="object-contain"
+                  className="object-cover"
                   data-ai-hint={logoImage.imageHint}
                 />
               )}
