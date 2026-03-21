@@ -60,14 +60,43 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
       return
     }
 
-    // Detect characters that are not digits, spaces, or s, m, h, d
-    const invalidChars = trimmed.match(/[^0-9\s-smhd]/gi)
-    if (invalidChars) {
-      const uniqueInvalids = Array.from(new Set(invalidChars))
+    // Pure number check (defaults to seconds)
+    if (/^\d+$/.test(trimmed)) {
+      onUpdate({ shutdownThreshold: trimmed })
+      return
+    }
+
+    // Strict validation for units
+    // We split by spaces and check each part (e.g., "1d", "12h")
+    const parts = trimmed.split(/\s+/)
+    const validUnits = ['s', 'm', 'h', 'd']
+    let isValid = true
+    let offendingPart = ""
+
+    for (const part of parts) {
+      // Each part must be digits followed by exactly ONE of the valid units
+      // Or just digits (which is handled by parseTimeToSeconds as seconds if it's the only thing)
+      const match = part.match(/^(\d+)([a-zA-Z]*)$/)
+      
+      if (!match) {
+        isValid = false
+        offendingPart = part
+        break
+      }
+
+      const unit = match[2].toLowerCase()
+      if (unit !== "" && !validUnits.includes(unit)) {
+        isValid = false
+        offendingPart = part
+        break
+      }
+    }
+
+    if (!isValid) {
       toast({
         variant: "destructive",
         title: "Invalid Unit Detected",
-        description: `Unsupported character(s): ${uniqueInvalids.join(', ')}. Use only s, m, h, or d.`,
+        description: `The part "${offendingPart}" is invalid. Please use s, m, h, or d.`,
       })
       return
     }
