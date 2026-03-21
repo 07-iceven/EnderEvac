@@ -28,7 +28,7 @@ export const translations = {
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
     steps: {
       waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity and idle threshold.' },
-      closing: { title: 'Closing Service Area', desc: 'Safely disconnecting remaining services.' },
+      closing: { title: 'Closing Minecraft Server', desc: 'Safely disconnecting remaining services.' },
       maintenance: { title: 'Maintenance Disguise', desc: 'Deploying "Under Maintenance" facade.' },
       uploading: { title: 'GitHub Archive', desc: 'Compressing and pushing world files to repository.' },
       notifying: { title: 'Community Notification', desc: 'Sending final messages to QQ and Website.' },
@@ -107,7 +107,7 @@ export const translations = {
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
       waiting: { title: '等待跑路', desc: '监控玩家活动和不活跃阈值。' },
-      closing: { title: '关闭服务区', desc: '安全断开所有剩余服务。' },
+      closing: { title: '关闭我的世界服务器', desc: '安全断开所有剩余服务。' },
       maintenance: { title: '伪装服务区维护中', desc: '部署“服务器维护”伪装。' },
       uploading: { title: '上传文件至 GitHub', desc: '压缩并推送世界文件至仓库。' },
       notifying: { title: '社区通知', desc: '向 QQ 群和网站发送最后消息。' },
@@ -186,7 +186,7 @@ export const translations = {
     evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
       waiting: { title: '避難待ち', desc: 'プレイヤーの活動としきい値を監視中。' },
-      closing: { title: 'サービスエリア闭锁', desc: '残りのサービスを安全に切断します。' },
+      closing: { title: 'マインクラフトサーバーを停止中', desc: '残りのサービスを安全に切断します。' },
       maintenance: { title: 'メンテナンス伪装', desc: '「メンテナンス中」の画面を展開します。' },
       uploading: { title: 'GitHub アーカイブ', desc: 'ファイルを圧縮してリポジトリにプッシュします。' },
       notifying: { title: 'コミュニティ通知', desc: 'QQグループとウェブサイトに最終メッセージを送信。' },
