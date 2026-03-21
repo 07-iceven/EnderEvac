@@ -27,13 +27,13 @@ export const translations = {
     evacuationTitle: 'Evacuation Protocol Status',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
     steps: {
-      waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity and idle threshold.' },
-      closing: { title: 'Closing Minecraft Server', desc: 'Safely disconnecting remaining services.' },
-      maintenance: { title: 'Maintenance Disguise', desc: 'Deploying "Under Maintenance" facade.' },
-      uploading: { title: 'GitHub Archive', desc: 'Compressing and pushing world files to repository.' },
-      notifying: { title: 'Sending Good News', desc: 'Broadcasting the successful migration and evacuation.' },
-      facade_shutdown: { title: 'Closing Maintenance Facade', desc: 'Decommissioning the temporary maintenance proxy.' },
-      shutdown: { title: 'Final Shutdown', desc: 'Decommissioning server instance.' }
+      waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity.' },
+      closing: { title: 'Closing Minecraft Server', desc: 'Disconnecting services.' },
+      maintenance: { title: 'Maintenance Facade Active', desc: 'Deploying "Under Maintenance" facade.' },
+      uploading: { title: 'GitHub Archive', desc: 'Pushing files and open-sourcing.' },
+      notifying: { title: 'Sending Good News', desc: 'Broadcasting evacuation and source URL.' },
+      facade_shutdown: { title: 'Closing Maintenance Facade', desc: 'Removing temporary maintenance proxy.' },
+      shutdown: { title: 'Shutdown', desc: 'Saving electricity.' }
     },
     tabs: {
       timer: 'Timer',
@@ -106,13 +106,13 @@ export const translations = {
     evacuationTitle: '跑路协议状态',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
-      waiting: { title: '等待跑路', desc: '监控玩家活动和不活跃阈值。' },
-      closing: { title: '关闭我的世界服务器', desc: '安全断开所有剩余服务。' },
-      maintenance: { title: '伪装服务区维护中', desc: '部署“服务器维护”伪装。' },
-      uploading: { title: '上传文件至 GitHub', desc: '压缩并推送世界文件至仓库。' },
-      notifying: { title: '发送喜报', desc: '广播跑路成功及数据迁移完成的消息。' },
-      facade_shutdown: { title: '关闭伪装服务器', desc: '撤除临时的“维护中”伪装代理。' },
-      shutdown: { title: '彻底关机', desc: '正式停用服务器实例。' }
+      waiting: { title: '等待跑路', desc: '监控玩家活动' },
+      closing: { title: '关闭我的世界服务器', desc: '断开服务' },
+      maintenance: { title: '伪装服务器维护中', desc: '部署“服务器维护”伪装' },
+      uploading: { title: '上传文件至GitHub', desc: '推送服务器文件至仓库并开源' },
+      notifying: { title: '发送喜报', desc: '广播跑路消息及开源地址' },
+      facade_shutdown: { title: '关闭伪装服务器', desc: '撤除临时的“维护中”伪装' },
+      shutdown: { title: '关机', desc: '节约用电' }
     },
     tabs: {
       timer: '定时器',
@@ -185,13 +185,13 @@ export const translations = {
     evacuationTitle: '避難プロトコルステータス',
     evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
-      waiting: { title: '避難待ち', desc: 'プレイヤーの活動としきい値を監視中。' },
-      closing: { title: 'マインクラフト服务器を停止中', desc: '残りのサービスを安全に切断します。' },
-      maintenance: { title: 'メンテナンス伪装', desc: '「メンテナンス中」の画面を展開します。' },
-      uploading: { title: 'GitHub アーカイブ', desc: 'ファイルを压缩してリポジトリにプッシュします。' },
-      notifying: { title: '喜報を送信', desc: '避難の成功とデータの移行完了を通知します。' },
-      facade_shutdown: { title: '偽装サーバーを停止', desc: '一時的なメンテナンスプロキシを停止します。' },
-      shutdown: { title: '最终シャットダウン', desc: 'サーバーインスタンスを正式に停止します。' }
+      waiting: { title: '避難待ち', desc: 'プレイヤーの活動を監視中。' },
+      closing: { title: 'マインクラフト服务器を停止中', desc: 'サービスを切断します。' },
+      maintenance: { title: '偽装サーバーを維持中', desc: '「メンテナンス中」の画面を展開します。' },
+      uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します。' },
+      notifying: { title: '喜報を送信', desc: '避難メッセージとソースURLを通知します。' },
+      facade_shutdown: { title: '偽装サーバーを停止', desc: '一時的な「メンテナンス中」の表示を撤去します。' },
+      shutdown: { title: 'シャットダウン', desc: '節電します。' }
     },
     tabs: {
       timer: 'タイマー',
