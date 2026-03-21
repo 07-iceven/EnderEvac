@@ -131,10 +131,13 @@ export function useSimulatedApp() {
         e.preventDefault()
         setIsManualPaused(prev => {
           const next = !prev
-          toast({
-            title: next ? "模拟已暂停" : "模拟已恢复",
-            description: next ? "按下 F1 键可恢复计时" : "按下 F1 键可再次暂停",
-          })
+          // Execute side effect after a tick to avoid React rendering warnings
+          setTimeout(() => {
+            toast({
+              title: next ? "模拟已暂停" : "模拟已恢复",
+              description: next ? "按下 F1 键可恢复计时" : "按下 F1 键可再次暂停",
+            })
+          }, 0)
           return next
         })
       }
