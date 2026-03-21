@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -38,21 +39,24 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
   const statusText = isEvacuating ? t.evacuating : isOnline ? t.running : t.offline
   const statusColor = isEvacuating ? "text-yellow-500" : isOnline ? "text-green-500" : "text-red-500"
 
+  // Persistent alert if evacuation was triggered (is currently evacuating or already offline)
+  const showEvacAlert = isEvacuating || !isOnline
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className={`fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 ${isEvacuating ? 'border-destructive/50 ring-2 ring-destructive/20' : ''}`}>
-        {isEvacuating ? (
-          <div className="relative h-full min-h-[140px] flex flex-col items-center justify-center p-6 bg-destructive/5 animate-pulse">
+      <Card className={`fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 ${showEvacAlert ? 'border-destructive/50 ring-2 ring-destructive/20' : ''}`}>
+        {showEvacAlert ? (
+          <div className={`relative h-full min-h-[140px] flex flex-col items-center justify-center p-6 ${isEvacuating ? 'bg-destructive/5 animate-pulse' : 'bg-destructive/10'}`}>
             <div className="absolute top-2 right-2 opacity-20">
               <AlertTriangle className="h-24 w-24 text-destructive" />
             </div>
             <div className="z-10 flex flex-col items-center gap-3">
-              <Zap className="h-8 w-8 text-destructive fill-destructive" />
+              <Zap className={`h-8 w-8 text-destructive ${isEvacuating ? 'fill-destructive' : ''}`} />
               <h3 className="text-4xl font-black text-destructive uppercase tracking-tighter text-center">
-                {t.evacuating}
+                {isEvacuating ? t.evacuating : t.offline}
               </h3>
               <p className="text-sm font-bold text-destructive/70 tracking-widest uppercase">
-                Protocol Active
+                {isEvacuating ? "Protocol Active" : "Server Shutdown Completed"}
               </p>
             </div>
           </div>
