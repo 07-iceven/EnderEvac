@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Info, Check, Clock, Palette, Languages, Moon, Sun } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
@@ -194,20 +193,28 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
           <CardDescription>{t.language.label}</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            <Select 
-              value={settings.language} 
-              onValueChange={(val: Language) => onUpdate({ language: val })}
+          <div className="grid grid-cols-3 gap-2">
+            <Button 
+              variant={settings.language === 'zh' ? 'default' : 'outline'}
+              onClick={() => onUpdate({ language: 'zh' })}
+              className="w-full text-xs sm:text-sm"
             >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={t.language.select} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="zh">简体中文 (Chinese)</SelectItem>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="ja">日本語 (Japanese)</SelectItem>
-              </SelectContent>
-            </Select>
+              简体中文
+            </Button>
+            <Button 
+              variant={settings.language === 'ja' ? 'default' : 'outline'}
+              onClick={() => onUpdate({ language: 'ja' })}
+              className="w-full text-xs sm:text-sm"
+            >
+              日本語
+            </Button>
+            <Button 
+              variant={settings.language === 'en' ? 'default' : 'outline'}
+              onClick={() => onUpdate({ language: 'en' })}
+              className="w-full text-xs sm:text-sm"
+            >
+              English
+            </Button>
           </div>
         </CardContent>
       </Card>
