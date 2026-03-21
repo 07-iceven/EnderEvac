@@ -49,9 +49,9 @@ export function parseTimeToSeconds(timeStr: string): number {
     hasMatch = true
   }
 
-  // Fallback for pure numbers (assume hours for legacy support)
-  if (!hasMatch && /^\d+$/.test(timeStr)) {
-    return parseInt(timeStr) * 3600
+  // Fallback for pure numbers (now default to seconds per user request)
+  if (!hasMatch && /^\d+$/.test(timeStr.trim())) {
+    return parseInt(timeStr.trim()) * 1
   }
 
   return totalSeconds || 86400 // default to 24h if invalid

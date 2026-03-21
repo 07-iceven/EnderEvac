@@ -1,11 +1,13 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Github, Megaphone, Timer, Palette, Info } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Github, Megaphone, Timer, Palette, Info, Check } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
@@ -15,6 +17,12 @@ interface ConfigPanelProps {
 }
 
 export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
+  const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
+
+  useEffect(() => {
+    setLocalThreshold(settings.shutdownThreshold)
+  }, [settings.shutdownThreshold])
+
   const accentColors = [
     { name: 'Default Blue', value: '#0078D4' },
     { name: 'Cyan', value: '#00B7C3' },
@@ -38,6 +46,10 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
     return parts.join(' ')
   }
 
+  const handleApplyThreshold = () => {
+    onUpdate({ shutdownThreshold: localThreshold })
+  }
+
   return (
     <Card className="fluent-glass">
       <CardHeader>
@@ -56,19 +68,27 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
           <TabsContent value="timer" className="space-y-4 pt-4">
             <div className="space-y-2">
               <Label htmlFor="threshold">Inactivity Threshold</Label>
-              <Input
-                id="threshold"
-                value={settings.shutdownThreshold}
-                onChange={(e) => onUpdate({ shutdownThreshold: e.target.value })}
-                placeholder="e.g. 1d 12h 30m"
-              />
+              <div className="flex gap-2">
+                <Input
+                  id="threshold"
+                  value={localThreshold}
+                  onChange={(e) => setLocalThreshold(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleApplyThreshold()}
+                  placeholder="e.g. 1d 12h 30m"
+                  className="flex-1"
+                />
+                <Button onClick={handleApplyThreshold} size="sm" className="gap-2">
+                  <Check className="h-4 w-4" />
+                  Confirm
+                </Button>
+              </div>
               <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                 <Info className="h-3 w-3" />
-                <span>Currently set to: <strong>{formatSeconds(totalSeconds)}</strong></span>
+                <span>Currently active: <strong>{formatSeconds(totalSeconds)}</strong></span>
               </div>
               <p className="text-xs text-muted-foreground">
                 Supported units: <strong>s</strong> (seconds), <strong>m</strong> (minutes), <strong>h</strong> (hours), <strong>d</strong> (days). 
-                Example: <code>1d 2h</code> or <code>30m</code>.
+                If no unit is specified, <strong>seconds (s)</strong> are used.
               </p>
             </div>
             
@@ -76,7 +96,7 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
               <Timer className="h-4 w-4" />
               <AlertTitle className="text-xs font-bold">Logic Explanation</AlertTitle>
               <AlertDescription className="text-xs">
-                The server automatically powers down once the idle timer matches this value.
+                The server automatically powers down once the idle timer matches the confirmed value.
               </AlertDescription>
             </Alert>
           </TabsContent>
