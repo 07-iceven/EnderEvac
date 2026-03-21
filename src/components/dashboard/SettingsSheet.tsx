@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
-import { Activity, Clock, Users, Timer } from "lucide-react"
+import { Activity, Clock, Users, Timer, RotateCcw } from "lucide-react"
 
 interface SettingsSheetProps {
   settings: AppSettings
@@ -20,6 +20,7 @@ interface SettingsSheetProps {
   setTimeSinceLastPlayer: (val: number) => void
   isOnline: boolean
   setIsOnline: (val: boolean) => void
+  resetSimulation: () => void
 }
 
 export function SettingsSheet({ 
@@ -32,7 +33,8 @@ export function SettingsSheet({
   timeSinceLastPlayer,
   setTimeSinceLastPlayer,
   isOnline,
-  setIsOnline
+  setIsOnline,
+  resetSimulation
 }: SettingsSheetProps) {
   const t = translations[settings.language]
 
@@ -170,7 +172,20 @@ export function SettingsSheet({
           </div>
         </div>
 
-        <div className="pt-6">
+        <Separator />
+
+        <div className="pt-2">
+          <Button 
+            variant="outline" 
+            className="w-full gap-2 text-destructive hover:text-destructive hover:bg-destructive/5"
+            onClick={resetSimulation}
+          >
+            <RotateCcw className="h-4 w-4" />
+            {t.editData.reset}
+          </Button>
+        </div>
+
+        <div className="pt-4">
           <p className="text-[10px] text-muted-foreground text-center italic">
             Ender-Evac Simulation Debugger
           </p>

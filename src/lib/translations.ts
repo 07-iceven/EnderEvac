@@ -29,7 +29,8 @@ export const translations = {
       elapsed: 'Inactivity Elapsed (Seconds)',
       online: 'Online Players',
       max: 'Max Players',
-      stepDurations: 'Step Durations (Seconds)'
+      stepDurations: 'Step Durations (Seconds)',
+      reset: 'Reset Simulation Data'
     },
     evacuationTitle: 'Evacuation Progress',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
@@ -84,7 +85,8 @@ export const translations = {
       inputRequiredDesc: 'Please enter an inactivity threshold.',
       invalidUnit: 'Invalid Unit Detected',
       invalidUnitDesc: 'The part "{{part}}" is invalid. Please use s, m, h, or d.',
-      configUpdated: 'Configuration updated successfully.'
+      configUpdated: 'Configuration updated successfully.',
+      simulationReset: 'Simulation data has been reset.'
     }
   },
   zh: {
@@ -115,7 +117,8 @@ export const translations = {
       elapsed: '已不活跃时间 (秒)',
       online: '在线玩家',
       max: '最多玩家数',
-      stepDurations: '各步骤用时 (秒)'
+      stepDurations: '各步骤用时 (秒)',
+      reset: '重置模拟数据'
     },
     evacuationTitle: '跑路进程',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
@@ -170,7 +173,8 @@ export const translations = {
       inputRequiredDesc: '请输入不活跃阈值。',
       invalidUnit: '检测到无效单位',
       invalidUnitDesc: '部分 "{{part}}" 无效。请使用 s, m, h 或 d。',
-      configUpdated: '配置已成功更新。'
+      configUpdated: '配置已成功更新。',
+      simulationReset: '模拟数据已重置。'
     }
   },
   ja: {
@@ -193,7 +197,7 @@ export const translations = {
     inactivityThreshold: '非アクティブしきい値',
     estimatedClosing: '避難予定時刻',
     configuration: 'タイマー設定',
-    configDesc: '自動避難のための非アクティブしきい値を設定します。',
+    configDesc: '自动避難のための非アクティブしきい値を設定します。',
     settingsTitle: 'ホームデータ編集',
     settingsDesc: '稼働時間、カウントダウン、プレイヤー数などのリアルタイムデータを手動で上書きします。',
     editData: {
@@ -201,10 +205,11 @@ export const translations = {
       elapsed: '非アクティブ経過 (秒)',
       online: 'オンライン',
       max: '最大人数',
-      stepDurations: 'ステップ所要時間 (秒)'
+      stepDurations: 'ステップ所要時間 (秒)',
+      reset: 'シミュレーションデータをリセット'
     },
     evacuationTitle: '避難プロセス',
-    evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
+    evacuationDesc: '自动サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
       waiting: { title: '避難待ち', desc: 'プレイヤーのアクティビティを監視中' },
       closing: { title: 'Minecraftサーバーを停止', desc: 'サービスを切断します' },
@@ -256,7 +261,8 @@ export const translations = {
       inputRequiredDesc: '非アクティブしきい値を入力してください。',
       invalidUnit: '無効な単位が検出されました',
       invalidUnitDesc: '「{{part}}」は无効です。s, m, h, d を使用してください。',
-      configUpdated: '設定が正常に更新されました。'
+      configUpdated: '設定が正常に更新されました。',
+      simulationReset: 'シミュレーションデータがリセットされました。'
     }
   }
 };

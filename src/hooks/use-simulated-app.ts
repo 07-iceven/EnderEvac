@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { Language } from '@/lib/translations'
+import { Language, translations } from '@/lib/translations'
 import { useToast } from '@/hooks/use-toast'
 
 export interface AppSettings {
@@ -68,7 +68,6 @@ export function useSimulatedApp() {
   const [uptimeSeconds, setUptimeSeconds] = useState(14 * 86400 + 2 * 3600)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
   
-  // Separate pause states to avoid conflicts
   const [isManualPaused, setIsManualPaused] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   
@@ -126,18 +125,15 @@ export function useSimulatedApp() {
     root.classList.add('custom-accent-vars')
   }, [settings.accentColor])
 
-  // Global F1 Key Listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'F1') {
         e.preventDefault()
         setIsManualPaused(prev => {
           const next = !prev
-          // Execute side effect after a tick to avoid React rendering warnings
           setTimeout(() => {
             toast({
-              title: next ? "模拟已暂停" : "模拟已恢复",
-              description: next ? "按下 F1 键可恢复计时" : "按下 F1 键可再次暂停",
+              title: next ? (settings.language === 'zh' ? "模拟已暂停" : "Simulation Paused") : (settings.language === 'zh' ? "模拟已恢复" : "Simulation Resumed"),
             })
           }, 0)
           return next
@@ -146,9 +142,8 @@ export function useSimulatedApp() {
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [toast])
+  }, [toast, settings.language])
 
-  // Logic: Reset timer when players join
   useEffect(() => {
     if (playerCount > 0) {
       setTimeSinceLastPlayer(0)
@@ -160,10 +155,8 @@ export function useSimulatedApp() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // If paused by either settings or manual F1, do not increment any timers
       if (isPaused) return
 
-      // Increment inactivity timer only if no players are online and server is online
       if (isOnline && (playerCount === 0 || isEvacuating)) {
         setTimeSinceLastPlayer(prev => prev + 1)
       }
@@ -186,7 +179,6 @@ export function useSimulatedApp() {
     if (isEvacuating) {
       const evacSeconds = timeSinceLastPlayer - threshold
       
-      // Calculate current step based on cumulative durations
       let cumulative = 0
       let step = 0
       for (let i = 0; i < settings.stepDurations.length; i++) {
@@ -224,6 +216,22 @@ export function useSimulatedApp() {
     setIsEvacuating(true)
   }
 
+  const resetSimulation = () => {
+    setPlayerCount(0)
+    setIsOnline(true)
+    setIsEvacuating(false)
+    setTimeSinceLastPlayer(0)
+    setUptimeSeconds(14 * 86400 + 2 * 3600)
+    setCurrentEvacStep(0)
+    updateSettings({
+      maxPlayers: 20,
+      stepDurations: [5, 5, 5, 5, 5, 5]
+    })
+    toast({
+      title: (translations as any)[settings.language].toasts.simulationReset
+    })
+  }
+
   return {
     settings,
     updateSettings,
@@ -240,6 +248,7 @@ export function useSimulatedApp() {
     setUptimeSeconds,
     currentEvacStep,
     triggerManualEvac,
+    resetSimulation,
     isPaused,
     isManualPaused,
     setIsSettingsOpen

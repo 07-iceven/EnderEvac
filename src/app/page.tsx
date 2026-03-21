@@ -30,6 +30,7 @@ export default function Home() {
     setUptimeSeconds,
     currentEvacStep,
     triggerManualEvac,
+    resetSimulation,
     isPaused,
     setIsSettingsOpen
   } = useSimulatedApp()
@@ -87,6 +88,7 @@ export default function Home() {
                 setTimeSinceLastPlayer={setTimeSinceLastPlayer}
                 isOnline={isOnline}
                 setIsOnline={setIsOnline}
+                resetSimulation={resetSimulation}
               />
             </Sheet>
           </div>
