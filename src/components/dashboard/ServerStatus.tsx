@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Activity, Users, Clock, AlertTriangle } from "lucide-react"
+import { Activity, Users, Clock, AlertTriangle, Zap } from "lucide-react"
 import { Language, translations } from "@/lib/translations"
 
 interface ServerStatusProps {
@@ -40,29 +40,48 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Evacuation Countdown - Spans full width at the top */}
-      <Card className="fluent-glass col-span-1 md:col-span-2 lg:col-span-4">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            {t.shutdownCountdown}
-          </CardTitle>
-          {progress > 80 && isOnline && !isEvacuating && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex justify-between items-end">
-            <div>
-              <div className="text-2xl font-mono font-bold tracking-tighter">
-                {formatFullTime(timeSinceLastPlayer)} / {formatFullTime(thresholdSeconds)}
-              </div>
-              <p className="text-xs text-muted-foreground">{t.inactivityThreshold}</p>
+      <Card className={`fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 ${isEvacuating ? 'border-destructive/50 ring-2 ring-destructive/20' : ''}`}>
+        {isEvacuating ? (
+          <div className="relative h-full min-h-[140px] flex flex-col items-center justify-center p-6 bg-destructive/5 animate-pulse">
+            <div className="absolute top-2 right-2 opacity-20">
+              <AlertTriangle className="h-24 w-24 text-destructive" />
             </div>
-            <div className="text-right">
-              <div className="text-xs font-semibold text-destructive uppercase">{t.estimatedClosing}</div>
-              <div className="text-lg font-bold text-destructive">{isEvacuating || !isOnline ? "0s" : formatFullTime(remainingSeconds)}</div>
+            <div className="z-10 flex flex-col items-center gap-3">
+              <Zap className="h-8 w-8 text-destructive fill-destructive" />
+              <h3 className="text-4xl font-black text-destructive uppercase tracking-tighter text-center">
+                {t.evacuating}
+              </h3>
+              <p className="text-sm font-bold text-destructive/70 tracking-widest uppercase">
+                Protocol Active
+              </p>
             </div>
           </div>
-          <Progress value={progress} className="h-2" />
-        </CardContent>
+        ) : (
+          <>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                {t.shutdownCountdown}
+              </CardTitle>
+              {progress > 80 && isOnline && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex justify-between items-end">
+                <div>
+                  <div className="text-2xl font-mono font-bold tracking-tighter">
+                    {formatFullTime(timeSinceLastPlayer)} / {formatFullTime(thresholdSeconds)}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{t.inactivityThreshold}</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs font-semibold text-destructive uppercase">{t.estimatedClosing}</div>
+                  <div className="text-lg font-bold text-destructive">{!isOnline ? "0s" : formatFullTime(remainingSeconds)}</div>
+                </div>
+              </div>
+              <Progress value={progress} className="h-2" />
+            </CardContent>
+          </>
+        )}
       </Card>
 
       {/* Server Status - Below countdown */}
