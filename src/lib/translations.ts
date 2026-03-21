@@ -5,8 +5,8 @@ export const translations = {
     title: 'Ender-Evac',
     subtitle: 'Automata Control Center',
     dashboard: 'Dashboard',
-    dashboardDesc: 'Monitor server status and automated shutdown tasks.',
-    manualShutdown: 'Manual Shutdown',
+    dashboardDesc: 'Monitor server status and automated evacuation tasks.',
+    manualShutdown: 'Trigger Evacuation',
     refresh: 'Refresh',
     serverStatus: 'Server Status',
     running: 'Running',
@@ -20,6 +20,16 @@ export const translations = {
     estimatedClosing: 'Estimated Closing In',
     configuration: 'Configuration',
     configDesc: 'Setup automated shutdown and notification parameters.',
+    evacuationTitle: 'Evacuation Protocol Status',
+    evacuationDesc: 'Visual progress of the automated server termination sequence.',
+    steps: {
+      waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity and idle threshold.' },
+      closing: { title: 'Closing Service Area', desc: 'Safely disconnecting remaining services.' },
+      maintenance: { title: 'Maintenance Disguise', desc: 'Deploying "Under Maintenance" facade.' },
+      uploading: { title: 'GitHub Archive', desc: 'Compressing and pushing world files to repository.' },
+      notifying: { title: 'Community Notification', desc: 'Sending final messages to QQ and Website.' },
+      shutdown: { title: 'Final Shutdown', desc: 'Decommissioning server instance.' }
+    },
     tabs: {
       timer: 'Timer',
       github: 'GitHub',
@@ -53,10 +63,6 @@ export const translations = {
       label: 'System Language',
       select: 'Select Language'
     },
-    log: {
-      title: 'Simulated Action Log',
-      initializing: 'Initializing monitoring systems...'
-    },
     footer: {
       copy: '© 2024 Ender-Evac. Developed for April 1st Release.',
       privacy: 'Privacy Policy',
@@ -75,7 +81,7 @@ export const translations = {
     subtitle: '自动控制中心',
     dashboard: '仪表盘',
     dashboardDesc: '监控服务器状态和自动关机任务。',
-    manualShutdown: '手动关机',
+    manualShutdown: '立即跑路',
     refresh: '刷新',
     serverStatus: '服务器状态',
     running: '运行中',
@@ -89,6 +95,16 @@ export const translations = {
     estimatedClosing: '预计关闭时间',
     configuration: '配置',
     configDesc: '设置自动关机和通知参数。',
+    evacuationTitle: '跑路协议状态',
+    evacuationDesc: '自动服务器终止序列的可视化进度。',
+    steps: {
+      waiting: { title: '等待跑路', desc: '监控玩家活动和不活跃阈值。' },
+      closing: { title: '关闭服务区', desc: '安全断开所有剩余服务。' },
+      maintenance: { title: '伪装服务区维护中', desc: '部署“服务器维护”伪装。' },
+      uploading: { title: '上传文件至 GitHub', desc: '压缩并推送世界文件至仓库。' },
+      notifying: { title: '社区通知', desc: '向 QQ 群和网站发送最后消息。' },
+      shutdown: { title: '彻底关机', desc: '正式停用服务器实例。' }
+    },
     tabs: {
       timer: '定时器',
       github: 'GitHub',
@@ -122,10 +138,6 @@ export const translations = {
       label: '系统语言',
       select: '选择语言'
     },
-    log: {
-      title: '模拟操作日志',
-      initializing: '正在初始化监控系统...'
-    },
     footer: {
       copy: '© 2024 Ender-Evac. 专为 4月1日 发布开发。',
       privacy: '隐私政策',
@@ -144,9 +156,9 @@ export const translations = {
     subtitle: 'オートマタコントロールセンター',
     dashboard: 'ダッシュボード',
     dashboardDesc: 'サーバーの状態と自動シャットダウンタスクを監視します。',
-    manualShutdown: '手動シャットダウン',
+    manualShutdown: '即時避難',
     refresh: '更新',
-    serverStatus: 'サーバー状態',
+    serverStatus: 'サーバー状态',
     running: '実行中',
     offline: 'オフライン',
     uptime: '稼働時間: 14日 2時間',
@@ -158,6 +170,16 @@ export const translations = {
     estimatedClosing: '予定終了時刻',
     configuration: '設定',
     configDesc: '自動シャットダウンと通知パラメータを設定します。',
+    evacuationTitle: '避難プロトコルステータス',
+    evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
+    steps: {
+      waiting: { title: '避難待ち', desc: 'プレイヤーの活動としきい値を監視中。' },
+      closing: { title: 'サービスエリア閉鎖', desc: '残りのサービスを安全に切断します。' },
+      maintenance: { title: 'メンテナンス偽装', desc: '「メンテナンス中」の画面を展開します。' },
+      uploading: { title: 'GitHub アーカイブ', desc: 'ファイルを圧縮してリポジトリにプッシュします。' },
+      notifying: { title: 'コミュニティ通知', desc: 'QQグループとウェブサイトに最終メッセージを送信。' },
+      shutdown: { title: '最終シャットダウン', desc: 'サーバーインスタンスを正式に停止します。' }
+    },
     tabs: {
       timer: 'タイマー',
       github: 'GitHub',
@@ -188,12 +210,8 @@ export const translations = {
       accentColor: 'メインアクセントカラー'
     },
     language: {
-      label: 'システム言語',
+      label: 'システム语言',
       select: '言語を選択'
-    },
-    log: {
-      title: 'シミュレートされたアクションログ',
-      initializing: '監視システムを初期化中...'
     },
     footer: {
       copy: '© 2024 Ender-Evac. 4月1日リリースのために開発されました。',

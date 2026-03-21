@@ -2,7 +2,7 @@
 
 import { useSimulatedApp, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { ServerStatus } from "@/components/dashboard/ServerStatus"
-import { LogViewer } from "@/components/dashboard/LogViewer"
+import { EvacuationProgress } from "@/components/dashboard/EvacuationProgress"
 import { ConfigPanel } from "@/components/dashboard/ConfigPanel"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -14,10 +14,11 @@ export default function Home() {
     updateSettings, 
     isDarkMode, 
     setIsDarkMode, 
-    logs, 
     playerCount, 
     isOnline, 
-    timeSinceLastPlayer 
+    timeSinceLastPlayer,
+    currentEvacStep,
+    triggerManualEvac
   } = useSimulatedApp()
 
   const t = translations[settings.language]
@@ -46,7 +47,7 @@ export default function Home() {
                 <p className="text-muted-foreground">{t.dashboardDesc}</p>
               </div>
               <div className="flex gap-2">
-                <Button>{t.manualShutdown}</Button>
+                <Button onClick={triggerManualEvac}>{t.manualShutdown}</Button>
               </div>
             </div>
             
@@ -69,7 +70,10 @@ export default function Home() {
               />
             </div>
             <div className="xl:col-span-2">
-              <LogViewer logs={logs} language={settings.language} />
+              <EvacuationProgress 
+                language={settings.language} 
+                currentStep={currentEvacStep} 
+              />
             </div>
           </div>
         </div>

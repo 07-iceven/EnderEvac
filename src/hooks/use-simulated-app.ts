@@ -14,13 +14,6 @@ export interface AppSettings {
   language: Language
 }
 
-export interface LogEntry {
-  id: string
-  timestamp: string
-  message: string
-  type: 'info' | 'warning' | 'error' | 'success'
-}
-
 const DEFAULT_SETTINGS: AppSettings = {
   shutdownThreshold: '24h',
   githubRepo: 'https://github.com/YourName/MinecraftServer-Backup',
@@ -62,10 +55,10 @@ export function parseTimeToSeconds(timeStr: string): number {
 export function useSimulatedApp() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS)
   const [isDarkMode, setIsDarkMode] = useState(true)
-  const [logs, setLogs] = useState<LogEntry[]>([])
   const [playerCount, setPlayerCount] = useState(0)
   const [isOnline, setIsOnline] = useState(true)
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
+  const [currentEvacStep, setCurrentEvacStep] = useState(0)
 
   useEffect(() => {
     const savedSettings = localStorage.getItem('enderevac-settings')
@@ -82,8 +75,6 @@ export function useSimulatedApp() {
     }
     const savedTheme = localStorage.getItem('enderevac-theme')
     if (savedTheme === 'light') setIsDarkMode(false)
-
-    addLog('System initialized. Waiting for player activity monitoring...', 'info')
   }, [])
 
   useEffect(() => {
@@ -124,37 +115,44 @@ export function useSimulatedApp() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeSinceLastPlayer(prev => prev + 1)
-      
-      if (Math.random() > 0.99) {
-        const events = [
-          'Checking player status via RCON...',
-          'Monitoring network traffic: No packets from clients.',
-          'GitHub API connectivity verified.',
-          'Website ping: OK.',
-          'QQ Group bot status: Connected.'
-        ]
-        addLog(events[Math.floor(Math.random() * events.length)], 'info')
-      }
     }, 1000)
 
     return () => clearInterval(interval)
   }, [])
 
-  const addLog = (message: string, type: LogEntry['type']) => {
-    const newLog: LogEntry = {
-      id: Math.random().toString(36).substr(2, 9),
-      timestamp: new Date().toLocaleTimeString(),
-      message,
-      type
+  // Simulate step changes based on countdown progress or manual triggers
+  useEffect(() => {
+    const threshold = parseTimeToSeconds(settings.shutdownThreshold)
+    const progress = (timeSinceLastPlayer / threshold)
+    
+    // Simple logic: mapping countdown progress to steps 0-5
+    // but usually evac only starts at the very end.
+    // Let's say step 0 is "waiting".
+    if (progress > 1) {
+      setIsOnline(false)
+      setCurrentEvacStep(5) // Shutdown
+    } else if (progress > 0.95) {
+      setCurrentEvacStep(4) // Notifying
+    } else if (progress > 0.90) {
+      setCurrentEvacStep(3) // Uploading
+    } else if (progress > 0.85) {
+      setCurrentEvacStep(2) // Maintenance
+    } else if (progress > 0.80) {
+      setCurrentEvacStep(1) // Closing
+    } else {
+      setCurrentEvacStep(0) // Waiting
     }
-    setLogs(prev => [newLog, ...prev].slice(0, 50))
-  }
+  }, [timeSinceLastPlayer, settings.shutdownThreshold])
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     const updated = { ...settings, ...newSettings }
     setSettings(updated)
     localStorage.setItem('enderevac-settings', JSON.stringify(updated))
-    addLog('Configuration updated successfully.', 'success')
+  }
+
+  const triggerManualEvac = () => {
+    // Jump to closing step
+    setTimeSinceLastPlayer(parseTimeToSeconds(settings.shutdownThreshold) * 0.81)
   }
 
   return {
@@ -162,10 +160,10 @@ export function useSimulatedApp() {
     updateSettings,
     isDarkMode,
     setIsDarkMode,
-    logs,
     playerCount,
     isOnline,
     timeSinceLastPlayer,
-    addLog
+    currentEvacStep,
+    triggerManualEvac
   }
 }
