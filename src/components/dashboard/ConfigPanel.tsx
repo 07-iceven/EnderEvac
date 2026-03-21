@@ -7,9 +7,10 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Github, Megaphone, Timer, Palette, Info, Check } from "lucide-react"
+import { Github, Megaphone, Timer, Palette, Info, Check, AlertCircle } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { useToast } from "@/hooks/use-toast"
 
 interface ConfigPanelProps {
   settings: AppSettings
@@ -17,6 +18,7 @@ interface ConfigPanelProps {
 }
 
 export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
+  const { toast } = useToast()
   const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
 
   useEffect(() => {
@@ -47,7 +49,30 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
   }
 
   const handleApplyThreshold = () => {
-    onUpdate({ shutdownThreshold: localThreshold })
+    const trimmed = localThreshold.trim()
+    
+    if (!trimmed) {
+      toast({
+        variant: "destructive",
+        title: "Input Required",
+        description: "Please enter an inactivity threshold.",
+      })
+      return
+    }
+
+    // Detect characters that are not digits, spaces, or s, m, h, d
+    const invalidChars = trimmed.match(/[^0-9\s-smhd]/gi)
+    if (invalidChars) {
+      const uniqueInvalids = Array.from(new Set(invalidChars))
+      toast({
+        variant: "destructive",
+        title: "Invalid Unit Detected",
+        description: `Unsupported character(s): ${uniqueInvalids.join(', ')}. Use only s, m, h, or d.`,
+      })
+      return
+    }
+
+    onUpdate({ shutdownThreshold: trimmed })
   }
 
   return (
