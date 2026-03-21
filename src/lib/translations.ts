@@ -108,18 +108,18 @@ export const translations = {
     configuration: '定时配置',
     configDesc: '设置自动跑路的不活跃时长阈值。',
     settingsTitle: '主页数据修改',
-    settingsDesc: '手动覆盖仪表盘上显示的实时状态数据。',
+    settingsDesc: '修改主页实时数据，包括运行时长、已倒计时时间、在线玩家与最多玩家数量',
     editData: {
       uptime: '运行时长 (秒)',
       elapsed: '已不活跃时间 (秒)',
       online: '在线玩家',
-      max: '最高玩家数'
+      max: '最多玩家数'
     },
     evacuationTitle: '跑路协议状态',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
       waiting: { title: '等待跑路', desc: '监控玩家活动' },
-      closing: { title: '关闭我的世界服务器', desc: '断开服务' },
+      closing: { title: '关闭 Minecraft 服务器', desc: '断开服务' },
       maintenance: { title: '伪装服务器维护中', desc: '部署“服务器维护”伪装' },
       uploading: { title: '上传文件至GitHub', desc: '推送服务器文件至仓库并开源' },
       notifying: { title: '发送喜报', desc: '广播跑路消息及开源地址' },
@@ -175,7 +175,7 @@ export const translations = {
     title: 'Ender-Evac',
     subtitle: 'オートマタコントロールセンター',
     dashboard: 'ダッシュボード',
-    dashboardDesc: 'サーバーの状態と自動避難タスクを監視します。',
+    dashboardDesc: 'サーバーの状態と自动避难タスクを監視します。',
     manualShutdown: '即时避难',
     refresh: '更新',
     settings: '設定',
@@ -184,14 +184,14 @@ export const translations = {
     evacuating: '避難中...',
     offline: 'オフライン',
     uptime: '稼働時間',
-    onlinePlayers: 'オンラインプレイヤー',
+    onlinePlayers: '在线プレイヤー',
     activeTraffic: 'アクティブ',
     idle: 'アイドル',
     shutdownCountdown: '避難カウントダウン',
     inactivityThreshold: '非アクティブ期間のしきい値',
-    estimatedClosing: '避難開始まで',
+    estimatedClosing: '避難开始まで',
     configuration: 'タイマー設定',
-    configDesc: '自動シャットダウンの非アクティブしきい値を設定します。',
+    configDesc: '自动シャットダウンの非アクティブしきい値を设定します。',
     settingsTitle: '数据编辑',
     settingsDesc: 'ダッシュボードに表示されるライブステータスデータを手動で上書きします。',
     editData: {
@@ -201,10 +201,10 @@ export const translations = {
       max: '最大人数'
     },
     evacuationTitle: '避難プロトコルステータス',
-    evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
+    evacuationDesc: '自动サーバー终了シーケンスの視覚的な進行状況。',
     steps: {
       waiting: { title: '避難待ち', desc: 'プレイヤーの活動を監視中' },
-      closing: { title: 'マインクラフト服务器を停止中', desc: 'サービスを切断します' },
+      closing: { title: 'Minecraft服务器を停止中', desc: 'サービスを切断します' },
       maintenance: { title: '偽装サーバーを維持中', desc: '「メンテナンス中」の画面を展開します' },
       uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します' },
       notifying: { title: '喜報を送信', desc: '避難メッセージとソースURLを通知します' },
@@ -216,7 +216,7 @@ export const translations = {
       github: 'GitHub',
       announcements: 'プッシュ',
       theme: 'テーマ',
-      language: '言語'
+      language: '语言'
     },
     timer: {
       label: '非アクティブしきい値',
@@ -242,7 +242,7 @@ export const translations = {
     },
     language: {
       label: '系统语言',
-      select: '言語を选択'
+      select: '语言を选択'
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
