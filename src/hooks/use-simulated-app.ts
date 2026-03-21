@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 
 export interface AppSettings {
-  shutdownThreshold: number // hours
+  shutdownThreshold: string // e.g., "24h", "30m", "1d"
   githubRepo: string
   githubToken: string
   qqGroup: string
@@ -20,13 +20,41 @@ export interface LogEntry {
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
-  shutdownThreshold: 24,
+  shutdownThreshold: '24h',
   githubRepo: 'https://github.com/YourName/MinecraftServer-Backup',
   githubToken: 'ghp_************************************',
   qqGroup: '123456789',
   websiteUrl: 'https://myserver.com',
   announcementContent: 'Due to long-term inactivity, the server is now officially closed. The source files are available on GitHub.',
   accentColor: '#0078D4',
+}
+
+export function parseTimeToSeconds(timeStr: string): number {
+  const units: { [key: string]: number } = {
+    s: 1,
+    m: 60,
+    h: 3600,
+    d: 86400
+  }
+  
+  const regex = /(\d+)([smhd])/g
+  let totalSeconds = 0
+  let match
+  let hasMatch = false
+
+  while ((match = regex.exec(timeStr.toLowerCase())) !== null) {
+    const value = parseInt(match[1])
+    const unit = match[2]
+    totalSeconds += value * (units[unit] || 0)
+    hasMatch = true
+  }
+
+  // Fallback for pure numbers (assume hours for legacy support)
+  if (!hasMatch && /^\d+$/.test(timeStr)) {
+    return parseInt(timeStr) * 3600
+  }
+
+  return totalSeconds || 86400 // default to 24h if invalid
 }
 
 export function useSimulatedApp() {
@@ -41,7 +69,16 @@ export function useSimulatedApp() {
   useEffect(() => {
     const savedSettings = localStorage.getItem('enderevac-settings')
     if (savedSettings) {
-      setSettings(JSON.parse(savedSettings))
+      try {
+        const parsed = JSON.parse(savedSettings)
+        // Migration: convert numeric threshold to string if needed
+        if (typeof parsed.shutdownThreshold === 'number') {
+          parsed.shutdownThreshold = `${parsed.shutdownThreshold}h`
+        }
+        setSettings(parsed)
+      } catch (e) {
+        console.error("Failed to parse settings", e)
+      }
     }
     const savedTheme = localStorage.getItem('enderevac-theme')
     if (savedTheme === 'light') setIsDarkMode(false)
@@ -64,7 +101,6 @@ export function useSimulatedApp() {
   useEffect(() => {
     const root = window.document.documentElement
     const hex = settings.accentColor
-    // Convert hex to HSL for CSS variables
     const r = parseInt(hex.slice(1, 3), 16) / 255
     const g = parseInt(hex.slice(3, 5), 16) / 255
     const b = parseInt(hex.slice(5, 7), 16) / 255
@@ -92,7 +128,6 @@ export function useSimulatedApp() {
     const interval = setInterval(() => {
       setTimeSinceLastPlayer(prev => prev + 1)
       
-      // Randomly log "events"
       if (Math.random() > 0.99) {
         const events = [
           'Checking player status via RCON...',

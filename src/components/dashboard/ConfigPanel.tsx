@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -6,9 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Slider } from "@/components/ui/slider"
-import { Github, Megaphone, Timer, Palette } from "lucide-react"
-import { AppSettings } from "@/hooks/use-simulated-app"
+import { Github, Megaphone, Timer, Palette, Info } from "lucide-react"
+import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface ConfigPanelProps {
   settings: AppSettings
@@ -24,6 +23,20 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
     { name: 'Orange', value: '#D83B01' },
     { name: 'Green', value: '#107C10' },
   ]
+
+  const totalSeconds = parseTimeToSeconds(settings.shutdownThreshold)
+  const formatSeconds = (s: number) => {
+    const d = Math.floor(s / 86400)
+    const h = Math.floor((s % 86400) / 3600)
+    const m = Math.floor((s % 3600) / 60)
+    const sec = s % 60
+    const parts = []
+    if (d > 0) parts.push(`${d}d`)
+    if (h > 0) parts.push(`${h}h`)
+    if (m > 0) parts.push(`${m}m`)
+    if (sec > 0 || parts.length === 0) parts.push(`${sec}s`)
+    return parts.join(' ')
+  }
 
   return (
     <Card className="fluent-glass">
@@ -42,19 +55,30 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
 
           <TabsContent value="timer" className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label>Inactivity Threshold (Hours)</Label>
-              <div className="flex gap-4 items-center">
-                <Slider
-                  value={[settings.shutdownThreshold]}
-                  onValueChange={(val) => onUpdate({ shutdownThreshold: val[0] })}
-                  max={168}
-                  step={1}
-                  className="flex-1"
-                />
-                <span className="w-12 text-center font-bold">{settings.shutdownThreshold}h</span>
+              <Label htmlFor="threshold">Inactivity Threshold</Label>
+              <Input
+                id="threshold"
+                value={settings.shutdownThreshold}
+                onChange={(e) => onUpdate({ shutdownThreshold: e.target.value })}
+                placeholder="e.g. 1d 12h 30m"
+              />
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                <Info className="h-3 w-3" />
+                <span>Currently set to: <strong>{formatSeconds(totalSeconds)}</strong></span>
               </div>
-              <p className="text-xs text-muted-foreground">The server will automatically shut down if 0 players are detected for this duration.</p>
+              <p className="text-xs text-muted-foreground">
+                Supported units: <strong>s</strong> (seconds), <strong>m</strong> (minutes), <strong>h</strong> (hours), <strong>d</strong> (days). 
+                Example: <code>1d 2h</code> or <code>30m</code>.
+              </p>
             </div>
+            
+            <Alert className="bg-primary/5 border-primary/20">
+              <Timer className="h-4 w-4" />
+              <AlertTitle className="text-xs font-bold">Logic Explanation</AlertTitle>
+              <AlertDescription className="text-xs">
+                The server automatically powers down once the idle timer matches this value.
+              </AlertDescription>
+            </Alert>
           </TabsContent>
 
           <TabsContent value="github" className="space-y-4 pt-4">

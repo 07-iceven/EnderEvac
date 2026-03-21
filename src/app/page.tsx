@@ -1,6 +1,6 @@
 "use client"
 
-import { useSimulatedApp } from "@/hooks/use-simulated-app"
+import { useSimulatedApp, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { ServerStatus } from "@/components/dashboard/ServerStatus"
 import { LogViewer } from "@/components/dashboard/LogViewer"
 import { ConfigPanel } from "@/components/dashboard/ConfigPanel"
@@ -19,6 +19,8 @@ export default function Home() {
     isOnline, 
     timeSinceLastPlayer 
   } = useSimulatedApp()
+
+  const thresholdSeconds = parseTimeToSeconds(settings.shutdownThreshold)
 
   return (
     <div className="min-h-screen font-body flex">
@@ -106,7 +108,7 @@ export default function Home() {
               isOnline={isOnline} 
               playerCount={playerCount} 
               timeSinceLastPlayer={timeSinceLastPlayer} 
-              thresholdHours={settings.shutdownThreshold} 
+              thresholdSeconds={thresholdSeconds} 
             />
           </section>
 

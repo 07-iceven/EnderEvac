@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,11 +9,10 @@ interface ServerStatusProps {
   isOnline: boolean
   playerCount: number
   timeSinceLastPlayer: number
-  thresholdHours: number
+  thresholdSeconds: number
 }
 
-export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thresholdHours }: ServerStatusProps) {
-  const thresholdSeconds = thresholdHours * 3600
+export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thresholdSeconds }: ServerStatusProps) {
   const progress = Math.min((timeSinceLastPlayer / thresholdSeconds) * 100, 100)
   const remainingSeconds = Math.max(thresholdSeconds - timeSinceLastPlayer, 0)
 
@@ -23,6 +21,16 @@ export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thres
     const mins = Math.floor((seconds % 3600) / 60)
     const secs = seconds % 60
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  const formatFullTime = (seconds: number) => {
+    const d = Math.floor(seconds / 86400)
+    const h = Math.floor((seconds % 86400) / 3600)
+    const m = Math.floor((seconds % 3600) / 60)
+    const s = seconds % 60
+    
+    if (d > 0) return `${d}d ${h}h ${m}m`
+    return formatTime(seconds)
   }
 
   return (
@@ -63,13 +71,13 @@ export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thres
           <div className="flex justify-between items-end">
             <div>
               <div className="text-2xl font-mono font-bold tracking-tighter">
-                {formatTime(timeSinceLastPlayer)} / {formatTime(thresholdSeconds)}
+                {formatFullTime(timeSinceLastPlayer)} / {formatFullTime(thresholdSeconds)}
               </div>
               <p className="text-xs text-muted-foreground">Inactivity duration threshold</p>
             </div>
             <div className="text-right">
               <div className="text-xs font-semibold text-destructive uppercase">Estimated Closing In</div>
-              <div className="text-lg font-bold text-destructive">{formatTime(remainingSeconds)}</div>
+              <div className="text-lg font-bold text-destructive">{formatFullTime(remainingSeconds)}</div>
             </div>
           </div>
           <Progress value={progress} className="h-2" />
