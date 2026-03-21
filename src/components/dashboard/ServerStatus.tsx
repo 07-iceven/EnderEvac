@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Activity, Users, Clock, AlertTriangle, Zap, Pause } from "lucide-react"
+import { Activity, Users, Clock, AlertTriangle, Zap } from "lucide-react"
 import { Language, translations } from "@/lib/translations"
 import { cn } from "@/lib/utils"
 
@@ -93,27 +93,13 @@ export function ServerStatus({
                   {t.shutdownCountdown}
                 </CardTitle>
                 <div className="flex items-center gap-2">
-                  {isPaused && (
-                    <Badge variant="secondary" className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20 animate-pulse flex items-center gap-1">
-                      <Pause className="h-3 w-3" />
-                      PAUSED (F1)
-                    </Badge>
-                  )}
                   {progress > 80 && isOnline && !isPaused && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
                 </div>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col items-center justify-center py-6 px-4">
-                <div className={cn(
-                  "text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm select-none text-center break-words leading-tight max-w-full",
-                  isPaused && "opacity-50"
-                )}>
-                  {isPaused ? "PAUSED" : formatFullTime(remainingSeconds)}
+                <div className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm select-none text-center break-words leading-tight max-w-full">
+                  {formatFullTime(remainingSeconds)}
                 </div>
-                {isPaused && (
-                  <p className="text-xs text-muted-foreground mt-4 animate-bounce">
-                    按下 F1 恢复模拟计时
-                  </p>
-                )}
               </CardContent>
             </>
           )}
