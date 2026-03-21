@@ -25,12 +25,23 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
   }, [settings.shutdownThreshold])
 
   const accentColors = [
-    { name: 'Default Blue', value: '#0078D4' },
-    { name: 'Cyan', value: '#00B7C3' },
-    { name: 'Purple', value: '#8764B8' },
-    { name: 'Pink', value: '#E1306C' },
-    { name: 'Orange', value: '#D83B01' },
-    { name: 'Green', value: '#107C10' },
+    { name: '粉色', value: '#f6329a' },
+    { name: '呆样橙色', value: '#ff6900' },
+    { name: '红色', value: '#fb2c36' },
+    { name: '琥珀色', value: '#fe9a00' },
+    { name: '黄色', value: '#f0b100' },
+    { name: '青柠色', value: '#7ccf00' },
+    { name: '绿色', value: '#00c950' },
+    { name: '翡翠色', value: '#00bc7d' },
+    { name: '蓝绿色', value: '#00bba7' },
+    { name: '青色', value: '#00b8db' },
+    { name: '天蓝色', value: '#00a6f4' },
+    { name: '蓝色', value: '#2b7fff' },
+    { name: '靛蓝色', value: '#615fff' },
+    { name: '紫罗兰色', value: '#8e51ff' },
+    { name: '紫色', value: '#ad46ff' },
+    { name: '紫红色', value: '#e12afb' },
+    { name: '玫瑰色', value: '#ff2056' },
   ]
 
   const totalSeconds = parseTimeToSeconds(settings.shutdownThreshold)
@@ -59,13 +70,11 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
       return
     }
 
-    // Pure number check (defaults to seconds)
     if (/^\d+$/.test(trimmed)) {
       onUpdate({ shutdownThreshold: trimmed })
       return
     }
 
-    // Strict validation for units
     const parts = trimmed.split(/\s+/)
     const validUnits = ['s', 'm', 'h', 'd']
     let isValid = true
