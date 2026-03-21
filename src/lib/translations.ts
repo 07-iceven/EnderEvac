@@ -70,7 +70,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      source: 'Open Source'
+      source: 'GitHub URL'
     },
     toasts: {
       inputRequired: 'Input Required',
@@ -149,7 +149,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      source: '开源链接'
+      source: 'GitHub URL'
     },
     toasts: {
       inputRequired: '需要输入',
@@ -228,7 +228,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      source: 'オープンソース'
+      source: 'GitHub URL'
     },
     toasts: {
       inputRequired: '入力が必要です',
