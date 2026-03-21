@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { Language } from '@/lib/translations'
 
 export interface AppSettings {
   shutdownThreshold: string // e.g., "24h", "30m", "1d"
@@ -10,6 +11,7 @@ export interface AppSettings {
   websiteUrl: string
   announcementContent: string
   accentColor: string // hex
+  language: Language
 }
 
 export interface LogEntry {
@@ -27,6 +29,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   websiteUrl: 'https://myserver.com',
   announcementContent: 'Due to long-term inactivity, the server is now officially closed. The source files are available on GitHub.',
   accentColor: '#0078D4',
+  language: 'zh'
 }
 
 export function parseTimeToSeconds(timeStr: string): number {
@@ -49,12 +52,11 @@ export function parseTimeToSeconds(timeStr: string): number {
     hasMatch = true
   }
 
-  // Fallback for pure numbers (now default to seconds per user request)
   if (!hasMatch && /^\d+$/.test(timeStr.trim())) {
     return parseInt(timeStr.trim()) * 1
   }
 
-  return totalSeconds || 86400 // default to 24h if invalid
+  return totalSeconds || 86400
 }
 
 export function useSimulatedApp() {
@@ -63,19 +65,17 @@ export function useSimulatedApp() {
   const [logs, setLogs] = useState<LogEntry[]>([])
   const [playerCount, setPlayerCount] = useState(0)
   const [isOnline, setIsOnline] = useState(true)
-  const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0) // seconds
+  const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
 
-  // Initial load
   useEffect(() => {
     const savedSettings = localStorage.getItem('enderevac-settings')
     if (savedSettings) {
       try {
         const parsed = JSON.parse(savedSettings)
-        // Migration: convert numeric threshold to string if needed
         if (typeof parsed.shutdownThreshold === 'number') {
           parsed.shutdownThreshold = `${parsed.shutdownThreshold}h`
         }
-        setSettings(parsed)
+        setSettings({ ...DEFAULT_SETTINGS, ...parsed })
       } catch (e) {
         console.error("Failed to parse settings", e)
       }
@@ -86,7 +86,6 @@ export function useSimulatedApp() {
     addLog('System initialized. Waiting for player activity monitoring...', 'info')
   }, [])
 
-  // Theme effect
   useEffect(() => {
     const root = window.document.documentElement
     if (isDarkMode) {
@@ -97,7 +96,6 @@ export function useSimulatedApp() {
     localStorage.setItem('enderevac-theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
-  // Accent color effect
   useEffect(() => {
     const root = window.document.documentElement
     const hex = settings.accentColor
@@ -123,7 +121,6 @@ export function useSimulatedApp() {
     root.classList.add('custom-accent-vars')
   }, [settings.accentColor])
 
-  // Simulation loop
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeSinceLastPlayer(prev => prev + 1)

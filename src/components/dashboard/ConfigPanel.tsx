@@ -10,9 +10,11 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Separator } from "@/components/ui/separator"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Github, Megaphone, Timer, Palette, Info, Check, Moon, Sun } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Github, Megaphone, Timer, Palette, Info, Check, Moon, Sun, Languages } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
+import { translations, Language } from "@/lib/translations"
 
 interface ConfigPanelProps {
   settings: AppSettings
@@ -24,29 +26,30 @@ interface ConfigPanelProps {
 export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: ConfigPanelProps) {
   const { toast } = useToast()
   const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
+  const t = translations[settings.language]
 
   useEffect(() => {
     setLocalThreshold(settings.shutdownThreshold)
   }, [settings.shutdownThreshold])
 
   const accentColors = [
-    { name: '粉色', value: '#f6329a' },
-    { name: '呆样橙色', value: '#ff6900' },
-    { name: '红色', value: '#fb2c36' },
-    { name: '琥珀色', value: '#fe9a00' },
-    { name: '黄色', value: '#f0b100' },
-    { name: '青柠色', value: '#7ccf00' },
-    { name: '绿色', value: '#00c950' },
-    { name: '翡翠色', value: '#00bc7d' },
-    { name: '蓝绿色', value: '#00bba7' },
-    { name: '青色', value: '#00b8db' },
-    { name: '天蓝色', value: '#00a6f4' },
-    { name: '蓝色', value: '#2b7fff' },
-    { name: '靛蓝色', value: '#615fff' },
-    { name: '紫罗兰色', value: '#8e51ff' },
-    { name: '紫色', value: '#ad46ff' },
-    { name: '紫红色', value: '#e12afb' },
-    { name: '玫瑰色', value: '#ff2056' },
+    { name: { en: 'Pink', zh: '粉色', ja: 'ピンク' }, value: '#f6329a' },
+    { name: { en: 'Orange', zh: '呆样橙色', ja: 'オレンジ' }, value: '#ff6900' },
+    { name: { en: 'Red', zh: '红色', ja: 'レッド' }, value: '#fb2c36' },
+    { name: { en: 'Amber', zh: '琥珀色', ja: 'アンバー' }, value: '#fe9a00' },
+    { name: { en: 'Yellow', zh: '黄色', ja: 'イエロー' }, value: '#f0b100' },
+    { name: { en: 'Lime', zh: '青柠色', ja: 'ライム' }, value: '#7ccf00' },
+    { name: { en: 'Green', zh: '绿色', ja: 'グリーン' }, value: '#00c950' },
+    { name: { en: 'Emerald', zh: '翡翠色', ja: 'エメラルド' }, value: '#00bc7d' },
+    { name: { en: 'Teal', zh: '蓝绿色', ja: 'ティール' }, value: '#00bba7' },
+    { name: { en: 'Cyan', zh: '青色', ja: 'シアン' }, value: '#00b8db' },
+    { name: { en: 'Sky', zh: '天蓝色', ja: 'スカイ' }, value: '#00a6f4' },
+    { name: { en: 'Blue', zh: '蓝色', ja: 'ブルー' }, value: '#2b7fff' },
+    { name: { en: 'Indigo', zh: '靛蓝色', ja: 'インディゴ' }, value: '#615fff' },
+    { name: { en: 'Violet', zh: '紫罗兰色', ja: 'バイオレット' }, value: '#8e51ff' },
+    { name: { en: 'Purple', zh: '紫色', ja: 'パープル' }, value: '#ad46ff' },
+    { name: { en: 'Fuchsia', zh: '紫红色', ja: 'マゼンタ' }, value: '#e12afb' },
+    { name: { en: 'Rose', zh: '玫瑰色', ja: 'ローズ' }, value: '#ff2056' },
   ]
 
   const totalSeconds = parseTimeToSeconds(settings.shutdownThreshold)
@@ -69,8 +72,8 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     if (!trimmed) {
       toast({
         variant: "destructive",
-        title: "Input Required",
-        description: "Please enter an inactivity threshold.",
+        title: t.toasts.inputRequired,
+        description: t.toasts.inputRequiredDesc,
       })
       return
     }
@@ -105,8 +108,8 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     if (!isValid) {
       toast({
         variant: "destructive",
-        title: "Invalid Unit Detected",
-        description: `The part "${offendingPart}" is invalid. Please use s, m, h, or d.`,
+        title: t.toasts.invalidUnit,
+        description: t.toasts.invalidUnitDesc.replace("{{part}}", offendingPart),
       })
       return
     }
@@ -117,49 +120,49 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
   return (
     <Card className="fluent-glass">
       <CardHeader>
-        <CardTitle>Configuration</CardTitle>
-        <CardDescription>Setup automated shutdown and notification parameters.</CardDescription>
+        <CardTitle>{t.configuration}</CardTitle>
+        <CardDescription>{t.configDesc}</CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="timer" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="timer"><Timer className="h-4 w-4 mr-2" /> Timer</TabsTrigger>
-            <TabsTrigger value="github"><Github className="h-4 w-4 mr-2" /> GitHub</TabsTrigger>
-            <TabsTrigger value="announcements"><Megaphone className="h-4 w-4 mr-2" /> Push</TabsTrigger>
-            <TabsTrigger value="theme"><Palette className="h-4 w-4 mr-2" /> Theme</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="timer"><Timer className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">{t.tabs.timer}</span></TabsTrigger>
+            <TabsTrigger value="github"><Github className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">{t.tabs.github}</span></TabsTrigger>
+            <TabsTrigger value="announcements"><Megaphone className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">{t.tabs.announcements}</span></TabsTrigger>
+            <TabsTrigger value="theme"><Palette className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">{t.tabs.theme}</span></TabsTrigger>
+            <TabsTrigger value="language"><Languages className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">{t.tabs.language}</span></TabsTrigger>
           </TabsList>
 
           <TabsContent value="timer" className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="threshold">Inactivity Threshold</Label>
+              <Label htmlFor="threshold">{t.timer.label}</Label>
               <div className="flex gap-2">
                 <Input
                   id="threshold"
                   value={localThreshold}
                   onChange={(e) => setLocalThreshold(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleApplyThreshold()}
-                  placeholder="e.g. 1d 12h 30m"
+                  placeholder={t.timer.placeholder}
                   className="flex-1"
                 />
                 <Button onClick={handleApplyThreshold} size="sm" className="gap-2">
                   <Check className="h-4 w-4" />
-                  Confirm
+                  {t.timer.confirm}
                 </Button>
               </div>
               <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                 <Info className="h-3 w-3" />
-                <span>Currently active: <strong>{formatSeconds(totalSeconds)}</strong></span>
+                <span>{t.timer.currentlyActive}: <strong>{formatSeconds(totalSeconds)}</strong></span>
               </div>
               <p className="text-xs text-muted-foreground">
-                Supported units: <strong>s</strong> (seconds), <strong>m</strong> (minutes), <strong>h</strong> (hours), <strong>d</strong> (days). 
-                If no unit is specified, <strong>seconds (s)</strong> are used.
+                {t.timer.hint}
               </p>
             </div>
           </TabsContent>
 
           <TabsContent value="github" className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label>Repository URL</Label>
+              <Label>{t.github.repo}</Label>
               <Input 
                 value={settings.githubRepo} 
                 onChange={(e) => onUpdate({ githubRepo: e.target.value })}
@@ -167,29 +170,29 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
               />
             </div>
             <div className="space-y-2">
-              <Label>Access Token (Simulated)</Label>
+              <Label>{t.github.token}</Label>
               <Input 
                 type="password" 
                 value={settings.githubToken} 
                 onChange={(e) => onUpdate({ githubToken: e.target.value })}
               />
-              <p className="text-xs text-muted-foreground">Used to push server archive when shutting down.</p>
+              <p className="text-xs text-muted-foreground">{t.github.hint}</p>
             </div>
           </TabsContent>
 
           <TabsContent value="announcements" className="space-y-4 pt-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>QQ Group ID</Label>
+                <Label>{t.push.qq}</Label>
                 <Input value={settings.qqGroup} onChange={(e) => onUpdate({ qqGroup: e.target.value })} />
               </div>
               <div className="space-y-2">
-                <Label>Website URL</Label>
+                <Label>{t.push.website}</Label>
                 <Input value={settings.websiteUrl} onChange={(e) => onUpdate({ websiteUrl: e.target.value })} />
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Shutdown Message</Label>
+              <Label>{t.push.message}</Label>
               <Textarea 
                 className="min-h-[100px]" 
                 value={settings.announcementContent}
@@ -201,8 +204,8 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
           <TabsContent value="theme" className="space-y-6 pt-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label className="text-base">Dark Mode</Label>
-                <p className="text-xs text-muted-foreground">Switch between light and dark themes.</p>
+                <Label className="text-base">{t.theme.darkMode}</Label>
+                <p className="text-xs text-muted-foreground">{t.theme.darkModeDesc}</p>
               </div>
               <div className="flex items-center gap-2">
                 {isDarkMode ? <Moon className="h-4 w-4 text-primary" /> : <Sun className="h-4 w-4 text-yellow-500" />}
@@ -216,7 +219,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             <Separator />
 
             <div className="space-y-3">
-              <Label className="text-base">Primary Accent Color</Label>
+              <Label className="text-base">{t.theme.accentColor}</Label>
               <TooltipProvider>
                 <div className="flex flex-wrap gap-2">
                   {accentColors.map((color) => (
@@ -229,12 +232,31 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                         />
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>{color.name}</p>
+                        <p>{color.name[settings.language]}</p>
                       </TooltipContent>
                     </Tooltip>
                   ))}
                 </div>
               </TooltipProvider>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="language" className="space-y-4 pt-4">
+            <div className="space-y-2">
+              <Label>{t.language.label}</Label>
+              <Select 
+                value={settings.language} 
+                onValueChange={(val: Language) => onUpdate({ language: val })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t.language.select} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="zh">简体中文 (Chinese)</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="ja">日本語 (Japanese)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </TabsContent>
         </Tabs>

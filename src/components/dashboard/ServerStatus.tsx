@@ -4,15 +4,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Activity, Users, Clock, AlertTriangle } from "lucide-react"
+import { Language, translations } from "@/lib/translations"
 
 interface ServerStatusProps {
   isOnline: boolean
   playerCount: number
   timeSinceLastPlayer: number
   thresholdSeconds: number
+  language: Language
 }
 
-export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thresholdSeconds }: ServerStatusProps) {
+export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thresholdSeconds, language }: ServerStatusProps) {
+  const t = translations[language]
   const progress = Math.min((timeSinceLastPlayer / thresholdSeconds) * 100, 100)
   const remainingSeconds = Math.max(thresholdSeconds - timeSinceLastPlayer, 0)
 
@@ -37,24 +40,24 @@ export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thres
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <Card className="fluent-glass">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium">Server Status</CardTitle>
+          <CardTitle className="text-sm font-medium">{t.serverStatus}</CardTitle>
           <Activity className={`h-4 w-4 ${isOnline ? "text-green-500" : "text-red-500"}`} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{isOnline ? "Running" : "Offline"}</div>
-          <p className="text-xs text-muted-foreground mt-1">Uptime: 14 days, 2 hours</p>
+          <div className="text-2xl font-bold">{isOnline ? t.running : t.offline}</div>
+          <p className="text-xs text-muted-foreground mt-1">{t.uptime}</p>
         </CardContent>
       </Card>
 
       <Card className="fluent-glass">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium">Online Players</CardTitle>
+          <CardTitle className="text-sm font-medium">{t.onlinePlayers}</CardTitle>
           <Users className="h-4 w-4 text-primary" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{playerCount} / 20</div>
           <Badge variant={playerCount > 0 ? "default" : "secondary"} className="mt-1">
-            {playerCount > 0 ? "Active Traffic" : "Idle"}
+            {playerCount > 0 ? t.activeTraffic : t.idle}
           </Badge>
         </CardContent>
       </Card>
@@ -63,7 +66,7 @@ export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thres
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium flex items-center gap-2">
             <Clock className="h-4 w-4" />
-            Shutdown Countdown
+            {t.shutdownCountdown}
           </CardTitle>
           {progress > 80 && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
         </CardHeader>
@@ -73,10 +76,10 @@ export function ServerStatus({ isOnline, playerCount, timeSinceLastPlayer, thres
               <div className="text-2xl font-mono font-bold tracking-tighter">
                 {formatFullTime(timeSinceLastPlayer)} / {formatFullTime(thresholdSeconds)}
               </div>
-              <p className="text-xs text-muted-foreground">Inactivity duration threshold</p>
+              <p className="text-xs text-muted-foreground">{t.inactivityThreshold}</p>
             </div>
             <div className="text-right">
-              <div className="text-xs font-semibold text-destructive uppercase">Estimated Closing In</div>
+              <div className="text-xs font-semibold text-destructive uppercase">{t.estimatedClosing}</div>
               <div className="text-lg font-bold text-destructive">{formatFullTime(remainingSeconds)}</div>
             </div>
           </div>
