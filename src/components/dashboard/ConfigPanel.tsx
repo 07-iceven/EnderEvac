@@ -206,14 +206,6 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
                     title={color.name}
                   />
                 ))}
-                <div className="relative">
-                  <input 
-                    type="color" 
-                    value={settings.accentColor}
-                    onChange={(e) => onUpdate({ accentColor: e.target.value })}
-                    className="w-8 h-8 rounded-full bg-transparent border-none cursor-pointer p-0 overflow-hidden"
-                  />
-                </div>
               </div>
             </div>
           </TabsContent>
