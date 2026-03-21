@@ -118,7 +118,7 @@ export const translations = {
     evacuationTitle: '跑路协议状态',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
-      waiting: { title: '等待跑路', desc: '监控玩家活动' },
+      waiting: { title: '等待跑路', desc: '监控玩家 activity' },
       closing: { title: '关闭 Minecraft 服务器', desc: '断开服务' },
       maintenance: { title: '伪装服务器维护中', desc: '部署“服务器维护”伪装' },
       uploading: { title: '上传文件至GitHub', desc: '推送服务器文件至仓库并开源' },
@@ -153,7 +153,7 @@ export const translations = {
     theme: {
       darkMode: '深色模式',
       darkModeDesc: '在亮色和深色主题之间切换。',
-      accentColor: '主强调色'
+      accentColor: '主题色'
     },
     language: {
       label: '系统语言',
