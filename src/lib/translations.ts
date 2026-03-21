@@ -3,7 +3,7 @@ export type Language = 'en' | 'zh' | 'ja';
 export const translations = {
   en: {
     title: 'Ender-Evac',
-    subtitle: 'Automata Control Center',
+    subtitle: 'Automated Server Evacuation Tool',
     dashboard: 'Dashboard',
     dashboardDesc: 'Monitor server status and automated evacuation tasks.',
     manualShutdown: 'Trigger Evacuation',
@@ -15,29 +15,29 @@ export const translations = {
     offline: 'Offline',
     uptime: 'Uptime',
     onlinePlayers: 'Online Players',
-    activeTraffic: 'Active Traffic',
+    activeTraffic: 'Active',
     idle: 'Idle',
     shutdownCountdown: 'Evacuation Countdown',
-    inactivityThreshold: 'Inactivity duration threshold',
-    estimatedClosing: 'Starts Running Away In',
-    configuration: 'Timer Configuration',
-    configDesc: 'Setup the inactivity threshold for automated evacuation.',
+    inactivityThreshold: 'Inactivity Threshold',
+    estimatedClosing: 'Estimated Evacuation Time',
+    configuration: 'Timer Config',
+    configDesc: 'Configure the inactivity threshold for automated evacuation.',
     settingsTitle: 'Home Data Editor',
-    settingsDesc: 'Manually override the live status data shown on the dashboard.',
+    settingsDesc: 'Manually override real-time data: uptime, countdown, online and max players.',
     editData: {
-      uptime: 'Uptime (seconds)',
-      elapsed: 'Inactivity Elapsed (seconds)',
+      uptime: 'Uptime (Seconds)',
+      elapsed: 'Inactivity Elapsed (Seconds)',
       online: 'Online Players',
       max: 'Max Players'
     },
-    evacuationTitle: 'Evacuation Protocol Status',
+    evacuationTitle: 'Evacuation Progress',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
     steps: {
       waiting: { title: 'Waiting for Evacuation', desc: 'Monitoring player activity' },
       closing: { title: 'Closing Minecraft Server', desc: 'Disconnecting services' },
       maintenance: { title: 'Maintenance Facade Active', desc: 'Deploying "Under Maintenance" facade' },
       uploading: { title: 'GitHub Archive', desc: 'Pushing files and open-sourcing' },
-      notifying: { title: 'Sending Good News', desc: 'Broadcasting evacuation and source URL' },
+      notifying: { title: 'Sending "Good News"', desc: 'Broadcasting evacuation and source URL' },
       facade_shutdown: { title: 'Closing Maintenance Facade', desc: 'Removing temporary maintenance proxy' },
       shutdown: { title: 'Shutdown', desc: 'Saving electricity' }
     },
@@ -52,13 +52,13 @@ export const translations = {
       label: 'Inactivity Threshold',
       placeholder: 'e.g. 1d 12h 30m',
       confirm: 'Confirm',
-      currentlyActive: 'Currently active',
-      hint: 'Supported units: s, m, h, d. Default is seconds (s).'
+      currentlyActive: 'Currently Active',
+      hint: 'Supports: s (sec), m (min), h (hr), d (day). Default is seconds.'
     },
     github: {
       repo: 'Repository URL',
       token: 'Access Token (Simulated)',
-      hint: 'Used to push server archive when shutting down.'
+      hint: 'Used to push server archive when evacuating.'
     },
     push: {
       qq: 'QQ Group ID',
@@ -68,7 +68,7 @@ export const translations = {
     theme: {
       darkMode: 'Dark Mode',
       darkModeDesc: 'Switch between light and dark themes.',
-      accentColor: 'Primary Accent Color'
+      accentColor: 'Theme Color'
     },
     language: {
       label: 'System Language',
@@ -76,7 +76,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
-      source: 'GitHub URL'
+      source: 'GitHub Repository'
     },
     toasts: {
       inputRequired: 'Input Required',
@@ -118,7 +118,7 @@ export const translations = {
     evacuationTitle: '跑路进程',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
-      waiting: { title: '等待跑路', desc: '监控玩家 activity' },
+      waiting: { title: '等待跑路', desc: '监控玩家活动' },
       closing: { title: '关闭 Minecraft 服务器', desc: '断开服务' },
       maintenance: { title: '伪装服务器维护中', desc: '部署“服务器维护”伪装' },
       uploading: { title: '上传文件至GitHub', desc: '推送服务器文件至仓库并开源' },
@@ -173,57 +173,57 @@ export const translations = {
   },
   ja: {
     title: 'Ender-Evac',
-    subtitle: 'オートマタコントロールセンター',
+    subtitle: 'サーバー全自動避難ツール',
     dashboard: 'ダッシュボード',
-    dashboardDesc: 'サーバーの状態と自动避难タスクを監視します。',
-    manualShutdown: '即时避难',
+    dashboardDesc: 'サーバーの状態と自動避難タスクを監視します。',
+    manualShutdown: '即時避難',
     refresh: '更新',
     settings: '設定',
-    serverStatus: 'サーバー状态',
-    running: '実行中',
+    serverStatus: 'サーバー状態',
+    running: '稼働中',
     evacuating: '避難中...',
     offline: 'オフライン',
     uptime: '稼働時間',
-    onlinePlayers: '在线プレイヤー',
+    onlinePlayers: 'オンラインプレイヤー',
     activeTraffic: 'アクティブ',
     idle: 'アイドル',
     shutdownCountdown: '避難カウントダウン',
-    inactivityThreshold: '非アクティブ期間のしきい値',
-    estimatedClosing: '避難开始まで',
+    inactivityThreshold: '非アクティブしきい値',
+    estimatedClosing: '避難予定時刻',
     configuration: 'タイマー設定',
-    configDesc: '自动シャットダウンの非アクティブしきい値を设定します。',
-    settingsTitle: '数据编辑',
-    settingsDesc: 'ダッシュボードに表示されるライブステータスデータを手動で上書きします。',
+    configDesc: '自動避難のための非アクティブしきい値を設定します。',
+    settingsTitle: 'ホームデータ編集',
+    settingsDesc: '稼働時間、カウントダウン、プレイヤー数などのリアルタイムデータを手動で上書きします。',
     editData: {
       uptime: '稼働時間 (秒)',
       elapsed: '非アクティブ経過 (秒)',
       online: 'オンライン',
       max: '最大人数'
     },
-    evacuationTitle: '避難プロトコルステータス',
-    evacuationDesc: '自动サーバー终了シーケンスの視覚的な進行状況。',
+    evacuationTitle: '避難プロセス',
+    evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
-      waiting: { title: '避難待ち', desc: 'プレイヤーの活動を監視中' },
-      closing: { title: 'Minecraft服务器を停止中', desc: 'サービスを切断します' },
-      maintenance: { title: '偽装サーバーを維持中', desc: '「メンテナンス中」の画面を展開します' },
+      waiting: { title: '避難待ち', desc: 'プレイヤーのアクティビティを監視中' },
+      closing: { title: 'Minecraftサーバーを停止', desc: 'サービスを切断します' },
+      maintenance: { title: 'メンテナンス偽装を有効化', desc: '「メンテナンス中」の画面を展開します' },
       uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します' },
-      notifying: { title: '喜報を送信', desc: '避難メッセージとソースURLを通知します' },
+      notifying: { title: '「喜報」を送信', desc: '避難メッセージとソースURLを通知します' },
       facade_shutdown: { title: '偽装サーバーを停止', desc: '一時的な「メンテナンス中」の表示を撤去します' },
-      shutdown: { title: '关机', desc: '節電します' }
+      shutdown: { title: 'シャットダウン', desc: '節電します' }
     },
     tabs: {
       timer: 'タイマー',
       github: 'GitHub',
-      announcements: 'プッシュ',
+      announcements: '通知',
       theme: 'テーマ',
-      language: '语言'
+      language: '言語'
     },
     timer: {
       label: '非アクティブしきい値',
       placeholder: '例: 1d 12h 30m',
-      confirm: '确认',
-      currentlyActive: '现在有効',
-      hint: 'サポートされている単位: s (秒), m (分), h (时), d (日)。デフォルトは秒です。'
+      confirm: '確認',
+      currentlyActive: '現在有効',
+      hint: '単位: s (秒), m (分), h (時), d (日)。デフォルトは秒です。'
     },
     github: {
       repo: 'リポジトリ URL',
@@ -238,11 +238,11 @@ export const translations = {
     theme: {
       darkMode: 'ダークモード',
       darkModeDesc: 'ライトテーマとダークテーマを切り替えます。',
-      accentColor: 'メインアクセントカラー'
+      accentColor: 'テーマカラー'
     },
     language: {
-      label: '系统语言',
-      select: '语言を选択'
+      label: 'システム言語',
+      select: '言語を選択'
     },
     footer: {
       copy: '© 2026 Ender-Evac.',
@@ -250,10 +250,10 @@ export const translations = {
     },
     toasts: {
       inputRequired: '入力が必要です',
-      inputRequiredDesc: '非アクティブしきい値を入力してください',
-      invalidUnit: '無効な单位が検出されました',
+      inputRequiredDesc: '非アクティブしきい値を入力してください。',
+      invalidUnit: '無効な単位が検出されました',
       invalidUnitDesc: '「{{part}}」は無効です。s, m, h, d を使用してください。',
-      configUpdated: '设定が正常に更新されました。'
+      configUpdated: '設定が正常に更新されました。'
     }
   }
 };
