@@ -26,12 +26,12 @@ export function EvacuationProgress({ language, currentStep }: EvacuationProgress
 
   return (
     <Card className="fluent-glass h-full flex flex-col">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl flex items-center gap-2">
           {t.evacuationTitle}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col justify-center p-8">
+      <CardContent className="flex-1 flex flex-col justify-center px-8 pb-8 pt-4">
         <div className="relative space-y-8 before:absolute before:inset-0 before:left-[19px] before:h-full before:w-px before:bg-border">
           {steps.map((step, index) => {
             const Icon = step.icon
