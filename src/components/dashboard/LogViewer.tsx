@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,7 +11,7 @@ interface LogViewerProps {
 
 export function LogViewer({ logs }: LogViewerProps) {
   return (
-    <Card className="fluent-glass flex flex-col h-full min-h-[400px]">
+    <Card className="fluent-glass flex flex-col h-full min-h-[500px]">
       <CardHeader className="pb-2 border-b">
         <CardTitle className="text-sm font-medium flex items-center gap-2">
           <Terminal className="h-4 w-4" />
@@ -20,7 +19,7 @@ export function LogViewer({ logs }: LogViewerProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0 flex-1 overflow-hidden">
-        <ScrollArea className="h-full max-h-[500px] p-4">
+        <ScrollArea className="h-full max-h-[800px] p-4">
           <div className="space-y-2 font-mono text-xs">
             {logs.length === 0 && (
               <div className="text-muted-foreground animate-pulse">Initializing monitoring systems...</div>

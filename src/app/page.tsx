@@ -6,7 +6,7 @@ import { LogViewer } from "@/components/dashboard/LogViewer"
 import { ConfigPanel } from "@/components/dashboard/ConfigPanel"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Sun, Moon, Settings } from "lucide-react"
+import { Sun, Moon } from "lucide-react"
 
 export default function Home() {
   const { 
@@ -74,10 +74,10 @@ export default function Home() {
           </section>
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-            <div className="xl:col-span-2 space-y-8">
+            <div className="xl:col-span-1">
               <ConfigPanel settings={settings} onUpdate={updateSettings} />
             </div>
-            <div className="xl:col-span-1">
+            <div className="xl:col-span-2">
               <LogViewer logs={logs} />
             </div>
           </div>
