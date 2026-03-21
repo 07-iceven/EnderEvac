@@ -16,7 +16,8 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        {/* 引入 MiSans 字体资源 */}
+        <link href="https://font.sec.miui.com/font/css?family=MiSans:400,500,600,700:Chinese_Simplify" rel="stylesheet" />
       </head>
       <body className="font-body antialiased selection:bg-primary/20">{children}</body>
     </html>
