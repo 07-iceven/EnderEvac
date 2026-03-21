@@ -5,13 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Info, Check, Clock, Palette, Languages, Moon, Sun } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
-import { translations, Language } from "@/lib/translations"
+import { translations } from "@/lib/translations"
 
 interface ConfigPanelProps {
   settings: AppSettings
@@ -155,8 +154,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                 />
               </div>
             </div>
-
-            <Separator />
 
             <div className="space-y-4">
               <Label className="text-sm font-semibold">{t.theme.accentColor}</Label>
