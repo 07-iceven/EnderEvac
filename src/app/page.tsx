@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useSimulatedApp, parseTimeToSeconds } from "@/hooks/use-simulated-app"
@@ -10,6 +11,8 @@ import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { Settings as SettingsIcon } from "lucide-react"
 import { translations } from "@/lib/translations"
+import Image from "next/image"
+import { PlaceHolderImages } from "@/lib/placeholder-images"
 
 export default function Home() {
   const { 
@@ -34,12 +37,25 @@ export default function Home() {
     ? Math.max(timeSinceLastPlayer - evacuationStartTime, 0) 
     : 0
 
+  const logoImage = PlaceHolderImages.find(img => img.id === 'app-logo')
+
   return (
     <div className="min-h-screen font-body bg-background/50">
       <main className="flex flex-col min-w-0">
         <header className="h-16 border-b fluent-glass flex items-center justify-between px-8 sticky top-0 z-50">
           <div className="flex items-center gap-4">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold shadow-lg">E</div>
+            <div className="w-10 h-10 rounded-lg overflow-hidden shadow-lg border bg-white flex items-center justify-center shrink-0">
+              {logoImage && (
+                <Image 
+                  src={logoImage.imageUrl} 
+                  alt="Logo" 
+                  width={40} 
+                  height={40}
+                  className="object-contain"
+                  data-ai-hint={logoImage.imageHint}
+                />
+              )}
+            </div>
             <h1 className="text-xl font-headline font-bold tracking-tight">{t.title}</h1>
             <Separator orientation="vertical" className="h-4 mx-2 hidden sm:block" />
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">{t.subtitle}</h2>
@@ -62,6 +78,7 @@ export default function Home() {
 
         <div className="flex-1 p-8 max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            {/* Left Column: Status & Progress */}
             <div className="lg:col-span-2 space-y-8">
               <section className="space-y-4">
                 <div className="flex justify-between items-end">
@@ -98,6 +115,7 @@ export default function Home() {
               />
             </div>
 
+            {/* Right Column: Config Panels */}
             <div className="lg:col-span-1 space-y-8">
               <ConfigPanel 
                 settings={settings} 
