@@ -61,9 +61,9 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button variant="outline" size="icon" className="h-9 w-9">
                   <SettingsIcon className="h-4 w-4" />
-                  {t.settings}
+                  <span className="sr-only">{t.settings}</span>
                 </Button>
               </SheetTrigger>
               <SettingsSheet 
