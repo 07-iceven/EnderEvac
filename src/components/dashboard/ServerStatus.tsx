@@ -87,7 +87,7 @@ export function ServerStatus({
             </div>
           ) : (
             <>
-              <CardHeader className="flex flex-row items-center justify-between pb-2 bg-transparent">
+              <CardHeader className="absolute top-0 left-0 right-0 flex flex-row items-center justify-between p-6 bg-transparent z-20">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                   <Clock className="h-4 w-4" />
                   {t.shutdownCountdown}
@@ -96,7 +96,7 @@ export function ServerStatus({
                   {progress > 80 && isOnline && !isPaused && <AlertTriangle className="h-4 w-4 text-destructive animate-pulse" />}
                 </div>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col items-center justify-center py-6 px-4">
+              <CardContent className="flex-1 flex flex-col items-center justify-center p-6">
                 <div className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black font-mono text-destructive tracking-tighter drop-shadow-sm select-none text-center break-words leading-tight max-w-full">
                   {formatFullTime(remainingSeconds)}
                 </div>
