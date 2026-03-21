@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Language, translations } from "@/lib/translations"
 import { CheckCircle2, Clock, ServerOff, Construction, Github, MessageSquare, Power, Loader2, EyeOff } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -30,7 +30,6 @@ export function EvacuationProgress({ language, currentStep }: EvacuationProgress
         <CardTitle className="flex items-center gap-2">
           {t.evacuationTitle}
         </CardTitle>
-        <CardDescription>{t.evacuationDesc}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col justify-center p-8">
         <div className="relative space-y-8 before:absolute before:inset-0 before:left-[19px] before:h-full before:w-px before:bg-border">
