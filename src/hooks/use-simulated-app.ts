@@ -59,6 +59,7 @@ export function useSimulatedApp() {
   const [isOnline, setIsOnline] = useState(true)
   const [isEvacuating, setIsEvacuating] = useState(false)
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
+  const [uptimeSeconds, setUptimeSeconds] = useState(14 * 86400 + 2 * 3600)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
 
   useEffect(() => {
@@ -116,10 +117,13 @@ export function useSimulatedApp() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeSinceLastPlayer(prev => prev + 1)
+      if (isOnline) {
+        setUptimeSeconds(prev => prev + 1)
+      }
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isOnline])
 
   useEffect(() => {
     const threshold = parseTimeToSeconds(settings.shutdownThreshold)
@@ -130,7 +134,6 @@ export function useSimulatedApp() {
 
     if (isEvacuating) {
       const evacSeconds = timeSinceLastPlayer - threshold
-      // Transition through steps every 5 seconds (Total 7 steps: index 0 to 6)
       const step = Math.min(Math.floor(evacSeconds / 5) + 1, 6)
       setCurrentEvacStep(step)
       
@@ -165,6 +168,7 @@ export function useSimulatedApp() {
     isOnline,
     isEvacuating,
     timeSinceLastPlayer,
+    uptimeSeconds,
     currentEvacStep,
     triggerManualEvac
   }

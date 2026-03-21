@@ -21,6 +21,7 @@ export default function Home() {
     isOnline, 
     isEvacuating,
     timeSinceLastPlayer,
+    uptimeSeconds,
     currentEvacStep,
     triggerManualEvac
   } = useSimulatedApp()
@@ -28,7 +29,6 @@ export default function Home() {
   const t = translations[settings.language]
   const thresholdSeconds = parseTimeToSeconds(settings.shutdownThreshold)
   
-  // Calculate elapsed time since evacuation protocol actually started
   const evacuationStartTime = thresholdSeconds
   const evacuationElapsed = isEvacuating || !isOnline 
     ? Math.max(timeSinceLastPlayer - evacuationStartTime, 0) 
@@ -62,7 +62,6 @@ export default function Home() {
 
         <div className="flex-1 p-8 max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            {/* Left Column: Dashboard and Protocol Progress (Aligned vertically) */}
             <div className="lg:col-span-2 space-y-8">
               <section className="space-y-4">
                 <div className="flex justify-between items-end">
@@ -86,6 +85,7 @@ export default function Home() {
                   isEvacuating={isEvacuating}
                   playerCount={playerCount} 
                   timeSinceLastPlayer={timeSinceLastPlayer} 
+                  uptimeSeconds={uptimeSeconds}
                   thresholdSeconds={thresholdSeconds}
                   language={settings.language}
                 />
@@ -98,7 +98,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Right Column: Configuration Cards */}
             <div className="lg:col-span-1 space-y-8">
               <ConfigPanel 
                 settings={settings} 

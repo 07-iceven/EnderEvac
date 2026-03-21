@@ -11,11 +11,12 @@ interface ServerStatusProps {
   isEvacuating: boolean
   playerCount: number
   timeSinceLastPlayer: number
+  uptimeSeconds: number
   thresholdSeconds: number
   language: Language
 }
 
-export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLastPlayer, thresholdSeconds, language }: ServerStatusProps) {
+export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLastPlayer, uptimeSeconds, thresholdSeconds, language }: ServerStatusProps) {
   const t = translations[language]
   const progress = Math.min((timeSinceLastPlayer / thresholdSeconds) * 100, 100)
   const remainingSeconds = Math.max(thresholdSeconds - timeSinceLastPlayer, 0)
@@ -39,7 +40,6 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {/* Evacuation Countdown - Spans full width at the top */}
       <Card className={`fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 ${isEvacuating ? 'border-destructive/50 ring-2 ring-destructive/20' : ''}`}>
         {isEvacuating ? (
           <div className="relative h-full min-h-[140px] flex flex-col items-center justify-center p-6 bg-destructive/5 animate-pulse">
@@ -84,7 +84,6 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
         )}
       </Card>
 
-      {/* Server Status - Below countdown */}
       <Card className="fluent-glass col-span-1 md:col-span-1 lg:col-span-2">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">{t.serverStatus}</CardTitle>
@@ -92,11 +91,12 @@ export function ServerStatus({ isOnline, isEvacuating, playerCount, timeSinceLas
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{statusText}</div>
-          <p className="text-xs text-muted-foreground mt-1">{t.uptime}</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {t.uptime}: {formatFullTime(uptimeSeconds)}
+          </p>
         </CardContent>
       </Card>
 
-      {/* Online Players - Below countdown */}
       <Card className="fluent-glass col-span-1 md:col-span-1 lg:col-span-2">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">{t.onlinePlayers}</CardTitle>
