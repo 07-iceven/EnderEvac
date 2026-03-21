@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
-import { Activity, Clock, Users, Shield } from "lucide-react"
+import { Activity, Clock, Users } from "lucide-react"
 
 interface SettingsSheetProps {
   settings: AppSettings
@@ -37,7 +37,10 @@ export function SettingsSheet({
   const t = translations[settings.language]
 
   return (
-    <SheetContent className="sm:max-w-md overflow-y-auto">
+    <SheetContent 
+      className="sm:max-w-md overflow-y-auto" 
+      onOpenAutoFocus={(e) => e.preventDefault()}
+    >
       <SheetHeader className="mb-6">
         <SheetTitle>{t.settingsTitle}</SheetTitle>
         <SheetDescription>{t.settingsDesc}</SheetDescription>
