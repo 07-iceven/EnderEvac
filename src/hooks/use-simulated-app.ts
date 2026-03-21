@@ -116,21 +116,37 @@ export function useSimulatedApp() {
     root.classList.add('custom-accent-vars')
   }, [settings.accentColor])
 
+  // Logic: Reset timer when players join
+  useEffect(() => {
+    if (playerCount > 0) {
+      setTimeSinceLastPlayer(0)
+      // If in evacuation, stop it if a player joins (logical for simulation)
+      if (isEvacuating) {
+        setIsEvacuating(false)
+      }
+    }
+  }, [playerCount])
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeSinceLastPlayer(prev => prev + 1)
+      // Increment inactivity timer only if no players are online and server is online
+      // Also increment if evacuation is already in progress (even if playerCount is 0)
+      if (isOnline && (playerCount === 0 || isEvacuating)) {
+        setTimeSinceLastPlayer(prev => prev + 1)
+      }
+      
       if (isOnline) {
         setUptimeSeconds(prev => prev + 1)
       }
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isOnline])
+  }, [isOnline, playerCount, isEvacuating])
 
   useEffect(() => {
     const threshold = parseTimeToSeconds(settings.shutdownThreshold)
     
-    if (timeSinceLastPlayer >= threshold && !isEvacuating && isOnline) {
+    if (timeSinceLastPlayer >= threshold && !isEvacuating && isOnline && playerCount === 0) {
       setIsEvacuating(true)
     }
 
@@ -148,7 +164,7 @@ export function useSimulatedApp() {
     } else {
       setCurrentEvacStep(0)
     }
-  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline])
+  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline, playerCount])
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     const updated = { ...settings, ...newSettings }
