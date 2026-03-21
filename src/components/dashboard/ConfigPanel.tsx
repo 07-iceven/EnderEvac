@@ -7,9 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Github, Megaphone, Timer, Palette, Info, Check, AlertCircle } from "lucide-react"
+import { Github, Megaphone, Timer, Palette, Info, Check } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
 
 interface ConfigPanelProps {
@@ -67,15 +66,12 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
     }
 
     // Strict validation for units
-    // We split by spaces and check each part (e.g., "1d", "12h")
     const parts = trimmed.split(/\s+/)
     const validUnits = ['s', 'm', 'h', 'd']
     let isValid = true
     let offendingPart = ""
 
     for (const part of parts) {
-      // Each part must be digits followed by exactly ONE of the valid units
-      // Or just digits (which is handled by parseTimeToSeconds as seconds if it's the only thing)
       const match = part.match(/^(\d+)([a-zA-Z]*)$/)
       
       if (!match) {
@@ -145,14 +141,6 @@ export function ConfigPanel({ settings, onUpdate }: ConfigPanelProps) {
                 If no unit is specified, <strong>seconds (s)</strong> are used.
               </p>
             </div>
-            
-            <Alert className="bg-primary/5 border-primary/20">
-              <Timer className="h-4 w-4" />
-              <AlertTitle className="text-xs font-bold">Logic Explanation</AlertTitle>
-              <AlertDescription className="text-xs">
-                The server automatically powers down once the idle timer matches the confirmed value.
-              </AlertDescription>
-            </Alert>
           </TabsContent>
 
           <TabsContent value="github" className="space-y-4 pt-4">
