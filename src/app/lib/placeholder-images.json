@@ -1,0 +1,11 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "server-bg",
+      "description": "Minecraft landscape background",
+      "imageUrl": "https://picsum.photos/seed/mc-server/1200/400",
+      "imageHint": "minecraft landscape"
+    }
+  ]
+}
