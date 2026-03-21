@@ -28,7 +28,8 @@ export const translations = {
       uptime: 'Uptime (Seconds)',
       elapsed: 'Inactivity Elapsed (Seconds)',
       online: 'Online Players',
-      max: 'Max Players'
+      max: 'Max Players',
+      stepDurations: 'Step Durations (Seconds)'
     },
     evacuationTitle: 'Evacuation Progress',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
@@ -113,7 +114,8 @@ export const translations = {
       uptime: '运行时长 (秒)',
       elapsed: '已不活跃时间 (秒)',
       online: '在线玩家',
-      max: '最多玩家数'
+      max: '最多玩家数',
+      stepDurations: '各步骤用时 (秒)'
     },
     evacuationTitle: '跑路进程',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
@@ -184,7 +186,7 @@ export const translations = {
     evacuating: '避難中...',
     offline: 'オフライン',
     uptime: '稼働時間',
-    onlinePlayers: 'オンラインプレイヤー',
+    onlinePlayers: '在线プレイヤー',
     activeTraffic: 'アクティブ',
     idle: 'アイドル',
     shutdownCountdown: '避難カウントダウン',
@@ -198,7 +200,8 @@ export const translations = {
       uptime: '稼働時間 (秒)',
       elapsed: '非アクティブ経過 (秒)',
       online: 'オンライン',
-      max: '最大人数'
+      max: '最大人数',
+      stepDurations: 'ステップ所要時間 (秒)'
     },
     evacuationTitle: '避難プロセス',
     evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
@@ -252,7 +255,7 @@ export const translations = {
       inputRequired: '入力が必要です',
       inputRequiredDesc: '非アクティブしきい値を入力してください。',
       invalidUnit: '無効な単位が検出されました',
-      invalidUnitDesc: '「{{part}}」は無効です。s, m, h, d を使用してください。',
+      invalidUnitDesc: '「{{part}}」は无効です。s, m, h, d を使用してください。',
       configUpdated: '設定が正常に更新されました。'
     }
   }

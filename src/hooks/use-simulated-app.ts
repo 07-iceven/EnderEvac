@@ -14,6 +14,7 @@ export interface AppSettings {
   accentColor: string // hex
   language: Language
   maxPlayers: number
+  stepDurations: number[] // [closing, maintenance, uploading, notifying, facade_shutdown, shutdown]
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
@@ -25,7 +26,8 @@ const DEFAULT_SETTINGS: AppSettings = {
   announcementContent: 'Due to long-term inactivity, the server is now officially closed. The source files are available on GitHub.',
   accentColor: '#0078D4',
   language: 'zh',
-  maxPlayers: 20
+  maxPlayers: 20,
+  stepDurations: [5, 5, 5, 5, 5, 5]
 }
 
 export function parseTimeToSeconds(timeStr: string): number {
@@ -183,7 +185,21 @@ export function useSimulatedApp() {
 
     if (isEvacuating) {
       const evacSeconds = timeSinceLastPlayer - threshold
-      const step = Math.min(Math.floor(evacSeconds / 5) + 1, 6)
+      
+      // Calculate current step based on cumulative durations
+      let cumulative = 0
+      let step = 0
+      for (let i = 0; i < settings.stepDurations.length; i++) {
+        cumulative += settings.stepDurations[i]
+        if (evacSeconds < cumulative) {
+          step = i + 1
+          break
+        }
+        if (i === settings.stepDurations.length - 1) {
+          step = 6
+        }
+      }
+      
       setCurrentEvacStep(step)
       
       if (step === 6) {
@@ -195,7 +211,7 @@ export function useSimulatedApp() {
     } else {
       setCurrentEvacStep(0)
     }
-  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline, playerCount])
+  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline, playerCount, settings.stepDurations])
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     const updated = { ...settings, ...newSettings }

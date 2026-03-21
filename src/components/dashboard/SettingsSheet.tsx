@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
-import { Activity, Clock, Users } from "lucide-react"
+import { Activity, Clock, Users, Timer } from "lucide-react"
 
 interface SettingsSheetProps {
   settings: AppSettings
@@ -35,6 +35,14 @@ export function SettingsSheet({
   setIsOnline
 }: SettingsSheetProps) {
   const t = translations[settings.language]
+
+  const handleStepDurationChange = (index: number, value: string) => {
+    const newDurations = [...settings.stepDurations]
+    newDurations[index] = parseInt(value) || 0
+    onUpdate({ stepDurations: newDurations })
+  }
+
+  const stepKeys = ['closing', 'maintenance', 'uploading', 'notifying', 'facade_shutdown', 'shutdown']
 
   return (
     <SheetContent 
@@ -101,6 +109,33 @@ export function SettingsSheet({
               value={timeSinceLastPlayer}
               onChange={(e) => setTimeSinceLastPlayer(parseInt(e.target.value) || 0)}
             />
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* Evacuation Steps Edit */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-bold text-sm text-primary">
+            <Timer className="h-4 w-4" />
+            {t.editData.stepDurations}
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            {stepKeys.map((key, index) => (
+              <div key={key} className="space-y-2">
+                <Label htmlFor={`step-${index}`} className="text-[10px] uppercase text-muted-foreground truncate block">
+                  {(t.steps as any)[key].title}
+                </Label>
+                <Input 
+                  id={`step-${index}`}
+                  type="number"
+                  value={settings.stepDurations[index]}
+                  onChange={(e) => handleStepDurationChange(index, e.target.value)}
+                  className="h-8"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
