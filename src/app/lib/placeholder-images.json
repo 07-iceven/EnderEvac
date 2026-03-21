@@ -1,3 +1,4 @@
+
 {
   "placeholderImages": [
     {
@@ -9,7 +10,7 @@
     {
       "id": "app-logo",
       "description": "Ender Evac Logo",
-      "imageUrl": "https://picsum.photos/seed/evac-exit-v3/512/512",
+      "imageUrl": "/logo.png",
       "imageHint": "green exit sign"
     }
   ]
