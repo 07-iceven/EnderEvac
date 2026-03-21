@@ -115,7 +115,7 @@ export const translations = {
       online: '在线玩家',
       max: '最多玩家数'
     },
-    evacuationTitle: '跑路协议状态',
+    evacuationTitle: '跑路进程',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
       waiting: { title: '等待跑路', desc: '监控玩家 activity' },
