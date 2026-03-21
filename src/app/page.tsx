@@ -16,6 +16,7 @@ export default function Home() {
     setIsDarkMode, 
     playerCount, 
     isOnline, 
+    isEvacuating,
     timeSinceLastPlayer,
     currentEvacStep,
     triggerManualEvac
@@ -47,12 +48,19 @@ export default function Home() {
                 <p className="text-muted-foreground">{t.dashboardDesc}</p>
               </div>
               <div className="flex gap-2">
-                <Button onClick={triggerManualEvac}>{t.manualShutdown}</Button>
+                <Button 
+                  onClick={triggerManualEvac} 
+                  disabled={isEvacuating || !isOnline}
+                  variant={isEvacuating ? "secondary" : "default"}
+                >
+                  {t.manualShutdown}
+                </Button>
               </div>
             </div>
             
             <ServerStatus 
               isOnline={isOnline} 
+              isEvacuating={isEvacuating}
               playerCount={playerCount} 
               timeSinceLastPlayer={timeSinceLastPlayer} 
               thresholdSeconds={thresholdSeconds}

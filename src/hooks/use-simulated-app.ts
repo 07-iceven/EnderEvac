@@ -57,6 +57,7 @@ export function useSimulatedApp() {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [playerCount, setPlayerCount] = useState(0)
   const [isOnline, setIsOnline] = useState(true)
+  const [isEvacuating, setIsEvacuating] = useState(false)
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
 
@@ -120,29 +121,29 @@ export function useSimulatedApp() {
     return () => clearInterval(interval)
   }, [])
 
-  // Simulate step changes based on countdown progress or manual triggers
   useEffect(() => {
     const threshold = parseTimeToSeconds(settings.shutdownThreshold)
-    const progress = (timeSinceLastPlayer / threshold)
     
-    // Simple logic: mapping countdown progress to steps 0-5
-    // but usually evac only starts at the very end.
-    // Let's say step 0 is "waiting".
-    if (progress > 1) {
-      setIsOnline(false)
-      setCurrentEvacStep(5) // Shutdown
-    } else if (progress > 0.95) {
-      setCurrentEvacStep(4) // Notifying
-    } else if (progress > 0.90) {
-      setCurrentEvacStep(3) // Uploading
-    } else if (progress > 0.85) {
-      setCurrentEvacStep(2) // Maintenance
-    } else if (progress > 0.80) {
-      setCurrentEvacStep(1) // Closing
-    } else {
-      setCurrentEvacStep(0) // Waiting
+    if (timeSinceLastPlayer >= threshold && !isEvacuating && isOnline) {
+      setIsEvacuating(true)
     }
-  }, [timeSinceLastPlayer, settings.shutdownThreshold])
+
+    if (isEvacuating) {
+      const evacSeconds = timeSinceLastPlayer - threshold
+      // Transition through steps every 5 seconds
+      const step = Math.min(Math.floor(evacSeconds / 5) + 1, 5)
+      setCurrentEvacStep(step)
+      
+      if (step === 5) {
+        setIsOnline(false)
+        setIsEvacuating(false)
+      }
+    } else if (!isOnline) {
+      setCurrentEvacStep(5)
+    } else {
+      setCurrentEvacStep(0)
+    }
+  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline])
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     const updated = { ...settings, ...newSettings }
@@ -151,8 +152,8 @@ export function useSimulatedApp() {
   }
 
   const triggerManualEvac = () => {
-    // Jump to closing step
-    setTimeSinceLastPlayer(parseTimeToSeconds(settings.shutdownThreshold) * 0.81)
+    setTimeSinceLastPlayer(parseTimeToSeconds(settings.shutdownThreshold))
+    setIsEvacuating(true)
   }
 
   return {
@@ -162,6 +163,7 @@ export function useSimulatedApp() {
     setIsDarkMode,
     playerCount,
     isOnline,
+    isEvacuating,
     timeSinceLastPlayer,
     currentEvacStep,
     triggerManualEvac

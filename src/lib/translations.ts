@@ -10,14 +10,15 @@ export const translations = {
     refresh: 'Refresh',
     serverStatus: 'Server Status',
     running: 'Running',
+    evacuating: 'Evacuating...',
     offline: 'Offline',
-    uptime: 'Uptime: 14 days, 2 hours',
+    uptime: 'Uptime: 14 days, 2 hours, 0s',
     onlinePlayers: 'Online Players',
     activeTraffic: 'Active Traffic',
     idle: 'Idle',
-    shutdownCountdown: 'Shutdown Countdown',
+    shutdownCountdown: 'Evacuation Countdown',
     inactivityThreshold: 'Inactivity duration threshold',
-    estimatedClosing: 'Estimated Closing In',
+    estimatedClosing: 'Starts Running Away In',
     configuration: 'Configuration',
     configDesc: 'Setup automated shutdown and notification parameters.',
     evacuationTitle: 'Evacuation Protocol Status',
@@ -80,21 +81,22 @@ export const translations = {
     title: 'Ender-Evac',
     subtitle: '自动控制中心',
     dashboard: '仪表盘',
-    dashboardDesc: '监控服务器状态和自动关机任务。',
+    dashboardDesc: '监控服务器状态和自动跑路任务。',
     manualShutdown: '立即跑路',
     refresh: '刷新',
     serverStatus: '服务器状态',
     running: '运行中',
+    evacuating: '跑路中...',
     offline: '离线',
-    uptime: '运行时长: 14天 2小时',
+    uptime: '运行时长: 14天 2小时 0s',
     onlinePlayers: '在线玩家',
     activeTraffic: '活跃中',
     idle: '空闲',
-    shutdownCountdown: '关机倒计时',
+    shutdownCountdown: '跑路倒计时',
     inactivityThreshold: '不活跃时长阈值',
-    estimatedClosing: '预计关闭时间',
+    estimatedClosing: '预计跑路时间',
     configuration: '配置',
-    configDesc: '设置自动关机和通知参数。',
+    configDesc: '设置自动跑路和通知参数。',
     evacuationTitle: '跑路协议状态',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
     steps: {
@@ -122,12 +124,12 @@ export const translations = {
     github: {
       repo: '仓库 URL',
       token: '访问令牌 (模拟)',
-      hint: '用于在关机时推送服务器归档。'
+      hint: '用于在跑路时推送服务器归档。'
     },
     push: {
       qq: 'QQ 群 ID',
       website: '网站 URL',
-      message: '关机公告内容'
+      message: '跑路公告内容'
     },
     theme: {
       darkMode: '深色模式',
@@ -155,30 +157,31 @@ export const translations = {
     title: 'Ender-Evac',
     subtitle: 'オートマタコントロールセンター',
     dashboard: 'ダッシュボード',
-    dashboardDesc: 'サーバーの状態と自動シャットダウンタスクを監視します。',
-    manualShutdown: '即時避難',
+    dashboardDesc: 'サーバーの状態と自動避難タスクを監視します。',
+    manualShutdown: '即时避难',
     refresh: '更新',
     serverStatus: 'サーバー状态',
     running: '実行中',
+    evacuating: '避難中...',
     offline: 'オフライン',
-    uptime: '稼働時間: 14日 2時間',
+    uptime: '稼働時間: 14日 2時間 0s',
     onlinePlayers: 'オンラインプレイヤー',
     activeTraffic: 'アクティブ',
     idle: 'アイドル',
-    shutdownCountdown: 'シャットダウンカウントダウン',
+    shutdownCountdown: '避難カウントダウン',
     inactivityThreshold: '非アクティブ期間のしきい値',
-    estimatedClosing: '予定終了時刻',
+    estimatedClosing: '避難開始まで',
     configuration: '設定',
     configDesc: '自動シャットダウンと通知パラメータを設定します。',
     evacuationTitle: '避難プロトコルステータス',
     evacuationDesc: '自動サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
       waiting: { title: '避難待ち', desc: 'プレイヤーの活動としきい値を監視中。' },
-      closing: { title: 'サービスエリア閉鎖', desc: '残りのサービスを安全に切断します。' },
-      maintenance: { title: 'メンテナンス偽装', desc: '「メンテナンス中」の画面を展開します。' },
+      closing: { title: 'サービスエリア闭锁', desc: '残りのサービスを安全に切断します。' },
+      maintenance: { title: 'メンテナンス伪装', desc: '「メンテナンス中」の画面を展開します。' },
       uploading: { title: 'GitHub アーカイブ', desc: 'ファイルを圧縮してリポジトリにプッシュします。' },
       notifying: { title: 'コミュニティ通知', desc: 'QQグループとウェブサイトに最終メッセージを送信。' },
-      shutdown: { title: '最終シャットダウン', desc: 'サーバーインスタンスを正式に停止します。' }
+      shutdown: { title: '最终シャットダウン', desc: 'サーバーインスタンスを正式に停止します。' }
     },
     tabs: {
       timer: 'タイマー',
@@ -190,19 +193,19 @@ export const translations = {
     timer: {
       label: '非アクティブしきい値',
       placeholder: '例: 1d 12h 30m',
-      confirm: '確認',
-      currentlyActive: '現在有効',
-      hint: 'サポートされている単位: s (秒), m (分), h (時), d (日)。デフォルトは秒です。'
+      confirm: '确认',
+      currentlyActive: '现在有効',
+      hint: 'サポートされている単位: s (秒), m (分), h (时), d (日)。デフォルトは秒です。'
     },
     github: {
       repo: 'リポジトリ URL',
       token: 'アクセストークン (シミュレート)',
-      hint: 'シャットダウン時にサーバーアーカイブをプッシュするために使用されます。'
+      hint: '避難時にサーバーアーカイブをプッシュするために使用されます。'
     },
     push: {
       qq: 'QQグループID',
       website: 'ウェブサイト URL',
-      message: 'シャットダウンメッセージ'
+      message: '避難メッセージ'
     },
     theme: {
       darkMode: 'ダークモード',
@@ -211,7 +214,7 @@ export const translations = {
     },
     language: {
       label: 'システム语言',
-      select: '言語を選択'
+      select: '言語を选択'
     },
     footer: {
       copy: '© 2024 Ender-Evac. 4月1日リリースのために開発されました。',
@@ -220,10 +223,10 @@ export const translations = {
     },
     toasts: {
       inputRequired: '入力が必要です',
-      inputRequiredDesc: '非アクティブしきい値を入力してください。',
+      inputRequiredDesc: '非アクティブしきい値を入力してください',
       invalidUnit: '無効な単位が検出されました',
       invalidUnitDesc: '「{{part}}」は無効です。s, m, h, d を使用してください。',
-      configUpdated: '設定が正常に更新されました。'
+      configUpdated: '设定が正常に更新されました。'
     }
   }
 };
