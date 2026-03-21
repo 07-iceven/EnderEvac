@@ -138,7 +138,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             <Palette className="h-5 w-5 text-primary" />
             {t.tabs.theme}
           </CardTitle>
-          <CardDescription>{t.theme.darkModeDesc}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
