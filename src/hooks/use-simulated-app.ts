@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Language } from '@/lib/translations'
+import { useToast } from '@/hooks/use-toast'
 
 export interface AppSettings {
   shutdownThreshold: string // e.g., "24h", "30m", "1d"
@@ -55,6 +56,7 @@ export function parseTimeToSeconds(timeStr: string): number {
 }
 
 export function useSimulatedApp() {
+  const { toast } = useToast()
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS)
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [playerCount, setPlayerCount] = useState(0)
@@ -63,7 +65,12 @@ export function useSimulatedApp() {
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
   const [uptimeSeconds, setUptimeSeconds] = useState(14 * 86400 + 2 * 3600)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
+  
+  // Separate pause states to avoid conflicts
+  const [isManualPaused, setIsManualPaused] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+  
+  const isPaused = isManualPaused || isSettingsOpen
 
   useEffect(() => {
     const savedSettings = localStorage.getItem('enderevac-settings')
@@ -117,6 +124,25 @@ export function useSimulatedApp() {
     root.classList.add('custom-accent-vars')
   }, [settings.accentColor])
 
+  // Global F1 Key Listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'F1') {
+        e.preventDefault()
+        setIsManualPaused(prev => {
+          const next = !prev
+          toast({
+            title: next ? "模拟已暂停" : "模拟已恢复",
+            description: next ? "按下 F1 键可恢复计时" : "按下 F1 键可再次暂停",
+          })
+          return next
+        })
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [toast])
+
   // Logic: Reset timer when players join
   useEffect(() => {
     if (playerCount > 0) {
@@ -129,7 +155,7 @@ export function useSimulatedApp() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // If paused, do not increment any timers
+      // If paused by either settings or manual F1, do not increment any timers
       if (isPaused) return
 
       // Increment inactivity timer only if no players are online and server is online
@@ -195,6 +221,8 @@ export function useSimulatedApp() {
     setUptimeSeconds,
     currentEvacStep,
     triggerManualEvac,
-    setIsPaused
+    isPaused,
+    isManualPaused,
+    setIsSettingsOpen
   }
 }

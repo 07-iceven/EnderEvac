@@ -30,7 +30,8 @@ export default function Home() {
     setUptimeSeconds,
     currentEvacStep,
     triggerManualEvac,
-    setIsPaused
+    isPaused,
+    setIsSettingsOpen
   } = useSimulatedApp()
 
   const t = translations[settings.language]
@@ -59,12 +60,16 @@ export default function Home() {
                 />
               )}
             </div>
-            <h1 className="text-xl font-headline font-bold tracking-tight">{t.title}</h1>
-            <Separator orientation="vertical" className="h-4 mx-2 hidden sm:block" />
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">{t.subtitle}</h2>
+            <div className="flex flex-col sm:flex-row sm:items-center">
+              <h1 className="text-xl font-headline font-bold tracking-tight">{t.title}</h1>
+              <div className="flex items-center">
+                <Separator orientation="vertical" className="h-4 mx-2 hidden sm:block" />
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">{t.subtitle}</h2>
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-2">
-            <Sheet onOpenChange={setIsPaused}>
+            <Sheet onOpenChange={setIsSettingsOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="h-9 w-9">
                   <SettingsIcon className="h-4 w-4" />
@@ -117,6 +122,7 @@ export default function Home() {
                   thresholdSeconds={thresholdSeconds}
                   language={settings.language}
                   maxPlayers={settings.maxPlayers}
+                  isPaused={isPaused}
                 />
               </section>
 
