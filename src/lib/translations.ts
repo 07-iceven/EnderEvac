@@ -88,7 +88,7 @@ export const translations = {
   },
   zh: {
     title: 'Ender-Evac',
-    subtitle: '自动控制中心',
+    subtitle: '服务器全自动跑路工具',
     dashboard: '仪表盘',
     dashboardDesc: '监控服务器状态和自动跑路任务。',
     manualShutdown: '立即跑路',
@@ -192,7 +192,7 @@ export const translations = {
     estimatedClosing: '避難開始まで',
     configuration: 'タイマー設定',
     configDesc: '自動シャットダウンの非アクティブしきい値を設定します。',
-    settingsTitle: 'データ編集',
+    settingsTitle: '数据编辑',
     settingsDesc: 'ダッシュボードに表示されるライブステータスデータを手動で上書きします。',
     editData: {
       uptime: '稼働時間 (秒)',
