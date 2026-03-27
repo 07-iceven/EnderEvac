@@ -246,7 +246,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                             updateColorPreview(settings.accentColor);
                             setHoveredColorName(null);
                           }}
-                          className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 active:scale-95 ${settings.accentColor.toLowerCase() === color.value.toLowerCase() ? 'border-foreground shadow-md' : 'border-transparent'}`}
+                          className={`w-8 h-8 rounded-full transition-all hover:scale-110 active:scale-95 outline-none ${settings.accentColor.toLowerCase() === color.value.toLowerCase() ? 'ring-2 ring-primary ring-offset-2 shadow-md' : 'ring-1 ring-border/50'}`}
                           style={{ backgroundColor: color.value }}
                         />
                       </TooltipTrigger>
@@ -268,7 +268,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                           <button
                             onMouseEnter={() => setHoveredColorName(t.theme.customColor)}
                             onMouseLeave={() => setHoveredColorName(null)}
-                            className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${isCustomColorActive ? 'border-foreground shadow-md' : 'border-transparent bg-muted'}`}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 outline-none ${isCustomColorActive ? 'ring-2 ring-primary ring-offset-2 shadow-md' : 'bg-muted ring-1 ring-border/50'}`}
                             style={isCustomColorActive ? { backgroundColor: settings.accentColor } : {}}
                           >
                             <Settings2 className={`h-4 w-4 ${isCustomColorActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
