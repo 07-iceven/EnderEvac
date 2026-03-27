@@ -6,9 +6,9 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Info, Check, Clock, Palette, Languages, Moon, Sun } from "lucide-react"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Info, Check, Clock, Palette, Languages, Moon, Sun, Settings2 } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
 import { translations } from "@/lib/translations"
@@ -132,8 +132,12 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     root.style.setProperty('--user-accent-l', `${Math.round(l * 100)}%`)
   }
 
-  const handleRgbChange = (channel: 'r' | 'g' | 'b', value: number[]) => {
-    const newRgb = { ...rgb, [channel]: value[0] };
+  const handleRgbInputChange = (channel: 'r' | 'g' | 'b', value: string) => {
+    let num = parseInt(value) || 0;
+    if (num < 0) num = 0;
+    if (num > 255) num = 255;
+    
+    const newRgb = { ...rgb, [channel]: num };
     setRgb(newRgb);
     
     // Direct DOM update for performance
@@ -141,10 +145,12 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     updateColorPreview(hex);
   };
 
-  const handleRgbCommit = () => {
+  const saveRgbSettings = () => {
     const hex = "#" + ((1 << 24) + (rgb.r << 16) + (rgb.g << 8) + rgb.b).toString(16).slice(1);
     onUpdate({ accentColor: hex });
   };
+
+  const isCustomColorActive = !accentColors.some(c => c.value.toLowerCase() === settings.accentColor.toLowerCase());
 
   return (
     <div className="space-y-6">
@@ -235,66 +241,64 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       </TooltipContent>
                     </Tooltip>
                   ))}
+
+                  {/* Custom Color Popover Trigger */}
+                  <Popover onOpenChange={(open) => !open && saveRgbSettings()}>
+                    <PopoverTrigger asChild>
+                      <button
+                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${isCustomColorActive ? 'border-foreground shadow-md' : 'border-transparent bg-muted'}`}
+                        style={isCustomColorActive ? { backgroundColor: settings.accentColor } : {}}
+                      >
+                        <Settings2 className={`h-4 w-4 ${isCustomColorActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-56 p-4" side="top" sideOffset={12}>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
+                          <div 
+                            className="w-8 h-4 rounded border" 
+                            style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
+                          />
+                        </div>
+                        
+                        <div className="grid grid-cols-3 gap-2">
+                          <div className="space-y-1">
+                            <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.r}</Label>
+                            <Input 
+                              type="number"
+                              value={rgb.r}
+                              onChange={(e) => handleRgbInputChange('r', e.target.value)}
+                              className="h-8 px-2 text-xs"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.g}</Label>
+                            <Input 
+                              type="number"
+                              value={rgb.g}
+                              onChange={(e) => handleRgbInputChange('g', e.target.value)}
+                              className="h-8 px-2 text-xs"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.b}</Label>
+                            <Input 
+                              type="number"
+                              value={rgb.b}
+                              onChange={(e) => handleRgbInputChange('b', e.target.value)}
+                              className="h-8 px-2 text-xs"
+                            />
+                          </div>
+                        </div>
+                        <Button size="sm" className="w-full h-8 text-xs" onClick={saveRgbSettings}>
+                          {t.timer.confirm}
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </TooltipProvider>
-
-              {/* RGB Sliders Section */}
-              <div className="space-y-4 pt-4 border-t">
-                <div className="flex items-center justify-between mb-2">
-                   <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
-                   <div 
-                     className="w-12 h-4 rounded border" 
-                     style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
-                   />
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-[10px] font-mono">
-                      <span>{t.theme.rgb.r}</span>
-                      <span>{rgb.r}</span>
-                    </div>
-                    <Slider 
-                      value={[rgb.r]} 
-                      max={255} 
-                      step={1} 
-                      onValueChange={(val) => handleRgbChange('r', val)}
-                      onValueCommit={handleRgbCommit}
-                      className="[&_[role=slider]]:h-3 [&_[role=slider]]:w-3"
-                    />
-                  </div>
-                  
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-[10px] font-mono">
-                      <span>{t.theme.rgb.g}</span>
-                      <span>{rgb.g}</span>
-                    </div>
-                    <Slider 
-                      value={[rgb.g]} 
-                      max={255} 
-                      step={1} 
-                      onValueChange={(val) => handleRgbChange('g', val)}
-                      onValueCommit={handleRgbCommit}
-                      className="[&_[role=slider]]:h-3 [&_[role=slider]]:w-3"
-                    />
-                  </div>
-                  
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-[10px] font-mono">
-                      <span>{t.theme.rgb.b}</span>
-                      <span>{rgb.b}</span>
-                    </div>
-                    <Slider 
-                      value={[rgb.b]} 
-                      max={255} 
-                      step={1} 
-                      onValueChange={(val) => handleRgbChange('b', val)}
-                      onValueCommit={handleRgbCommit}
-                      className="[&_[role=slider]]:h-3 [&_[role=slider]]:w-3"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </CardContent>
