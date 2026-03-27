@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Ender-Evac',
+  title: 'Ender Evac',
   description: 'Minecraft server automated shutdown and open-source tool.',
 };
 

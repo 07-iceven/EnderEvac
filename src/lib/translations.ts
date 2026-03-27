@@ -2,7 +2,7 @@ export type Language = 'en' | 'zh' | 'ja';
 
 export const translations = {
   en: {
-    title: 'Ender-Evac',
+    title: 'Ender Evac',
     subtitle: 'Automated Server Evacuation Tool',
     dashboard: 'Dashboard',
     dashboardDesc: 'Monitor server status and automated evacuation tasks.',
@@ -77,7 +77,7 @@ export const translations = {
       select: 'Select Language'
     },
     footer: {
-      copy: '© 2026 Ender-Evac.',
+      copy: '© 2026 Ender Evac.',
       source: 'GitHub Repository'
     },
     toasts: {
@@ -90,7 +90,7 @@ export const translations = {
     }
   },
   zh: {
-    title: 'Ender-Evac',
+    title: 'Ender Evac',
     subtitle: '服务器全自动跑路工具',
     dashboard: '仪表盘',
     dashboardDesc: '监控服务器状态和自动跑路任务。',
@@ -165,7 +165,7 @@ export const translations = {
       select: '选择语言'
     },
     footer: {
-      copy: '© 2026 Ender-Evac.',
+      copy: '© 2026 Ender Evac.',
       source: 'GitHub URL'
     },
     toasts: {
@@ -178,8 +178,8 @@ export const translations = {
     }
   },
   ja: {
-    title: 'Ender-Evac',
-    subtitle: 'サーバー全自動避難ツール',
+    title: 'Ender Evac',
+    subtitle: '服务器全自動避難ツール',
     dashboard: 'ダッシュボード',
     dashboardDesc: 'サーバーの状態と自動避難タスクを監視します。',
     manualShutdown: '即時避難',
@@ -212,7 +212,7 @@ export const translations = {
     evacuationDesc: '自动サーバー終了シーケンスの視覚的な進行状況。',
     steps: {
       waiting: { title: '避難待ち', desc: 'プレイヤーのアクティビティを監視中' },
-      closing: { title: 'Minecraftサーバーを停止', desc: 'サービスを切断します' },
+      closing: { title: 'Minecraft服务器を停止', desc: 'サービスを切断します' },
       maintenance: { title: 'メンテナンス偽装を有効化', desc: '「メンテナンス中」の画面を展開します' },
       uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します' },
       notifying: { title: '「喜報」を送信', desc: '避難メッセージとソースURLを通知します' },
@@ -253,7 +253,7 @@ export const translations = {
       select: '言語を選択'
     },
     footer: {
-      copy: '© 2026 Ender-Evac.',
+      copy: '© 2026 Ender Evac.',
       source: 'GitHub URL'
     },
     toasts: {
