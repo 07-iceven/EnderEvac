@@ -234,7 +234,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       </TooltipTrigger>
                       <TooltipContent 
                         side="right" 
-                        sideOffset={12} 
+                        sideOffset={4} 
                         className="text-[10px] px-2 py-1 h-auto min-w-0"
                       >
                         <p className="font-medium">{color.name[settings.language]}</p>
@@ -302,7 +302,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                     </TooltipTrigger>
                     <TooltipContent 
                       side="right" 
-                      sideOffset={12} 
+                      sideOffset={4} 
                       className="text-[10px] px-2 py-1 h-auto min-w-0"
                     >
                       <p className="font-medium">{t.theme.customColor}</p>
