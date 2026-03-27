@@ -233,7 +233,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                         />
                       </TooltipTrigger>
                       <TooltipContent 
-                        side="top" 
+                        side="right" 
                         sideOffset={12} 
                         className="text-[10px] px-2 py-1 h-auto min-w-0"
                       >
@@ -301,7 +301,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       </Popover>
                     </TooltipTrigger>
                     <TooltipContent 
-                      side="top" 
+                      side="right" 
                       sideOffset={12} 
                       className="text-[10px] px-2 py-1 h-auto min-w-0"
                     >
