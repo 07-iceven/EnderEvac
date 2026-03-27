@@ -23,6 +23,7 @@ interface ConfigPanelProps {
 export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: ConfigPanelProps) {
   const { toast } = useToast()
   const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
+  const [hoveredColorName, setHoveredColorName] = useState<string | null>(null)
   const t = translations[settings.language]
 
   // RGB Local State
@@ -151,6 +152,10 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
   };
 
   const isCustomColorActive = !accentColors.some(c => c.value.toLowerCase() === settings.accentColor.toLowerCase());
+  
+  const activeColor = accentColors.find(c => c.value.toLowerCase() === settings.accentColor.toLowerCase());
+  const activeColorName = activeColor ? activeColor.name[settings.language] : t.theme.customColor;
+  const currentDisplayColorName = hoveredColorName || activeColorName;
 
   return (
     <div className="space-y-6">
@@ -220,7 +225,12 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             </div>
 
             <div className="space-y-4">
-              <Label className="text-sm font-semibold">{t.theme.accentColor}</Label>
+              <div className="flex items-center gap-2">
+                <Label className="text-sm font-semibold">{t.theme.accentColor}</Label>
+                <span className="text-xs text-muted-foreground font-normal transition-opacity duration-200">
+                  {currentDisplayColorName}
+                </span>
+              </div>
               <TooltipProvider>
                 <div className="grid grid-cols-6 gap-2">
                   {accentColors.map((color) => (
@@ -228,6 +238,14 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       <TooltipTrigger asChild>
                         <button
                           onClick={() => onUpdate({ accentColor: color.value })}
+                          onMouseEnter={() => {
+                            updateColorPreview(color.value);
+                            setHoveredColorName(color.name[settings.language]);
+                          }}
+                          onMouseLeave={() => {
+                            updateColorPreview(settings.accentColor);
+                            setHoveredColorName(null);
+                          }}
                           className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 active:scale-95 ${settings.accentColor.toLowerCase() === color.value.toLowerCase() ? 'border-foreground shadow-md' : 'border-transparent'}`}
                           style={{ backgroundColor: color.value }}
                         />
@@ -248,6 +266,8 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       <Popover onOpenChange={(open) => !open && saveRgbSettings()}>
                         <PopoverTrigger asChild>
                           <button
+                            onMouseEnter={() => setHoveredColorName(t.theme.customColor)}
+                            onMouseLeave={() => setHoveredColorName(null)}
                             className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${isCustomColorActive ? 'border-foreground shadow-md' : 'border-transparent bg-muted'}`}
                             style={isCustomColorActive ? { backgroundColor: settings.accentColor } : {}}
                           >
