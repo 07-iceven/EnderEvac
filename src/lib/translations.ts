@@ -71,7 +71,12 @@ export const translations = {
       darkMode: 'Dark Mode',
       darkModeDesc: 'Switch between light and dark themes.',
       accentColor: 'Theme Color',
-      customColor: 'Custom Color'
+      customColor: 'Custom Color',
+      rgb: {
+        r: 'Red',
+        g: 'Green',
+        b: 'Blue'
+      }
     },
     language: {
       label: 'System Language',
@@ -160,7 +165,12 @@ export const translations = {
       darkMode: '深色模式',
       darkModeDesc: '在亮色和深色主题之间切换。',
       accentColor: '主题色',
-      customColor: '自定义颜色'
+      customColor: '自定义颜色',
+      rgb: {
+        r: '红',
+        g: '绿',
+        b: '蓝'
+      }
     },
     language: {
       label: '系统语言',
@@ -249,11 +259,16 @@ export const translations = {
       darkMode: 'ダークモード',
       darkModeDesc: 'ライトテーマとダークテーマを切り替えます。',
       accentColor: 'テーマカラー',
-      customColor: 'カスタムカラー'
+      customColor: 'カスタムカラー',
+      rgb: {
+        r: '赤',
+        g: '绿',
+        b: '青'
+      }
     },
     language: {
-      label: 'システム言語',
-      select: '言語を選択'
+      label: 'システム语言',
+      select: '语言を選択'
     },
     footer: {
       copy: '© 2026 Ender Evac.',

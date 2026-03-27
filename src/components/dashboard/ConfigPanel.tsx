@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
+import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Info, Check, Clock, Palette, Languages, Moon, Sun, Pipette } from "lucide-react"
+import { Info, Check, Clock, Palette, Languages, Moon, Sun } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
 import { translations } from "@/lib/translations"
@@ -22,15 +23,25 @@ interface ConfigPanelProps {
 export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: ConfigPanelProps) {
   const { toast } = useToast()
   const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
-  const [localColor, setLocalColor] = useState(settings.accentColor)
   const t = translations[settings.language]
+
+  // RGB Local State
+  const [rgb, setRgb] = useState({ r: 0, g: 0, b: 0 })
 
   useEffect(() => {
     setLocalThreshold(settings.shutdownThreshold)
   }, [settings.shutdownThreshold])
 
+  // Sync RGB state from settings hex
   useEffect(() => {
-    setLocalColor(settings.accentColor)
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(settings.accentColor);
+    if (result) {
+      setRgb({
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      });
+    }
   }, [settings.accentColor])
 
   const accentColors = [
@@ -98,7 +109,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
 
   // Optimized color picking logic to avoid lag
   const updateColorPreview = (hex: string) => {
-    setLocalColor(hex)
     const root = window.document.documentElement
     const r = parseInt(hex.slice(1, 3), 16) / 255
     const g = parseInt(hex.slice(3, 5), 16) / 255
@@ -122,7 +132,19 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     root.style.setProperty('--user-accent-l', `${Math.round(l * 100)}%`)
   }
 
-  const isPredefinedColor = accentColors.some(c => c.value.toLowerCase() === settings.accentColor.toLowerCase())
+  const handleRgbChange = (channel: 'r' | 'g' | 'b', value: number[]) => {
+    const newRgb = { ...rgb, [channel]: value[0] };
+    setRgb(newRgb);
+    
+    // Direct DOM update for performance
+    const hex = "#" + ((1 << 24) + (newRgb.r << 16) + (newRgb.g << 8) + newRgb.b).toString(16).slice(1);
+    updateColorPreview(hex);
+  };
+
+  const handleRgbCommit = () => {
+    const hex = "#" + ((1 << 24) + (rgb.r << 16) + (rgb.g << 8) + rgb.b).toString(16).slice(1);
+    onUpdate({ accentColor: hex });
+  };
 
   return (
     <div className="space-y-6">
@@ -213,31 +235,66 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       </TooltipContent>
                     </Tooltip>
                   ))}
-                  
-                  <Tooltip delayDuration={100}>
-                    <TooltipTrigger asChild>
-                      <div className="relative w-8 h-8 group">
-                        <input
-                          type="color"
-                          value={localColor}
-                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => updateColorPreview(e.target.value)}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdate({ accentColor: e.target.value })}
-                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                        />
-                        <div 
-                          className={`w-full h-full rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${!isPredefinedColor ? 'border-foreground shadow-md' : 'border-dashed border-muted-foreground bg-muted/30'}`}
-                          style={{ backgroundColor: localColor }}
-                        >
-                          <Pipette className={`h-3 w-3 ${!isPredefinedColor ? 'text-white mix-blend-difference' : 'text-muted-foreground'}`} />
-                        </div>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" sideOffset={12} className="text-[10px] px-2 py-1 h-auto min-w-0">
-                      <p className="font-medium">{t.theme.customColor}</p>
-                    </TooltipContent>
-                  </Tooltip>
                 </div>
               </TooltipProvider>
+
+              {/* RGB Sliders Section */}
+              <div className="space-y-4 pt-4 border-t">
+                <div className="flex items-center justify-between mb-2">
+                   <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
+                   <div 
+                     className="w-12 h-4 rounded border" 
+                     style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
+                   />
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[10px] font-mono">
+                      <span>{t.theme.rgb.r}</span>
+                      <span>{rgb.r}</span>
+                    </div>
+                    <Slider 
+                      value={[rgb.r]} 
+                      max={255} 
+                      step={1} 
+                      onValueChange={(val) => handleRgbChange('r', val)}
+                      onValueCommit={handleRgbCommit}
+                      className="[&_[role=slider]]:h-3 [&_[role=slider]]:w-3"
+                    />
+                  </div>
+                  
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[10px] font-mono">
+                      <span>{t.theme.rgb.g}</span>
+                      <span>{rgb.g}</span>
+                    </div>
+                    <Slider 
+                      value={[rgb.g]} 
+                      max={255} 
+                      step={1} 
+                      onValueChange={(val) => handleRgbChange('g', val)}
+                      onValueCommit={handleRgbCommit}
+                      className="[&_[role=slider]]:h-3 [&_[role=slider]]:w-3"
+                    />
+                  </div>
+                  
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[10px] font-mono">
+                      <span>{t.theme.rgb.b}</span>
+                      <span>{rgb.b}</span>
+                    </div>
+                    <Slider 
+                      value={[rgb.b]} 
+                      max={255} 
+                      step={1} 
+                      onValueChange={(val) => handleRgbChange('b', val)}
+                      onValueCommit={handleRgbCommit}
+                      className="[&_[role=slider]]:h-3 [&_[role=slider]]:w-3"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </CardContent>
