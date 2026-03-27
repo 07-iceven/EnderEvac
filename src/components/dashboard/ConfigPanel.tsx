@@ -22,11 +22,16 @@ interface ConfigPanelProps {
 export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: ConfigPanelProps) {
   const { toast } = useToast()
   const [localThreshold, setLocalThreshold] = useState(settings.shutdownThreshold)
+  const [localColor, setLocalColor] = useState(settings.accentColor)
   const t = translations[settings.language]
 
   useEffect(() => {
     setLocalThreshold(settings.shutdownThreshold)
   }, [settings.shutdownThreshold])
+
+  useEffect(() => {
+    setLocalColor(settings.accentColor)
+  }, [settings.accentColor])
 
   const accentColors = [
     { name: { en: 'Pink', zh: '粉色', ja: 'ピンク' }, value: '#f6329a' },
@@ -91,11 +96,36 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     toast({ title: t.toasts.configUpdated })
   }
 
+  // Optimized color picking logic to avoid lag
+  const updateColorPreview = (hex: string) => {
+    setLocalColor(hex)
+    const root = window.document.documentElement
+    const r = parseInt(hex.slice(1, 3), 16) / 255
+    const g = parseInt(hex.slice(3, 5), 16) / 255
+    const b = parseInt(hex.slice(5, 7), 16) / 255
+    const max = Math.max(r, g, b), min = Math.min(r, g, b)
+    let h = 0, s, l = (max + min) / 2
+    if (max !== min) {
+      const d = max - min
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break
+        case g: h = (b - r) / d + 2; break
+        case b: h = (r - g) / d + 4; break
+      }
+      h /= 6
+    } else {
+      s = 0
+    }
+    root.style.setProperty('--user-accent-h', `${Math.round(h * 360)}`)
+    root.style.setProperty('--user-accent-s', `${Math.round(s * 100)}%`)
+    root.style.setProperty('--user-accent-l', `${Math.round(l * 100)}%`)
+  }
+
   const isPredefinedColor = accentColors.some(c => c.value.toLowerCase() === settings.accentColor.toLowerCase())
 
   return (
     <div className="space-y-6">
-      {/* Timer Configuration Card */}
       <Card className="fluent-glass">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg flex items-center gap-2">
@@ -121,7 +151,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                 </Button>
               </div>
               
-              {/* Enhanced Currently Active Display */}
               <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 border border-border/50 mt-4">
                 <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <Info className="h-4 w-4 text-primary" />
@@ -140,7 +169,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
         </CardContent>
       </Card>
 
-      {/* Theme / Appearance Card */}
       <Card className="fluent-glass">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg flex items-center gap-2">
@@ -186,19 +214,19 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                     </Tooltip>
                   ))}
                   
-                  {/* Custom Color Picker */}
                   <Tooltip delayDuration={100}>
                     <TooltipTrigger asChild>
                       <div className="relative w-8 h-8 group">
                         <input
                           type="color"
-                          value={settings.accentColor}
-                          onChange={(e) => onUpdate({ accentColor: e.target.value })}
+                          value={localColor}
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => updateColorPreview(e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdate({ accentColor: e.target.value })}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         />
                         <div 
                           className={`w-full h-full rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${!isPredefinedColor ? 'border-foreground shadow-md' : 'border-dashed border-muted-foreground bg-muted/30'}`}
-                          style={{ backgroundColor: !isPredefinedColor ? settings.accentColor : 'transparent' }}
+                          style={{ backgroundColor: localColor }}
                         >
                           <Pipette className={`h-3 w-3 ${!isPredefinedColor ? 'text-white mix-blend-difference' : 'text-muted-foreground'}`} />
                         </div>
@@ -215,7 +243,6 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
         </CardContent>
       </Card>
 
-      {/* Language Selection Card */}
       <Card className="fluent-glass">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg flex items-center gap-2">
