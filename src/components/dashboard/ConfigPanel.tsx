@@ -47,7 +47,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
 
   const accentColors = [
     { name: { en: 'Pink', zh: '粉色', ja: 'ピンク' }, value: '#f6329a' },
-    { name: { en: 'Orange', zh: '呆样橙色', ja: 'オレンジ' }, value: '#ff6900' },
+    { name: { en: 'Orange', zh: '橙色', ja: 'オレンジ' }, value: '#ff6900' },
     { name: { en: 'Red', zh: '红色', ja: 'レッド' }, value: '#fb2c36' },
     { name: { en: 'Amber', zh: '琥珀色', ja: 'アンバー' }, value: '#fe9a00' },
     { name: { en: 'Yellow', zh: '黄色', ja: 'イエロー' }, value: '#f0b100' },
@@ -225,9 +225,9 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between">
                 <Label className="text-sm font-semibold">{t.theme.accentColor}</Label>
-                <span className="text-xs text-muted-foreground font-normal transition-opacity duration-200">
+                <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full uppercase tracking-wider transition-all duration-200">
                   {currentDisplayColorName}
                 </span>
               </div>
