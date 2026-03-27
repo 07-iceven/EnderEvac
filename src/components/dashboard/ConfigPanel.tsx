@@ -243,60 +243,71 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                   ))}
 
                   {/* Custom Color Popover Trigger */}
-                  <Popover onOpenChange={(open) => !open && saveRgbSettings()}>
-                    <PopoverTrigger asChild>
-                      <button
-                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${isCustomColorActive ? 'border-foreground shadow-md' : 'border-transparent bg-muted'}`}
-                        style={isCustomColorActive ? { backgroundColor: settings.accentColor } : {}}
-                      >
-                        <Settings2 className={`h-4 w-4 ${isCustomColorActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-56 p-4" side="top" sideOffset={12}>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
-                          <div 
-                            className="w-8 h-4 rounded border" 
-                            style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
-                          />
-                        </div>
-                        
-                        <div className="grid grid-cols-3 gap-2">
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.r}</Label>
-                            <Input 
-                              type="number"
-                              value={rgb.r}
-                              onChange={(e) => handleRgbInputChange('r', e.target.value)}
-                              className="h-8 px-2 text-xs"
-                            />
+                  <Tooltip delayDuration={100}>
+                    <TooltipTrigger asChild>
+                      <Popover onOpenChange={(open) => !open && saveRgbSettings()}>
+                        <PopoverTrigger asChild>
+                          <button
+                            className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${isCustomColorActive ? 'border-foreground shadow-md' : 'border-transparent bg-muted'}`}
+                            style={isCustomColorActive ? { backgroundColor: settings.accentColor } : {}}
+                          >
+                            <Settings2 className={`h-4 w-4 ${isCustomColorActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-56 p-4" side="top" sideOffset={12}>
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                              <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
+                              <div 
+                                className="w-8 h-4 rounded border" 
+                                style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
+                              />
+                            </div>
+                            
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="space-y-1">
+                                <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.r}</Label>
+                                <Input 
+                                  type="number"
+                                  value={rgb.r}
+                                  onChange={(e) => handleRgbInputChange('r', e.target.value)}
+                                  className="h-8 px-2 text-xs"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.g}</Label>
+                                <Input 
+                                  type="number"
+                                  value={rgb.g}
+                                  onChange={(e) => handleRgbInputChange('g', e.target.value)}
+                                  className="h-8 px-2 text-xs"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.b}</Label>
+                                <Input 
+                                  type="number"
+                                  value={rgb.b}
+                                  onChange={(e) => handleRgbInputChange('b', e.target.value)}
+                                  className="h-8 px-2 text-xs"
+                                />
+                              </div>
+                            </div>
+                            <Button size="sm" className="w-full h-8 text-xs" onClick={saveRgbSettings}>
+                              {t.timer.confirm}
+                            </Button>
                           </div>
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.g}</Label>
-                            <Input 
-                              type="number"
-                              value={rgb.g}
-                              onChange={(e) => handleRgbInputChange('g', e.target.value)}
-                              className="h-8 px-2 text-xs"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.b}</Label>
-                            <Input 
-                              type="number"
-                              value={rgb.b}
-                              onChange={(e) => handleRgbInputChange('b', e.target.value)}
-                              className="h-8 px-2 text-xs"
-                            />
-                          </div>
-                        </div>
-                        <Button size="sm" className="w-full h-8 text-xs" onClick={saveRgbSettings}>
-                          {t.timer.confirm}
-                        </Button>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                        </PopoverContent>
+                      </Popover>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="top" 
+                      sideOffset={12} 
+                      className="text-[10px] px-2 py-1 h-auto min-w-0"
+                    >
+                      <p className="font-medium">{t.theme.customColor}</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </TooltipProvider>
             </div>
