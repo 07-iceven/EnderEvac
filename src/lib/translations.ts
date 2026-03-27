@@ -70,7 +70,8 @@ export const translations = {
     theme: {
       darkMode: 'Dark Mode',
       darkModeDesc: 'Switch between light and dark themes.',
-      accentColor: 'Theme Color'
+      accentColor: 'Theme Color',
+      customColor: 'Custom Color'
     },
     language: {
       label: 'System Language',
@@ -158,7 +159,8 @@ export const translations = {
     theme: {
       darkMode: '深色模式',
       darkModeDesc: '在亮色和深色主题之间切换。',
-      accentColor: '主题色'
+      accentColor: '主题色',
+      customColor: '自定义颜色'
     },
     language: {
       label: '系统语言',
@@ -213,10 +215,10 @@ export const translations = {
     steps: {
       waiting: { title: '避難待ち', desc: 'プレイヤーのアクティビティを監視中' },
       closing: { title: 'Minecraft服务器を停止', desc: 'サービスを切断します' },
-      maintenance: { title: 'メンテナンス偽装を有効化', desc: '「メンテナンス中」の画面を展開します' },
+      maintenance: { title: 'メンテナンス伪装を有効化', desc: '「メンテナンス中」の画面を展開します' },
       uploading: { title: 'GitHub アーカイブ', desc: 'ファイルをプッシュしてオープンソース化します' },
       notifying: { title: '「喜報」を送信', desc: '避難メッセージとソースURLを通知します' },
-      facade_shutdown: { title: '偽装サーバーを停止', desc: '一時的な「メンテナンス中」の表示を撤去します' },
+      facade_shutdown: { title: '伪装サーバーを停止', desc: '一時的な「メンテナンス中」の表示を撤去します' },
       shutdown: { title: 'シャットダウン', desc: '節電します' }
     },
     tabs: {
@@ -246,7 +248,8 @@ export const translations = {
     theme: {
       darkMode: 'ダークモード',
       darkModeDesc: 'ライトテーマとダークテーマを切り替えます。',
-      accentColor: 'テーマカラー'
+      accentColor: 'テーマカラー',
+      customColor: 'カスタムカラー'
     },
     language: {
       label: 'システム言語',

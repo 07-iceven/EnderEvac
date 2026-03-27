@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Info, Check, Clock, Palette, Languages, Moon, Sun } from "lucide-react"
+import { Info, Check, Clock, Palette, Languages, Moon, Sun, Pipette } from "lucide-react"
 import { AppSettings, parseTimeToSeconds } from "@/hooks/use-simulated-app"
 import { useToast } from "@/hooks/use-toast"
 import { translations } from "@/lib/translations"
@@ -91,6 +91,8 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     toast({ title: t.toasts.configUpdated })
   }
 
+  const isPredefinedColor = accentColors.some(c => c.value.toLowerCase() === settings.accentColor.toLowerCase())
+
   return (
     <div className="space-y-6">
       {/* Timer Configuration Card */}
@@ -170,7 +172,7 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       <TooltipTrigger asChild>
                         <button
                           onClick={() => onUpdate({ accentColor: color.value })}
-                          className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 active:scale-95 ${settings.accentColor === color.value ? 'border-foreground shadow-md' : 'border-transparent'}`}
+                          className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 active:scale-95 ${settings.accentColor.toLowerCase() === color.value.toLowerCase() ? 'border-foreground shadow-md' : 'border-transparent'}`}
                           style={{ backgroundColor: color.value }}
                         />
                       </TooltipTrigger>
@@ -183,6 +185,29 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
                       </TooltipContent>
                     </Tooltip>
                   ))}
+                  
+                  {/* Custom Color Picker */}
+                  <Tooltip delayDuration={100}>
+                    <TooltipTrigger asChild>
+                      <div className="relative w-8 h-8 group">
+                        <input
+                          type="color"
+                          value={settings.accentColor}
+                          onChange={(e) => onUpdate({ accentColor: e.target.value })}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+                        <div 
+                          className={`w-full h-full rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${!isPredefinedColor ? 'border-foreground shadow-md' : 'border-dashed border-muted-foreground bg-muted/30'}`}
+                          style={{ backgroundColor: !isPredefinedColor ? settings.accentColor : 'transparent' }}
+                        >
+                          <Pipette className={`h-3 w-3 ${!isPredefinedColor ? 'text-white mix-blend-difference' : 'text-muted-foreground'}`} />
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" sideOffset={12} className="text-[10px] px-2 py-1 h-auto min-w-0">
+                      <p className="font-medium">{t.theme.customColor}</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </TooltipProvider>
             </div>
