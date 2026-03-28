@@ -44,9 +44,9 @@ export function ServerStatus({
     const pad = (n: number) => n.toString().padStart(2, '0');
 
     const parts = []
-    parts.push(`${pad(d)}d`)
-    parts.push(`${pad(h)}h`)
-    parts.push(`${pad(m)}m`)
+    if (d > 0) parts.push(`${pad(d)}d`)
+    if (h > 0 || d > 0) parts.push(`${pad(h)}h`)
+    if (m > 0 || h > 0 || d > 0) parts.push(`${pad(m)}m`)
     parts.push(`${pad(s)}s`)
     return parts.join(' ')
   }
