@@ -68,7 +68,7 @@ export function useSimulatedApp() {
   const [isEvacuating, setIsEvacuating] = useState(false)
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
   const [evacuationElapsed, setEvacuationElapsed] = useState(0) // 跑路已用时长（秒）
-  const [uptimeSeconds, setUptimeSeconds] = useState(14 * 86400 + 2 * 3600)
+  const [uptimeSeconds, setUptimeSeconds] = useState(86400)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
   
   const [isManualPaused, setIsManualPaused] = useState(false)
@@ -243,7 +243,7 @@ export function useSimulatedApp() {
     setIsEvacuating(false)
     setTimeSinceLastPlayer(0)
     setEvacuationElapsed(0)
-    setUptimeSeconds(14 * 86400 + 2 * 3600)
+    setUptimeSeconds(86400)
     setCurrentEvacStep(0)
     toast({
       title: (translations as any)[settings.language].toasts.simulationReset
