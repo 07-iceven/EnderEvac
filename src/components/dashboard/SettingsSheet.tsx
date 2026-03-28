@@ -37,7 +37,7 @@ export function SettingsSheet({
   setIsOnline,
   resetSimulation
 }: SettingsSheetProps) {
-  const t = translations[settings.language]
+  const t = (translations as any)[settings.language]
 
   const handleStepDurationChange = (index: number, value: string) => {
     const newDurations = [...settings.stepDurations]
@@ -226,19 +226,13 @@ export function SettingsSheet({
 
         <div className="pt-2">
           <Button 
-            variant="outline" 
+            variant="ghost"
             className="w-full gap-2 text-destructive hover:text-destructive hover:bg-destructive/5"
             onClick={resetSimulation}
           >
             <RotateCcw className="h-4 w-4" />
             {t.editData.reset}
           </Button>
-        </div>
-
-        <div className="pt-4">
-          <p className="text-[10px] text-muted-foreground text-center italic">
-            Ender Evac Simulation Debugger
-          </p>
         </div>
       </div>
     </SheetContent>
