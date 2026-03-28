@@ -39,11 +39,13 @@ export function ServerStatus({
     const m = Math.floor((seconds % 3600) / 60)
     const s = seconds % 60
     
+    const pad = (n: number) => (n > 0 && n < 10 ? `0${n}` : n.toString());
+
     const parts = []
-    if (d > 0) parts.push(`${d}d`)
-    if (h > 0) parts.push(`${h}h`)
-    if (m > 0) parts.push(`${m}m`)
-    parts.push(`${s}s`)
+    if (d > 0) parts.push(`${pad(d)}d`)
+    if (h > 0) parts.push(`${pad(h)}h`)
+    if (m > 0) parts.push(`${pad(m)}m`)
+    parts.push(`${pad(s)}s`)
     return parts.join(' ')
   }
 
