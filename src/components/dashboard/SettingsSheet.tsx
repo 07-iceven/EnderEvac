@@ -5,9 +5,10 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { Slider } from "@/components/ui/slider"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
-import { Activity, Clock, Users, Timer, RotateCcw } from "lucide-react"
+import { Activity, Clock, Users, Timer, RotateCcw, Zap } from "lucide-react"
 
 interface SettingsSheetProps {
   settings: AppSettings
@@ -116,6 +117,32 @@ export function SettingsSheet({
 
         <Separator />
 
+        {/* Simulation Speed Edit */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-bold text-sm text-primary">
+            <Zap className="h-4 w-4" />
+            {t.editData.speed}
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex justify-between text-[10px] text-muted-foreground uppercase font-bold tracking-widest">
+              <span>1x</span>
+              <span className="text-primary">{settings.simulationSpeed}x</span>
+              <span>100x</span>
+            </div>
+            <Slider 
+              value={[settings.simulationSpeed]} 
+              min={1} 
+              max={100} 
+              step={1}
+              onValueChange={([val]) => onUpdate({ simulationSpeed: val })}
+              className="py-2"
+            />
+          </div>
+        </div>
+
+        <Separator />
+
         {/* Evacuation Steps Edit */}
         <div className="space-y-4">
           <div className="flex items-center gap-2 font-bold text-sm text-primary">
@@ -187,7 +214,7 @@ export function SettingsSheet({
 
         <div className="pt-4">
           <p className="text-[10px] text-muted-foreground text-center italic">
-            Ender-Evac Simulation Debugger
+            Ender Evac Simulation Debugger
           </p>
         </div>
       </div>

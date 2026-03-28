@@ -15,6 +15,7 @@ export interface AppSettings {
   language: Language
   maxPlayers: number
   stepDurations: number[] // [closing, maintenance, uploading, notifying, facade_shutdown, shutdown]
+  simulationSpeed: number // 1x, 2x, etc.
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
@@ -27,7 +28,8 @@ const DEFAULT_SETTINGS: AppSettings = {
   accentColor: '#0078D4',
   language: 'zh',
   maxPlayers: 20,
-  stepDurations: [5, 5, 5, 5, 5, 5]
+  stepDurations: [5, 5, 5, 5, 5, 5],
+  simulationSpeed: 1
 }
 
 export function parseTimeToSeconds(timeStr: string): number {
@@ -157,17 +159,19 @@ export function useSimulatedApp() {
     const interval = setInterval(() => {
       if (isPaused) return
 
+      const speed = settings.simulationSpeed || 1
+
       if (isOnline && (playerCount === 0 || isEvacuating)) {
-        setTimeSinceLastPlayer(prev => prev + 1)
+        setTimeSinceLastPlayer(prev => prev + speed)
       }
       
       if (isOnline) {
-        setUptimeSeconds(prev => prev + 1)
+        setUptimeSeconds(prev => prev + speed)
       }
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isOnline, playerCount, isEvacuating, isPaused])
+  }, [isOnline, playerCount, isEvacuating, isPaused, settings.simulationSpeed])
 
   useEffect(() => {
     const threshold = parseTimeToSeconds(settings.shutdownThreshold)
@@ -222,7 +226,6 @@ export function useSimulatedApp() {
     setTimeSinceLastPlayer(0)
     setUptimeSeconds(14 * 86400 + 2 * 3600)
     setCurrentEvacStep(0)
-    // Removed reset of stepDurations and playerCount per user request
     toast({
       title: (translations as any)[settings.language].toasts.simulationReset
     })
