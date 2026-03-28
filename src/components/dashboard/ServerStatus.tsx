@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -34,6 +35,9 @@ export function ServerStatus({
   const t = translations[language]
   const progress = Math.min((timeSinceLastPlayer / thresholdSeconds) * 100, 100)
   const remainingSeconds = Math.max(thresholdSeconds - timeSinceLastPlayer, 0)
+  
+  // 倒计时进度条：从 100% 减少到 0%
+  const remainingProgress = 100 - progress
 
   const formatFullTime = (seconds: number) => {
     const d = Math.floor(seconds / 86400)
@@ -44,10 +48,24 @@ export function ServerStatus({
     const pad = (n: number) => n.toString().padStart(2, '0');
 
     const parts = []
-    if (d > 0) parts.push(`${pad(d)}d`)
-    if (h > 0 || d > 0) parts.push(`${pad(h)}h`)
-    if (m > 0 || h > 0 || d > 0) parts.push(`${pad(m)}m`)
-    parts.push(`${pad(s)}s`)
+    
+    // 只有当该单位不为 0，或者是当前最高的非零单位时才显示
+    if (d > 0) {
+      parts.push(`${pad(d)}d`)
+      parts.push(`${pad(h)}h`)
+      parts.push(`${pad(m)}m`)
+      parts.push(`${pad(s)}s`)
+    } else if (h > 0) {
+      parts.push(`${pad(h)}h`)
+      parts.push(`${pad(m)}m`)
+      parts.push(`${pad(s)}s`)
+    } else if (m > 0) {
+      parts.push(`${pad(m)}m`)
+      parts.push(`${pad(s)}s`)
+    } else {
+      parts.push(`${pad(s)}s`)
+    }
+
     return parts.join(' ')
   }
 
@@ -56,9 +74,8 @@ export function ServerStatus({
 
   const showEvacAlert = isEvacuating || !isOnline
 
-  // Calculate dynamic transition duration based on simulation speed
-  // Use a slightly shorter duration than the tick interval to ensure it finishes before next update
-  const transitionDuration = isPaused ? 0 : Math.max(50, 1000 / simulationSpeed)
+  // 核心优化：过渡时间必须精确等于模拟时钟的间隔，才能实现无缝匀速动画
+  const transitionDuration = isPaused ? 0 : (1000 / simulationSpeed)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -66,12 +83,12 @@ export function ServerStatus({
         "fluent-glass col-span-1 md:col-span-2 lg:col-span-4 overflow-hidden transition-all duration-500 relative min-h-[320px] flex flex-col justify-center",
         showEvacAlert ? 'border-destructive/50 ring-2 ring-destructive/20 bg-destructive/10' : 'bg-destructive/[0.02]'
       )}>
-        {/* Background Progress Layer */}
+        {/* 背景倒计时进度条 */}
         {!showEvacAlert && isOnline && (
           <div 
-            className="absolute inset-y-0 left-0 bg-destructive/20 transition-all ease-linear z-0"
+            className="absolute inset-y-0 left-0 bg-destructive/20 transition-[width] ease-linear z-0"
             style={{ 
-              width: `${progress}%`,
+              width: `${remainingProgress}%`,
               transitionDuration: `${transitionDuration}ms`
             }}
           />
