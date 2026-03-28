@@ -125,6 +125,7 @@ export default function Home() {
                   language={settings.language}
                   maxPlayers={settings.maxPlayers}
                   isPaused={isPaused}
+                  simulationSpeed={settings.simulationSpeed}
                 />
               </section>
 

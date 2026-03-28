@@ -16,6 +16,7 @@ interface ServerStatusProps {
   language: Language
   maxPlayers: number
   isPaused?: boolean
+  simulationSpeed: number
 }
 
 export function ServerStatus({ 
@@ -27,7 +28,8 @@ export function ServerStatus({
   thresholdSeconds, 
   language,
   maxPlayers,
-  isPaused = false
+  isPaused = false,
+  simulationSpeed
 }: ServerStatusProps) {
   const t = translations[language]
   const progress = Math.min((timeSinceLastPlayer / thresholdSeconds) * 100, 100)
@@ -39,13 +41,12 @@ export function ServerStatus({
     const m = Math.floor((seconds % 3600) / 60)
     const s = seconds % 60
     
-    // Pad all numbers to 2 digits, including 0
     const pad = (n: number) => n.toString().padStart(2, '0');
 
     const parts = []
-    if (d > 0) parts.push(`${pad(d)}d`)
-    if (h > 0 || d > 0) parts.push(`${pad(h)}h`)
-    if (m > 0 || h > 0 || d > 0) parts.push(`${pad(m)}m`)
+    parts.push(`${pad(d)}d`)
+    parts.push(`${pad(h)}h`)
+    parts.push(`${pad(m)}m`)
     parts.push(`${pad(s)}s`)
     return parts.join(' ')
   }
@@ -54,6 +55,10 @@ export function ServerStatus({
   const statusColor = isEvacuating ? "text-yellow-500" : isOnline ? "text-green-500" : "text-red-500"
 
   const showEvacAlert = isEvacuating || !isOnline
+
+  // Calculate dynamic transition duration based on simulation speed
+  // Use a slightly shorter duration than the tick interval to ensure it finishes before next update
+  const transitionDuration = isPaused ? 0 : Math.max(50, 1000 / simulationSpeed)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -64,8 +69,11 @@ export function ServerStatus({
         {/* Background Progress Layer */}
         {!showEvacAlert && isOnline && (
           <div 
-            className="absolute inset-y-0 left-0 bg-destructive/20 transition-all duration-1000 ease-linear z-0"
-            style={{ width: `${progress}%` }}
+            className="absolute inset-y-0 left-0 bg-destructive/20 transition-all ease-linear z-0"
+            style={{ 
+              width: `${progress}%`,
+              transitionDuration: `${transitionDuration}ms`
+            }}
           />
         )}
 
