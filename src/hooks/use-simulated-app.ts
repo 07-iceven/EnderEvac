@@ -156,19 +156,20 @@ export function useSimulatedApp() {
   }, [playerCount, isEvacuating])
 
   useEffect(() => {
+    const speed = settings.simulationSpeed || 1
+    const intervalDuration = 1000 / speed
+
     const interval = setInterval(() => {
       if (isPaused) return
 
-      const speed = settings.simulationSpeed || 1
-
       if (isOnline && (playerCount === 0 || isEvacuating)) {
-        setTimeSinceLastPlayer(prev => prev + speed)
+        setTimeSinceLastPlayer(prev => prev + 1)
       }
       
       if (isOnline) {
-        setUptimeSeconds(prev => prev + speed)
+        setUptimeSeconds(prev => prev + 1)
       }
-    }, 1000)
+    }, intervalDuration)
 
     return () => clearInterval(interval)
   }, [isOnline, playerCount, isEvacuating, isPaused, settings.simulationSpeed])
