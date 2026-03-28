@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Slider } from "@/components/ui/slider"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
 import { Activity, Clock, Users, Timer, RotateCcw, Zap } from "lucide-react"
@@ -124,20 +123,26 @@ export function SettingsSheet({
             {t.editData.speed}
           </div>
           
-          <div className="space-y-4">
-            <div className="flex justify-between text-[10px] text-muted-foreground uppercase font-bold tracking-widest">
-              <span>1x</span>
-              <span className="text-primary">{settings.simulationSpeed}x</span>
-              <span>100x</span>
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2">
+              <Input 
+                id="speed"
+                type="number"
+                min={1}
+                value={settings.simulationSpeed}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  onUpdate({ simulationSpeed: isNaN(val) ? 1 : Math.max(1, val) });
+                }}
+                className="font-mono font-bold text-lg h-12"
+              />
+              <span className="text-2xl font-black text-muted-foreground/30 italic select-none">X</span>
             </div>
-            <Slider 
-              value={[settings.simulationSpeed]} 
-              min={1} 
-              max={100} 
-              step={1}
-              onValueChange={([val]) => onUpdate({ simulationSpeed: val })}
-              className="py-2"
-            />
+            <p className="text-[10px] text-muted-foreground leading-tight italic">
+              {settings.language === 'zh' 
+                ? '* 提高模拟倍率以快速观察倒计时和跑路流程。' 
+                : '* Increase speed multiplier to quickly test the evacuation sequence.'}
+            </p>
           </div>
         </div>
 
