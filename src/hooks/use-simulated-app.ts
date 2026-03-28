@@ -22,7 +22,7 @@ export interface AppSettings {
 
 const DEFAULT_SETTINGS: AppSettings = {
   shutdownThreshold: '24h',
-  githubRepo: 'https://github.com/07-iceven/EnderEvac',
+  githubRepo: 'https://github.com/YourName/MinecraftServer-Backup',
   githubToken: 'ghp_************************************',
   qqGroup: '123456789',
   websiteUrl: 'https://myserver.com',
