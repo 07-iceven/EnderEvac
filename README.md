@@ -1,4 +1,4 @@
-# Ender Evac 控制中心
+# Ender Evac 服务器全自动跑路工具
 
 [GitHub Repository](https://github.com/07-iceven/EnderEvac)
 
