@@ -87,7 +87,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender Evac.',
-      source: 'GitHub Repository'
+      source: 'https://github.com/07-iceven/EnderEvac'
     },
     toasts: {
       inputRequired: 'Input Required',
@@ -184,7 +184,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender Evac.',
-      source: 'GitHub URL'
+      source: 'https://github.com/07-iceven/EnderEvac'
     },
     toasts: {
       inputRequired: '需要输入',
@@ -281,7 +281,7 @@ export const translations = {
     },
     footer: {
       copy: '© 2026 Ender Evac.',
-      source: 'GitHub URL'
+      source: 'https://github.com/07-iceven/EnderEvac'
     },
     toasts: {
       inputRequired: '入力が必要です',

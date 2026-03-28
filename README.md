@@ -1,5 +1,7 @@
 # Ender Evac 服务器全自动跑路工具
 
+[GitHub Repository](https://github.com/07-iceven/EnderEvac)
+
 这是 2026 年愚人节项目 —— **Ender Evac**。
 
 ## 项目简介
