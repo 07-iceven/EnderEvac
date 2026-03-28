@@ -67,6 +67,7 @@ export function useSimulatedApp() {
   const [isOnline, setIsOnline] = useState(true)
   const [isEvacuating, setIsEvacuating] = useState(false)
   const [timeSinceLastPlayer, setTimeSinceLastPlayer] = useState(0)
+  const [evacuationElapsed, setEvacuationElapsed] = useState(0) // 跑路已用时长（秒）
   const [uptimeSeconds, setUptimeSeconds] = useState(14 * 86400 + 2 * 3600)
   const [currentEvacStep, setCurrentEvacStep] = useState(0)
   
@@ -151,44 +152,58 @@ export function useSimulatedApp() {
       setTimeSinceLastPlayer(0)
       if (isEvacuating) {
         setIsEvacuating(false)
+        setEvacuationElapsed(0)
       }
     }
   }, [playerCount, isEvacuating])
 
+  // 倒计时阶段：受模拟速率影响
   useEffect(() => {
+    if (isPaused || isEvacuating || !isOnline) return
+
     const speed = settings.simulationSpeed || 1
     const intervalDuration = 1000 / speed
 
     const interval = setInterval(() => {
-      if (isPaused) return
-
-      if (isOnline && (playerCount === 0 || isEvacuating)) {
+      if (playerCount === 0) {
         setTimeSinceLastPlayer(prev => prev + 1)
       }
-      
-      if (isOnline) {
-        setUptimeSeconds(prev => prev + 1)
-      }
+      setUptimeSeconds(prev => prev + 1)
     }, intervalDuration)
 
     return () => clearInterval(interval)
   }, [isOnline, playerCount, isEvacuating, isPaused, settings.simulationSpeed])
 
+  // 跑路进程阶段：不受模拟速率影响，固定 1x 速率
+  useEffect(() => {
+    if (isPaused || !isEvacuating) return
+
+    const interval = setInterval(() => {
+      setEvacuationElapsed(prev => prev + 1)
+      setUptimeSeconds(prev => prev + 1) // 跑路期间运行时长依然正常增加
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isEvacuating, isPaused])
+
+  // 触发跑路逻辑
   useEffect(() => {
     const threshold = parseTimeToSeconds(settings.shutdownThreshold)
     
     if (timeSinceLastPlayer >= threshold && !isEvacuating && isOnline && playerCount === 0) {
       setIsEvacuating(true)
+      setEvacuationElapsed(0)
     }
+  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline, playerCount])
 
+  // 跑路步骤计算
+  useEffect(() => {
     if (isEvacuating) {
-      const evacSeconds = timeSinceLastPlayer - threshold
-      
       let cumulative = 0
       let step = 0
       for (let i = 0; i < settings.stepDurations.length; i++) {
         cumulative += settings.stepDurations[i]
-        if (evacSeconds < cumulative) {
+        if (evacuationElapsed < cumulative) {
           step = i + 1
           break
         }
@@ -202,13 +217,14 @@ export function useSimulatedApp() {
       if (step === 6) {
         setIsOnline(false)
         setIsEvacuating(false)
+        setEvacuationElapsed(0)
       }
     } else if (!isOnline) {
       setCurrentEvacStep(6)
     } else {
       setCurrentEvacStep(0)
     }
-  }, [timeSinceLastPlayer, settings.shutdownThreshold, isEvacuating, isOnline, playerCount, settings.stepDurations])
+  }, [evacuationElapsed, isEvacuating, isOnline, settings.stepDurations])
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     const updated = { ...settings, ...newSettings }
@@ -218,6 +234,7 @@ export function useSimulatedApp() {
 
   const triggerManualEvac = () => {
     setTimeSinceLastPlayer(parseTimeToSeconds(settings.shutdownThreshold))
+    setEvacuationElapsed(0)
     setIsEvacuating(true)
   }
 
@@ -225,6 +242,7 @@ export function useSimulatedApp() {
     setIsOnline(true)
     setIsEvacuating(false)
     setTimeSinceLastPlayer(0)
+    setEvacuationElapsed(0)
     setUptimeSeconds(14 * 86400 + 2 * 3600)
     setCurrentEvacStep(0)
     toast({
@@ -244,6 +262,7 @@ export function useSimulatedApp() {
     isEvacuating,
     timeSinceLastPlayer,
     setTimeSinceLastPlayer,
+    evacuationElapsed,
     uptimeSeconds,
     setUptimeSeconds,
     currentEvacStep,

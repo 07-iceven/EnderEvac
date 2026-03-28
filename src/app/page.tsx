@@ -26,6 +26,7 @@ export default function Home() {
     isEvacuating,
     timeSinceLastPlayer,
     setTimeSinceLastPlayer,
+    evacuationElapsed,
     uptimeSeconds,
     setUptimeSeconds,
     currentEvacStep,
@@ -38,11 +39,6 @@ export default function Home() {
   const t = translations[settings.language]
   const thresholdSeconds = parseTimeToSeconds(settings.shutdownThreshold)
   
-  const evacuationStartTime = thresholdSeconds
-  const evacuationElapsed = isEvacuating || !isOnline 
-    ? Math.max(timeSinceLastPlayer - evacuationStartTime, 0) 
-    : 0
-
   const logoImage = PlaceHolderImages.find(img => img.id === 'app-logo')
 
   return (
