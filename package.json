@@ -1,10 +1,10 @@
 {
-  "name": "enderevac",
+  "name": "nextn",
   "version": "0.1.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/07-iceven/EnderEvac"
+    "url": "https://github.com/07-iceven/EnderEvac.git"
   },
   "scripts": {
     "dev": "next dev --turbopack -p 9002",
