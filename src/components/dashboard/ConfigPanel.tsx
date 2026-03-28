@@ -211,94 +211,104 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
             {t.tabs.theme}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label className="text-base">{t.theme.darkMode}</Label>
-              <p className="text-xs text-muted-foreground">{t.theme.darkModeDesc}</p>
-            </div>
-            <Switch 
-              checked={isDarkMode}
-              onCheckedChange={setIsDarkMode}
-            />
-          </div>
-
-          <div className="space-y-3">
+        <CardContent>
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium">{t.theme.accentColor}</Label>
-              <span className="text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">
-                {currentDisplayColorName}
-              </span>
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
-              {accentColors.map((color) => (
-                <button
-                  key={color.value}
-                  className={`h-7 w-7 rounded-full border-2 transition-all ${settings.accentColor.toLowerCase() === color.value.toLowerCase() ? 'border-primary scale-110 shadow-md' : 'border-transparent hover:scale-110'}`}
-                  style={{ backgroundColor: color.value }}
-                  onClick={() => onUpdate({ accentColor: color.value })}
-                  onMouseEnter={() => setHoveredColorName(color.name[settings.language])}
-                  onMouseLeave={() => setHoveredColorName(null)}
+              <div className="space-y-0.5">
+                <Label className="text-sm font-semibold">{t.theme.darkMode}</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                {isDarkMode ? <Moon className="h-4 w-4 text-primary" /> : <Sun className="h-4 w-4 text-yellow-500" />}
+                <Switch 
+                  checked={isDarkMode} 
+                  onCheckedChange={setIsDarkMode} 
                 />
-              ))}
-              
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="icon"
-                    className={`h-7 w-7 rounded-full p-0 border-2 transition-all ${isCustomColorActive ? 'border-primary scale-110 shadow-md' : 'border-transparent hover:scale-110'}`}
-                    style={{ backgroundColor: isCustomColorActive ? settings.accentColor : 'transparent' }}
-                  >
-                    <Settings2 className="h-3.5 w-3.5" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-64" align="end">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
-                      <div 
-                        className="w-8 h-4 rounded border" 
-                        style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
-                      />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm font-semibold">{t.theme.accentColor}</Label>
+                <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full uppercase tracking-wider transition-all duration-200">
+                  {currentDisplayColorName}
+                </span>
+              </div>
+              <div className="grid grid-cols-6 gap-2">
+                {accentColors.map((color) => (
+                  <button
+                    key={color.value}
+                    onClick={() => onUpdate({ accentColor: color.value })}
+                    onMouseEnter={() => {
+                      updateColorPreview(color.value);
+                      setHoveredColorName(color.name[settings.language]);
+                    }}
+                    onMouseLeave={() => {
+                      updateColorPreview(settings.accentColor);
+                      setHoveredColorName(null);
+                    }}
+                    className={`w-8 h-8 rounded-full transition-all hover:scale-110 active:scale-95 outline-none ${settings.accentColor.toLowerCase() === color.value.toLowerCase() ? 'ring-2 ring-primary ring-offset-2 shadow-md' : 'ring-1 ring-border/50'}`}
+                    style={{ backgroundColor: color.value }}
+                  />
+                ))}
+
+                {/* Custom Color Popover Trigger */}
+                <Popover onOpenChange={(open) => !open && saveRgbSettings()}>
+                  <PopoverTrigger asChild>
+                    <button
+                      onMouseEnter={() => setHoveredColorName(t.theme.customColor)}
+                      onMouseLeave={() => setHoveredColorName(null)}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 outline-none ${isCustomColorActive ? 'ring-2 ring-primary ring-offset-2 shadow-md' : 'bg-muted ring-1 ring-border/50'}`}
+                      style={isCustomColorActive ? { backgroundColor: settings.accentColor } : {}}
+                    >
+                      <Settings2 className={`h-4 w-4 ${isCustomColorActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-56 p-4" side="top" sideOffset={12}>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.theme.customColor}</Label>
+                        <div 
+                          className="w-8 h-4 rounded border" 
+                          style={{ backgroundColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }}
+                        />
+                      </div>
+                      
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="space-y-1">
+                          <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.r}</Label>
+                          <Input 
+                            type="number"
+                            value={rgb.r}
+                            onChange={(e) => handleRgbInputChange('r', e.target.value)}
+                            className="h-8 px-2 text-xs"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.g}</Label>
+                          <Input 
+                            type="number"
+                            value={rgb.g}
+                            onChange={(e) => handleRgbInputChange('g', e.target.value)}
+                            className="h-8 px-2 text-xs"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.b}</Label>
+                          <Input 
+                            type="number"
+                            value={rgb.b}
+                            onChange={(e) => handleRgbInputChange('b', e.target.value)}
+                            className="h-8 px-2 text-xs"
+                          />
+                        </div>
+                      </div>
+                      <Button size="sm" className="w-full h-8 text-xs" onClick={saveRgbSettings}>
+                        {t.timer.confirm}
+                      </Button>
                     </div>
-                    
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="space-y-1">
-                        <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.r}</Label>
-                        <Input 
-                          type="number"
-                          value={rgb.r}
-                          onChange={(e) => handleRgbInputChange('r', e.target.value)}
-                          className="h-8 px-2 text-xs"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.g}</Label>
-                        <Input 
-                          type="number"
-                          value={rgb.g}
-                          onChange={(e) => handleRgbInputChange('g', e.target.value)}
-                          className="h-8 px-2 text-xs"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[10px] font-mono uppercase text-muted-foreground">{t.theme.rgb.b}</Label>
-                        <Input 
-                          type="number"
-                          value={rgb.b}
-                          onChange={(e) => handleRgbInputChange('b', e.target.value)}
-                          className="h-8 px-2 text-xs"
-                        />
-                      </div>
-                    </div>
-                    <Button size="sm" className="w-full h-8 text-xs" onClick={saveRgbSettings}>
-                      {t.timer.confirm}
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
           </div>
         </CardContent>
