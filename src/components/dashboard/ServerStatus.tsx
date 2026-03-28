@@ -39,12 +39,13 @@ export function ServerStatus({
     const m = Math.floor((seconds % 3600) / 60)
     const s = seconds % 60
     
-    const pad = (n: number) => (n > 0 && n < 10 ? `0${n}` : n.toString());
+    // Pad all numbers to 2 digits, including 0
+    const pad = (n: number) => n.toString().padStart(2, '0');
 
     const parts = []
     if (d > 0) parts.push(`${pad(d)}d`)
-    if (h > 0) parts.push(`${pad(h)}h`)
-    if (m > 0) parts.push(`${pad(m)}m`)
+    if (h > 0 || d > 0) parts.push(`${pad(h)}h`)
+    if (m > 0 || h > 0 || d > 0) parts.push(`${pad(m)}m`)
     parts.push(`${pad(s)}s`)
     return parts.join(' ')
   }

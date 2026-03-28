@@ -72,12 +72,12 @@ export function ConfigPanel({ settings, onUpdate, isDarkMode, setIsDarkMode }: C
     const m = Math.floor((s % 3600) / 60)
     const sec = s % 60
 
-    const pad = (n: number) => (n > 0 && n < 10 ? `0${n}` : n.toString());
+    const pad = (n: number) => n.toString().padStart(2, '0');
 
     const parts = []
     if (d > 0) parts.push(`${pad(d)}d`)
-    if (h > 0) parts.push(`${pad(h)}h`)
-    if (m > 0) parts.push(`${pad(m)}m`)
+    if (h > 0 || d > 0) parts.push(`${pad(h)}h`)
+    if (m > 0 || h > 0 || d > 0) parts.push(`${pad(m)}m`)
     parts.push(`${pad(sec)}s`)
     return parts.join(' ')
   }
