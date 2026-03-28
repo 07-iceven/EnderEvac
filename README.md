@@ -1,4 +1,4 @@
-# Ender Evac 控制中心
+# Ender Evac 服务器全自动跑路工具
 
 这是 2026 年愚人节项目 —— **Ender Evac**。
 
