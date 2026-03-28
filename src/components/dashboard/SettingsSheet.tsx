@@ -140,6 +140,17 @@ export function SettingsSheet({
               <span className="text-2xl font-black text-muted-foreground/30 italic select-none">X</span>
             </div>
           </div>
+
+          <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+              <Keyboard className="h-3 w-3" />
+              {t.editData.pauseShortcut}
+            </div>
+            <Switch 
+              checked={settings.enablePauseShortcut}
+              onCheckedChange={(val) => onUpdate({ enablePauseShortcut: val })}
+            />
+          </div>
         </div>
 
         <Separator />

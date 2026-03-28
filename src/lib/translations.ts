@@ -32,7 +32,8 @@ export const translations = {
       stepDurations: 'Step Durations (Seconds)',
       reset: 'Reset Simulation Data',
       speed: 'Simulation Speed (Multiplier)',
-      playerControls: 'Keyboard Player Controls (↑/↓)'
+      playerControls: 'Keyboard Player Controls (↑/↓)',
+      pauseShortcut: 'F1 Pause Control'
     },
     evacuationTitle: 'Evacuation Progress',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
@@ -128,7 +129,8 @@ export const translations = {
       stepDurations: '各步骤用时 (秒)',
       reset: '重置模拟数据',
       speed: '模拟速率 (倍数)',
-      playerControls: '键盘控制玩家数 (↑/↓)'
+      playerControls: '键盘控制玩家数 (↑/↓)',
+      pauseShortcut: 'F1 暂停控制'
     },
     evacuationTitle: '跑路进程',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
@@ -201,7 +203,7 @@ export const translations = {
     manualShutdown: '即時避難',
     refresh: '更新',
     settings: '設定',
-    serverStatus: 'サーバー状態',
+    serverStatus: 'サーバー状态',
     running: '稼働中',
     evacuating: '避難中...',
     offline: 'オフライン',
@@ -211,7 +213,7 @@ export const translations = {
     idle: 'アイドル',
     shutdownCountdown: '避難カウントダウン',
     inactivityThreshold: '非アクティブしきい値',
-    estimatedClosing: '避難予定時刻',
+    estimatedClosing: '避難予定时刻',
     configuration: 'タイマー設定',
     configDesc: '自动避難のための非アクティブしきい値を設定します。',
     settingsTitle: 'ホームデータ編集',
@@ -224,7 +226,8 @@ export const translations = {
       stepDurations: 'ステップ所要時間 (秒)',
       reset: 'シミュレーションデータをリセット',
       speed: 'シミュレーション速度 (倍数)',
-      playerControls: 'キーボードでプレイヤー数を調整 (↑/↓)'
+      playerControls: 'キーボードでプレイヤー数を調整 (↑/↓)',
+      pauseShortcut: 'F1 一時停止コントロール'
     },
     evacuationTitle: '避難プロセス',
     evacuationDesc: '自动サーバー終了シーケンスの視覚的な進行状況。',
@@ -273,7 +276,7 @@ export const translations = {
       }
     },
     language: {
-      label: 'システム语言',
+      label: '系统语言',
       select: '语言を選択'
     },
     footer: {
