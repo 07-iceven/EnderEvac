@@ -31,7 +31,8 @@ export const translations = {
       max: 'Max Players',
       stepDurations: 'Step Durations (Seconds)',
       reset: 'Reset Simulation Data',
-      speed: 'Simulation Speed (Multiplier)'
+      speed: 'Simulation Speed (Multiplier)',
+      playerControls: 'Keyboard Player Controls (↑/↓)'
     },
     evacuationTitle: 'Evacuation Progress',
     evacuationDesc: 'Visual progress of the automated server termination sequence.',
@@ -126,7 +127,8 @@ export const translations = {
       max: '最多玩家数',
       stepDurations: '各步骤用时 (秒)',
       reset: '重置模拟数据',
-      speed: '模拟速率 (倍数)'
+      speed: '模拟速率 (倍数)',
+      playerControls: '键盘控制玩家数 (↑/↓)'
     },
     evacuationTitle: '跑路进程',
     evacuationDesc: '自动服务器终止序列的可视化进度。',
@@ -221,7 +223,8 @@ export const translations = {
       max: '最大人数',
       stepDurations: 'ステップ所要時間 (秒)',
       reset: 'シミュレーションデータをリセット',
-      speed: 'シミュレーション速度 (倍数)'
+      speed: 'シミュレーション速度 (倍数)',
+      playerControls: 'キーボードでプレイヤー数を調整 (↑/↓)'
     },
     evacuationTitle: '避難プロセス',
     evacuationDesc: '自动サーバー終了シーケンスの視覚的な進行状況。',

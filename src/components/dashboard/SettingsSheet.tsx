@@ -5,9 +5,10 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { Switch } from "@/components/ui/switch"
 import { AppSettings } from "@/hooks/use-simulated-app"
 import { translations } from "@/lib/translations"
-import { Activity, Clock, Users, Timer, RotateCcw, Zap } from "lucide-react"
+import { Activity, Clock, Users, Timer, RotateCcw, Zap, Keyboard } from "lucide-react"
 
 interface SettingsSheetProps {
   settings: AppSettings
@@ -138,38 +139,6 @@ export function SettingsSheet({
               />
               <span className="text-2xl font-black text-muted-foreground/30 italic select-none">X</span>
             </div>
-            <p className="text-[10px] text-muted-foreground leading-tight italic">
-              {settings.language === 'zh' 
-                ? '* 提高模拟倍率以快速观察倒计时和跑路流程。' 
-                : '* Increase speed multiplier to quickly test the evacuation sequence.'}
-            </p>
-          </div>
-        </div>
-
-        <Separator />
-
-        {/* Evacuation Steps Edit */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 font-bold text-sm text-primary">
-            <Timer className="h-4 w-4" />
-            {t.editData.stepDurations}
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4">
-            {stepKeys.map((key, index) => (
-              <div key={key} className="space-y-2">
-                <Label htmlFor={`step-${index}`} className="text-[10px] uppercase text-muted-foreground truncate block">
-                  {(t.steps as any)[key].title}
-                </Label>
-                <Input 
-                  id={`step-${index}`}
-                  type="number"
-                  value={settings.stepDurations[index]}
-                  onChange={(e) => handleStepDurationChange(index, e.target.value)}
-                  className="h-8"
-                />
-              </div>
-            ))}
           </div>
         </div>
 
@@ -201,6 +170,44 @@ export function SettingsSheet({
                 onChange={(e) => onUpdate({ maxPlayers: parseInt(e.target.value) || 0 })}
               />
             </div>
+          </div>
+
+          <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+              <Keyboard className="h-3 w-3" />
+              {t.editData.playerControls}
+            </div>
+            <Switch 
+              checked={settings.enablePlayerControls}
+              onCheckedChange={(val) => onUpdate({ enablePlayerControls: val })}
+            />
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* Evacuation Steps Edit */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 font-bold text-sm text-primary">
+            <Timer className="h-4 w-4" />
+            {t.editData.stepDurations}
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            {stepKeys.map((key, index) => (
+              <div key={key} className="space-y-2">
+                <Label htmlFor={`step-${index}`} className="text-[10px] uppercase text-muted-foreground truncate block">
+                  {(t.steps as any)[key].title}
+                </Label>
+                <Input 
+                  id={`step-${index}`}
+                  type="number"
+                  value={settings.stepDurations[index]}
+                  onChange={(e) => handleStepDurationChange(index, e.target.value)}
+                  className="h-8"
+                />
+              </div>
+            ))}
           </div>
         </div>
 

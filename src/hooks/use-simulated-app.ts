@@ -16,6 +16,7 @@ export interface AppSettings {
   maxPlayers: number
   stepDurations: number[] // [closing, maintenance, uploading, notifying, facade_shutdown, shutdown]
   simulationSpeed: number // 1x, 2x, etc.
+  enablePlayerControls: boolean
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
@@ -29,7 +30,8 @@ const DEFAULT_SETTINGS: AppSettings = {
   language: 'zh',
   maxPlayers: 20,
   stepDurations: [5, 5, 5, 5, 5, 5],
-  simulationSpeed: 1
+  simulationSpeed: 1,
+  enablePlayerControls: false
 }
 
 export function parseTimeToSeconds(timeStr: string): number {
@@ -130,6 +132,7 @@ export function useSimulatedApp() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Pause simulation with F1
       if (e.key === 'F1') {
         e.preventDefault()
         setIsManualPaused(prev => {
@@ -142,10 +145,21 @@ export function useSimulatedApp() {
           return next
         })
       }
+
+      // Handle player count shortcuts if enabled
+      if (settings.enablePlayerControls && !isEvacuating && isOnline) {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          setPlayerCount(prev => Math.min(prev + 1, settings.maxPlayers))
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          setPlayerCount(prev => Math.max(prev - 1, 0))
+        }
+      }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [toast, settings.language])
+  }, [toast, settings.language, settings.enablePlayerControls, settings.maxPlayers, isEvacuating, isOnline])
 
   useEffect(() => {
     if (playerCount > 0) {
